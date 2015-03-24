@@ -6,5 +6,5 @@ while using an electronic table (A table with a TV in it).
 
 The goal is to have an Initiative sorter for Players and NPCs,
 Searchable Bestiary, and a Searchable Spell list.
-The players will have the ability to provide a character portrate.
+The players will have the ability to provide a character portait.
 This portrate will be displayed when it is their initiative.
