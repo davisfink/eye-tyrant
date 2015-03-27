@@ -15,7 +15,9 @@
     <body>
         <div class="wrapper">
             <h1>eye tyrant</h1>
-            <% content %>
+            <div class="content">
+                <% content %>
+            </div>
         </div>
     </body>
 </html>

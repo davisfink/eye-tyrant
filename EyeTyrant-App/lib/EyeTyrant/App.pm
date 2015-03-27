@@ -4,7 +4,10 @@ use Dancer2;
 our $VERSION = '0.1';
 
 get '/' => sub {
-    template 'index';
+    template 'index', {
+        'msg' => "Test message",
+        'page_title' => "eye tyrant",
+    };
 };
 
 get '/pictures/' => sub {

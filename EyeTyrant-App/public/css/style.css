@@ -1,5 +1,6 @@
 html, body {
     width: 100%;
+    line-height: 1.6;
 }
 .wrapper {
     margin: 0 auto;
