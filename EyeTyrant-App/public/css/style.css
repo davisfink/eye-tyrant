@@ -2,7 +2,31 @@ html, body {
     width: 100%;
     line-height: 1.6;
 }
+
 .wrapper {
     margin: 0 auto;
     width: 600px;
+}
+
+#InitiativeList {
+    display:block;
+}
+
+.entry {
+    padding: .25em;
+}
+
+.inish {
+    width: 20px;
+}
+
+.button {
+    background: #ccc;
+    color: #fff;
+    display:block;
+    padding: 1rem 2rem;
+    margin: .25rem;
+    text-align: center;
+    text-decoration: none;
+    float: left;
 }
