@@ -16,6 +16,9 @@ html, body {
     padding: .25em;
 }
 
+.inish,.name {
+    margin: auto .25rem;
+}
 .inish {
     width: 20px;
 }
@@ -29,4 +32,11 @@ html, body {
     text-align: center;
     text-decoration: none;
     float: left;
+}
+.remove {
+    background: #ccc;
+    color: #fff;
+    padding: .25rem;
+    text-align: center;
+    text-decoration: none;
 }

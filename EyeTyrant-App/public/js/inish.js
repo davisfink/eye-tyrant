@@ -6,13 +6,19 @@ $(function () {
 
         $init_div.empty();
         for (item in sorted_list) {
-            if (sorted_list[item]['name'] != "" && sorted_list[item]['inish'] != "") {
-                NewInitshDiv(sorted_list[item]['inish'],sorted_list[item]['name']);
+            if (sorted_list[item]['name'] != "" || sorted_list[item]['inish'] != "") {
+                NewInitshDiv(sorted_list[item]['inish'],sorted_list[item]['name'], "disabled");
             }
         }
     });
+
     $("#NewEntry").click(function(e) {
-        NewInitshDiv("","");
+        NewInitshDiv("","","");
+    });
+
+    $( "#InitiativeList" ).on( "click", '.remove', function(e) {
+        e.preventDefault();
+        $(this).parent().remove();
     });
 });
 
@@ -44,10 +50,12 @@ function sortNumber(a,b) {
     return a > b ? 1 : a < b ? -1 : 0;
 }
 
-function NewInitshDiv(new_inish, new_name) {
+function NewInitshDiv(new_inish, new_name, status) {
+    console.log(new_name);
     $("#InitiativeList").append(
         "<div class='entry'>" +
-        "<input class='inish' value=" + new_inish + ">" +
-        "<input class='name' value=" + new_name + ">" +
+        "<input class='inish' value='" + new_inish + "'>" +
+        "<input class='name' value='" + new_name + "'" + status + ">" +
+        "<a href='#' class='remove'>X</a>" +
         "</div>");
 }
