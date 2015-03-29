@@ -11,3 +11,33 @@
     will have the ability to provide a character portait. This portrate
     will be displayed when it is their initiative.
 </p>
+<div id="InitiativeList">
+    <div class="entry">
+        <input class="inish" value="20">
+        <input class="name" value="barf bags">
+    </div>
+    <div class="entry">
+        <input class="inish" value="5">
+        <input class="name" value="tom toosh">
+    </div>
+    <div class="entry">
+        <input class="inish" value="20">
+        <input class="name" value="frank tacoman">
+    </div>
+    <div class="entry">
+        <input class="inish" value="1">
+        <input class="name" value="orange">
+    </div>
+    <div class="entry">
+        <input class="inish"value="17">
+        <input class="name" value="mark">
+    </div>
+</div>
+<div class="buttons">
+    <a href="#" id="SortInitiative" class="button">Sort</a>
+    <a href="#" id="NewEntry" class="button">New Initiative Member</a>
+</div>
+<div class="footer">
+    <script src="<% request.uri_base %>/js/inish.js">
+    </script>
+</div>
