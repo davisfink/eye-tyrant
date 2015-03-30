@@ -16,11 +16,20 @@ html, body {
     padding: .25em;
 }
 
-.inish,.name {
+.inish,
+.name,
+.damage,
+.new_damage {
     margin: auto .25rem;
 }
-.inish {
+.inish,
+.damage,
+.new_damage {
     width: 20px;
+}
+
+.damage,
+.new_damage {
 }
 
 .button {
@@ -33,10 +42,20 @@ html, body {
     text-decoration: none;
     float: left;
 }
+
 .remove {
     background: #ccc;
     color: #fff;
     padding: .25rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.update_damage {
+    background: #ccc;
+    color: #fff;
+    padding: .25rem;
+    margin: auto .25rem;
     text-align: center;
     text-decoration: none;
 }

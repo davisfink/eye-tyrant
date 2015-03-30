@@ -15,31 +15,49 @@
     <div class="entry">
         <input class="inish" value="">
         <input class="name" value="Thokk">
+        <input class='damage' value='0' tabindex="-1">
+        <input class='new_damage' value='' tabindex="-1">
+        <a href="#" class="update_damage">Update<a>
         <a href="#" class="remove">X</a>
     </div>
     <div class="entry">
         <input class="inish" value="">
         <input class="name" value="Barash">
+        <input class='damage' value='0' tabindex="-1">
+        <input class='new_damage' value='' tabindex="-1">
+        <a href="#" class="update_damage">Update<a>
         <a href="#" class="remove">X</a>
     </div>
     <div class="entry">
         <input class="inish" value="">
         <input class="name" value="Anders">
+        <input class='damage' value='0' tabindex="-1">
+        <input class='new_damage' value='' tabindex="-1">
+        <a href="#" class="update_damage">Update<a>
         <a href="#" class="remove">X</a>
     </div>
     <div class="entry">
         <input class="inish" value="">
         <input class="name" value="Thokk with Bone">
+        <input class='damage' value='0' tabindex="-1">
+        <input class='new_damage' value='' tabindex="-1">
+        <a href="#" class="update_damage">Update<a>
         <a href="#" class="remove">X</a>
     </div>
     <div class="entry">
         <input class="inish"value="">
         <input class="name" value="Greywolf">
+        <input class='damage' value='0' tabindex="-1">
+        <input class='new_damage' value='' tabindex="-1">
+        <a href="#" class="update_damage">Update<a>
         <a href="#" class="remove">X</a>
     </div>
     <div class="entry">
         <input class="inish"value="">
         <input class="name" value="Theren">
+        <input class='damage' value='0' tabindex="-1">
+        <input class='new_damage' value='' tabindex="-1">
+        <a href="#" class="update_damage">Update<a>
         <a href="#" class="remove">X</a>
     </div>
 </div>
