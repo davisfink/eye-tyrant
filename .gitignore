@@ -18,6 +18,6 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
-
+DB.pm
 
 node_modules/

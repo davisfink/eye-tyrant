@@ -12,6 +12,13 @@
     will be displayed when it is their initiative.
 </p>
 <div id="InitiativeList">
+    <% FOREACH person IN people %>
+        <% person.name %> <% person.race %>
+    <% END %>
+    <% FOREACH monster IN monsters %>
+        <% monster.name %> <% monster.type %><br/>
+    <% END %>
+
     <div class="entry">
         <input class="inish" value="">
         <input class="name" value="Thokk">
