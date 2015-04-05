@@ -1,14 +1,7 @@
 <div id="InitiativeList">
-    <% request %>
-    <% FOREACH person IN people %>
-    <div class="entry">
-        <input class="inish" value="">
-        <input class="name" value="<% person.name %>">
-        <input class='damage' value='0' tabindex="-1">
-        <input class='new_damage' value='' tabindex="-1">
-        <a href="#" class="update_damage">Update</a>
-        <a href="#" class="remove">X</a>
-    </div>
+    <% query %><br/><br/>
+    <% FOREACH monster IN monsters %>
+        <% monster.name %><br/>
     <% END %>
 </div>
 <div class="buttons">
@@ -16,7 +9,7 @@
     <a href="#" id="NewEntry" class="button">New Initiative Member</a>
 </div>
 <div class="search">
-    <form action="/">
+    <form action="get-monster">
         <input name="monster" />
         <button type="submit">Submit</button>
     </form>
