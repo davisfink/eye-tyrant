@@ -13,22 +13,14 @@ use EyeTyrant::DataObjects::Monster::Manager;
 our $VERSION = '0.1';
 
 get '/' => sub {
-    my $monsters   = EyeTyrant::DataObjects::Monster::Manager->get_objects;
     my $characters = EyeTyrant::DataObjects::Character::Manager->get_objects;
-    my $character_array = [
-        map {
-                {
-                    name => $_->name,
-                    race => $_->race,
-                }
-            } @$characters
-    ];
+
+    warn:Dumper(request->params);
 
     template 'index', {
         'msg'        => "Test message",
         'page_title' => "eye tyrant",
         'people'     => $characters,
-        'monsters'   => $monsters,
     };
 };
 
@@ -38,6 +30,21 @@ get '/pictures/' => sub {
 
 get '/encounter/' => sub {
     template 'encounter';
+};
+
+get '/get-monster/' => sub {
+    my $search_term  = request->params->{monster};
+    my $monsters     = EyeTyrant::DataObjects::Monster::Manager->get_objects (
+        query => [
+            name => { like => ['%'.$search_term.'%']}
+        ],
+        sort_by => 'name ASC',
+    );
+
+    template 'monster', {
+        'monsters'   => $monsters,
+        'query'      => $search_term,
+    };
 };
 
 true;
