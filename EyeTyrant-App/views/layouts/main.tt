@@ -4,7 +4,8 @@
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=<% settings.charset %>" />
         <title>eye tyrant</title>
-        <link rel="stylesheet" href="<% request.uri_base %>/css/style.css" />
+        <link rel="stylesheet" href="<% request.uri_base %>/jquery-ui/jquery-ui.css" />
+        <link rel="stylesheet" href="<% request.uri_base %>/css/app.css" />
 
         <!-- Grab jQuery from a CDN, fall back to local if necessary -->
         <script type="text/javascript">/* <![CDATA[ */
@@ -12,11 +13,20 @@
             /* ]]> */</script>
     </head>
     <body>
-        <div class="wrapper">
-            <h1>eye tyrant</h1>
-            <div class="content">
-                <% content %>
+        <div class="row">
+            <div class="medium-12 columns">
+                <div class="wrapper">
+                    <h1>eye tyrant</h1>
+                    <div class="content">
+                        <% content %>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="footer">
+            <script src="<% request.uri_base %>/jquery-ui/jquery-ui.js"></script>
+            <script src="<% request.uri_base %>/js/inish.js"></script>
+            <script src="<% request.uri_base %>/js/autocomplete.js"></script>
         </div>
     </body>
 </html>

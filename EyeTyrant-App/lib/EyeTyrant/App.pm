@@ -3,6 +3,8 @@ package EyeTyrant::App;
 use strict;
 use warnings;
 
+use JSON;
+
 use Dancer2;
 use Data::Dumper;
 use Dancer2::Template::TemplateToolkit;
@@ -18,8 +20,6 @@ get '/' => sub {
     warn:Dumper(request->params);
 
     template 'index', {
-        'msg'        => "Test message",
-        'page_title' => "eye tyrant",
         'people'     => $characters,
     };
 };
@@ -33,18 +33,21 @@ get '/encounter/' => sub {
 };
 
 get '/get-monster/' => sub {
-    my $search_term  = request->params->{monster};
-    my $monsters     = EyeTyrant::DataObjects::Monster::Manager->get_objects (
+    my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects (
         query => [
-            name => { like => ['%'.$search_term.'%']}
+            name => { like => ['%'.params->{search}.'%']}
         ],
         sort_by => 'name ASC',
     );
 
-    template 'monster', {
-        'monsters'   => $monsters,
-        'query'      => $search_term,
-    };
+    my $monster_list;
+    foreach my $mon (@$monsters) {
+        print Dumper($mon->name);
+    }
+
+     my $json = encode_json $monsters;
+     print Dumper($json);
+
 };
 
 true;
