@@ -1,19 +1,9 @@
-<div id="InitiativeList">
-    <% query %><br/><br/>
+<div id="results">
+"monsters" : [
     <% FOREACH monster IN monsters %>
-        <% monster.name %><br/>
+    {
+        name : <% monster.name %>
+    },
     <% END %>
-</div>
-<div class="buttons">
-    <a href="#" id="SortInitiative" class="button">Sort</a>
-    <a href="#" id="NewEntry" class="button">New Initiative Member</a>
-</div>
-<div class="search">
-    <form action="get-monster">
-        <input name="monster" />
-        <button type="submit">Submit</button>
-    </form>
-</div>
-<div class="footer">
-    <script src="<% request.uri_base %>/js/inish.js"></script>
+]
 </div>

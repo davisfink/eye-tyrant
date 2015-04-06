@@ -1,26 +1,34 @@
-<div id="InitiativeList">
-    <% request %>
-    <% FOREACH person IN people %>
-    <div class="entry">
-        <input class="inish" value="">
-        <input class="name" value="<% person.name %>">
-        <input class='damage' value='0' tabindex="-1">
-        <input class='new_damage' value='' tabindex="-1">
-        <a href="#" class="update_damage">Update</a>
-        <a href="#" class="remove">X</a>
+<div class="row">
+    <div class="medium-12 columns">
+        <div class="panel">
+            <div id="InitiativeList">
+                <% FOREACH person IN people %>
+                <div class="entry">
+                    <input class="inish" value="">
+                    <input class="name" value="<% person.name %>">
+                    <input class='damage' value='0' tabindex="-1">
+                    <input class='new_damage' value='' tabindex="-1">
+                    <a href="#" class="update_damage">Update</a>
+                    <a href="#" class="remove">X</a>
+                </div>
+                <% END %>
+            </div>
+        </div>
     </div>
-    <% END %>
 </div>
-<div class="buttons">
-    <a href="#" id="SortInitiative" class="button">Sort</a>
-    <a href="#" id="NewEntry" class="button">New Initiative Member</a>
+<div class="row">
+    <div class="medium-12 columns">
+        <div class="buttons">
+            <a href="#" id="SortInitiative" class="button">Sort</a>
+            <a href="#" id="NewEntry" class="button">New Initiative Member</a>
+        </div>
+    </div>
 </div>
-<div class="search">
-    <form action="/">
-        <input name="monster" />
-        <button type="submit">Submit</button>
-    </form>
-</div>
-<div class="footer">
-    <script src="<% request.uri_base %>/js/inish.js"></script>
+<div class="row">
+    <div class="medium-12 columns">
+        <div class="search">
+            <label for="autocomplete">Find a Monster</label>
+            <input id="autocomplete" name="monster"/>
+        </div>
+    </div>
 </div>

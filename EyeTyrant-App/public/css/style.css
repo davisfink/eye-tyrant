@@ -32,6 +32,14 @@ html, body {
 .new_damage {
 }
 
+.buttons {
+    display:block;
+    clear:both;
+}
+.buttons:after {
+    display:block;
+    clear:both;
+}
 .button {
     background: #ccc;
     color: #fff;
@@ -58,4 +66,12 @@ html, body {
     margin: auto .25rem;
     text-align: center;
     text-decoration: none;
+}
+
+.search {
+    display:block;
+    width: 100%;
+}
+#Monster {
+    width: 200px;
 }

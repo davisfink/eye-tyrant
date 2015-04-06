@@ -1,0 +1,88 @@
+@import "settings";
+@import "foundation";
+
+// Or selectively include components
+// @import
+//   "foundation/components/accordion",
+//   "foundation/components/alert-boxes",
+//   "foundation/components/block-grid",
+//   "foundation/components/breadcrumbs",
+//   "foundation/components/button-groups",
+//   "foundation/components/buttons",
+//   "foundation/components/clearing",
+//   "foundation/components/dropdown",
+//   "foundation/components/dropdown-buttons",
+//   "foundation/components/flex-video",
+//   "foundation/components/forms",
+//   "foundation/components/grid",
+//   "foundation/components/inline-lists",
+//   "foundation/components/joyride",
+//   "foundation/components/keystrokes",
+//   "foundation/components/labels",
+//   "foundation/components/magellan",
+//   "foundation/components/orbit",
+//   "foundation/components/pagination",
+//   "foundation/components/panels",
+//   "foundation/components/pricing-tables",
+//   "foundation/components/progress-bars",
+//   "foundation/components/reveal",
+//   "foundation/components/side-nav",
+//   "foundation/components/split-buttons",
+//   "foundation/components/sub-nav",
+//   "foundation/components/switches",
+//   "foundation/components/tables",
+//   "foundation/components/tabs",
+//   "foundation/components/thumbs",
+//   "foundation/components/tooltips",
+//   "foundation/components/top-bar",
+//   "foundation/components/type",
+//   "foundation/components/offcanvas",
+//   "foundation/components/visibility";
+
+html, body {
+    width: 100%;
+    line-height: 1.6;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 600px;
+}
+
+#InitiativeList {
+    display:block;
+}
+
+.entry {
+    padding: .25em;
+}
+
+.inish,
+.name,
+.damage,
+.new_damage {
+    margin: auto .25rem;
+}
+.inish,
+.damage,
+.new_damage {
+    width: 20px;
+}
+
+.damage,
+.new_damage {
+
+}
+
+.search {
+    display: block;
+    width: 100%;
+}
+#Monster {
+    width: 200px;
+}
+
+.select2-container {
+    width: 300px;
+}
+
