@@ -1,32 +1,67 @@
 <div id="results">
     <% FOREACH monster IN monsters %>
     <div class="monster">
-        name: <% monster.name %><br/>
-        size <% monster.size %><br/>
-        type <% monster.type %><br/>
-        alignment <% monster.alignment %><br/>
-        ac <% monster.ac %><br/>
-        hp <% monster.hp %><br/>
-        speed <% monster.speed %><br/>
-        str <% monster.str %><br/>
-        dex <% monster.dex %><br/>
-        con <% monster.con %><br/>
-        int <% monster.int %><br/>
-        wis <% monster.wis %><br/>
-        cha <% monster.cha %><br/>
-        save <% monster.save %><br/>
-        skill <% monster.skill %><br/>
-        vulnerable <% monster.vulnerable %><br/>
-        resist <% monster.resist %><br/>
-        immune <% monster.immune %><br/>
-        conditionImmune <% monster.conditionImmune %><br/>
-        senses <% monster.seses %><br/>
-        passive <% monster.passive %><br/>
-        languages <% monster.languages %><br/>
-        cr <% monster.cr %><br/>
-        trait <% monster.trait %><br/>
-        action <% monster.action %><br/>
+        <h3><% monster.name %></h3>
+        <div class="row">
+            <div class="medium-4 columns">
+                <div class="panel">
+                    Size: <% monster.size %><br/>
+                    Type: <% monster.type %><br/>
+                    Alignment: <% monster.alignment %><br/>
+                    Challenge Rating: <% monster.cr %><br/>
+                </div>
+            </div>
+            <div class="medium-4 columns end">
+                <div class="panel">
+                    Senses: <% monster.seses %><br/>
+                    Passive Perception: <% monster.passive %><br/>
+                    Languages: <% monster.languages %><br/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-6 columns">
+                <div class="panel">
+                    <h5>Stats</h5>
+                    <div class="row">
+                        <div class="medium-8 columns">
+                            Armor Class: <% monster.ac %><br/>
+                            Health: <% monster.hp %><br/>
+                            Movement: <% monster.speed %><br/>
+                        </div>
+                        <div class="medium-4 columns">
+                            Strength: <% monster.str %><br/>
+                            Dexterity: <% monster.dex %><br/>
+                            Constitution: <% monster.con %><br/>
+                            Intellect: <% monster.int %><br/>
+                            Wisdom: <% monster.wis %><br/>
+                            Charisma: <% monster.cha %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="medium-6 columns">
+                <div class="panel">
+                    <h5>Conditionals</h5>
+                    Saves: <% monster.saves %><br/>
+                    Skills: <% monster.skill %><br/>
+                    Vulnerabilities: <% monster.vulnerable %><br/>
+                    Resistances: <% monster.resist %><br/>
+                    Immunities: <% monster.immune %><br/>
+                    Condition Immunities: <% monster.conditionImmune %><br/>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <h5>Traits</h5>
+            <% monster.trait %><br/>
+        </div>
+        <div class="panel">
+            <h5>Attacks</h5>
+            <% monster.action %>
+        </div>
     </div>
+    <hr/>
     <% END %>
 
 </div>
