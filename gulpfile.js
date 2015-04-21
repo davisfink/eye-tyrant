@@ -12,7 +12,7 @@
  * `npm install`
  * `gulp`
  */
-var devPath = 'newark-beth.dev:5000';
+var devPath = 'localhost:5000';
 
 /* Required gulp plugins */
 
