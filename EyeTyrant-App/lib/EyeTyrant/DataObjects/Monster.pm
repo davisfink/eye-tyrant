@@ -23,7 +23,7 @@ __PACKAGE__->meta->setup(
         int             => { type => 'integer' },
         wis             => { type => 'integer' },
         cha             => { type => 'integer' },
-        save            => { type => 'varchar', alias => 'save_col', length => 256 },
+        saves           => { type => 'varchar', length => 256 },
         skill           => { type => 'varchar', default => '', length => 256 },
         vulnerable      => { type => 'varchar', length => 256 },
         resist          => { type => 'varchar', length => 256 },

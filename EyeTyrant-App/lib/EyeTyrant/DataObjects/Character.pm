@@ -13,6 +13,7 @@ __PACKAGE__->meta->setup(
         name       => { type => 'varchar', length => 100 },
         race       => { type => 'varchar', length => 50 },
         perception => { type => 'integer' },
+        image_uri  => { type => 'varchar', length => 256 },
     ],
 
     primary_key_columns => [ 'id' ],
