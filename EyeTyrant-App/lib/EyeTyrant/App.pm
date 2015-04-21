@@ -45,8 +45,12 @@ get '/get-monster/' => sub {
         print Dumper($mon->name);
     }
 
-     my $json = encode_json $monsters;
-     print Dumper($json);
+    template 'monster', {
+        'monsters' => $monsters,
+    };
+
+    #my $json = encode_json $monsters;
+    # print Dumper($json);
 
 };
 

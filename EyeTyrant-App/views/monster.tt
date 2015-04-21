@@ -1,9 +1,32 @@
 <div id="results">
-"monsters" : [
     <% FOREACH monster IN monsters %>
-    {
-        name : <% monster.name %>
-    },
+    <div class="monster">
+        name: <% monster.name %><br/>
+        size <% monster.size %><br/>
+        type <% monster.type %><br/>
+        alignment <% monster.alignment %><br/>
+        ac <% monster.ac %><br/>
+        hp <% monster.hp %><br/>
+        speed <% monster.speed %><br/>
+        str <% monster.str %><br/>
+        dex <% monster.dex %><br/>
+        con <% monster.con %><br/>
+        int <% monster.int %><br/>
+        wis <% monster.wis %><br/>
+        cha <% monster.cha %><br/>
+        save <% monster.save %><br/>
+        skill <% monster.skill %><br/>
+        vulnerable <% monster.vulnerable %><br/>
+        resist <% monster.resist %><br/>
+        immune <% monster.immune %><br/>
+        conditionImmune <% monster.conditionImmune %><br/>
+        senses <% monster.seses %><br/>
+        passive <% monster.passive %><br/>
+        languages <% monster.languages %><br/>
+        cr <% monster.cr %><br/>
+        trait <% monster.trait %><br/>
+        action <% monster.action %><br/>
+    </div>
     <% END %>
-]
+
 </div>
