@@ -1,6 +1,6 @@
 <div class="search">
     <form method="GET">
-        <input type="text" name="search"/>
+        <input id="autocomplete" name="id"/>
         <input type="submit" class="button"/>
     </form>
 </div>

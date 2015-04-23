@@ -49,6 +49,8 @@ get '/search-monster/' => sub {
 };
 
 get '/autocomplete-monster/' => sub {
+    content_type 'application/json';
+
     my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects (
         query => [
             name => { like => ['%'.params->{search}.'%']}
@@ -56,12 +58,8 @@ get '/autocomplete-monster/' => sub {
         sort_by => 'name ASC',
     );
 
-    my $monster_map = [ map {as_tree($_)} @$monsters ];
-
-    warn Dumper($monster_map);
-    foreach my $mob ($monsters) {
-    };
-
+    my $monster_map = [ map { {label => $_->name, value => $_->id } } @$monsters ];
+    return to_json ($monster_map);
 };
 
 get '/get-monster/' => sub {
