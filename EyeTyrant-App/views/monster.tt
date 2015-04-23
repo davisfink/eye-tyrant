@@ -1,3 +1,9 @@
+<div class="search">
+    <form method="GET">
+        <input type="text" name="search"/>
+        <input type="submit" class="button"/>
+    </form>
+</div>
 <div id="results">
     <% FOREACH monster IN monsters %>
     <div class="monster">
@@ -42,7 +48,7 @@
             </div>
             <div class="medium-6 columns">
                 <div class="panel">
-                    <h5>Conditionals</h5>
+                    <h5>Physical Traits</h5>
                     Saves: <% monster.saves %><br/>
                     Skills: <% monster.skill %><br/>
                     Vulnerabilities: <% monster.vulnerable %><br/>

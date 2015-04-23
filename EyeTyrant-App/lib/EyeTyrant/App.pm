@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use JSON;
+use JSON::XS;
 
 use Dancer2;
 use Data::Dumper;
@@ -11,16 +12,15 @@ use Dancer2::Template::TemplateToolkit;
 use lib "..";
 use EyeTyrant::DataObjects::Character::Manager;
 use EyeTyrant::DataObjects::Monster::Manager;
+use Rose::DB::Object::Helpers qw( as_tree as_json );
 
 our $VERSION = '0.1';
 
 get '/' => sub {
     my $characters = EyeTyrant::DataObjects::Character::Manager->get_objects;
 
-    warn:Dumper(request->params);
-
     template 'index', {
-        'people'     => $characters,
+        'people' => $characters,
     };
 };
 
@@ -32,7 +32,23 @@ get '/encounter/' => sub {
     template 'encounter';
 };
 
-get '/get-monster/' => sub {
+get '/search-monster/' => sub {
+    my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects (
+        query => [
+            name => { like => ['%'.params->{search}.'%'] }
+        ],
+        sort_by => 'name ASC',
+    );
+
+    print Dumper($monsters);
+
+    template 'monster', {
+        'monsters' => $monsters,
+    };
+
+};
+
+get '/autocomplete-monster/' => sub {
     my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects (
         query => [
             name => { like => ['%'.params->{search}.'%']}
@@ -40,18 +56,25 @@ get '/get-monster/' => sub {
         sort_by => 'name ASC',
     );
 
-    my $monster_list;
-    foreach my $mon (@$monsters) {
-        print Dumper($mon->name);
-    }
+    my $monster_map = [ map {as_tree($_)} @$monsters ];
+
+    warn Dumper($monster_map);
+    foreach my $mob ($monsters) {
+    };
+
+};
+
+get '/get-monster/' => sub {
+    my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects (
+        query => [
+            id => params->{id},
+        ],
+        sort_by => 'name ASC',
+    );
 
     template 'monster', {
         'monsters' => $monsters,
     };
-
-    #my $json = encode_json $monsters;
-    # print Dumper($json);
-
 };
 
 true;
