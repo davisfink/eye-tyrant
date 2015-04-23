@@ -13,6 +13,7 @@ use lib "..";
 use EyeTyrant::DataObjects::Character::Manager;
 use EyeTyrant::DataObjects::Monster::Manager;
 use Rose::DB::Object::Helpers qw( as_tree as_json );
+use Template::Plugin::Comma;
 
 our $VERSION = '0.1';
 
@@ -53,7 +54,7 @@ get '/autocomplete-monster/' => sub {
 
     my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects (
         query => [
-            name => { like => ['%'.params->{search}.'%']}
+            name => { like => ['%'.params->{term}.'%']}
         ],
         sort_by => 'name ASC',
     );
@@ -68,6 +69,7 @@ get '/get-monster/' => sub {
             id => params->{id},
         ],
         sort_by => 'name ASC',
+        require_objects => [qw(experience)],
     );
 
     template 'monster', {

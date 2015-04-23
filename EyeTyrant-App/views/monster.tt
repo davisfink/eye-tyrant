@@ -1,10 +1,11 @@
+<% USE Comma %>
 <div class="search">
     <form method="GET">
-        <input id="autocomplete" name="id"/>
+        <input id="autocomplete" type="text" name="id"/>
         <input type="submit" class="button"/>
     </form>
 </div>
-<div id="results">
+<div id="Result">
     <% FOREACH monster IN monsters %>
     <div class="monster">
         <h3><% monster.name %></h3>
@@ -14,7 +15,7 @@
                     Size: <% monster.size %><br/>
                     Type: <% monster.type %><br/>
                     Alignment: <% monster.alignment %><br/>
-                    Challenge Rating: <% monster.cr %><br/>
+                    Challenge Rating: <% monster.cr %> (<% monster.experience.exp | comma %>xp)<br/>
                 </div>
             </div>
             <div class="medium-4 columns end">

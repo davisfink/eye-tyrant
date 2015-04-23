@@ -1,12 +1,14 @@
 $(function() {
     $( "#autocomplete" ).autocomplete({
-        source: function (request, response) {
-            $.get("/autocomplete-monster/", {
-                search: request.term
-            }, function (data) {
-                response(data);
+        source: "/autocomplete-monster/",
+        minLength: 3,
+        select: function (event, ui) {
+            var monster_id = ui.item.value;
+            $("#FoundMonster").empty();
+            $.get("/get-monster/?id=" + monster_id, function (data) {
+               var monster = $(data).find("#Result");
+               $("#FoundMonster").append(monster);
             });
-        },
-        minLength: 3
+        }
     });
 });

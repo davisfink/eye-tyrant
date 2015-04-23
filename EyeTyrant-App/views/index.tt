@@ -32,3 +32,9 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="medium-12 columns">
+        <div id="FoundMonster">
+        </div>
+    </div>
+</div>
