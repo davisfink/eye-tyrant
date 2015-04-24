@@ -111,14 +111,11 @@ get '/new-encounter/' => sub {
         ],
     );
 
-    #I think this might be pointless, as every active character
-    #is in every encounter. Updating their encounter_id serves
-    #no purpose..
-    while (each @$characters) {
-        $characters->[$_]->encounter_id($encounter->id);
-        $characters->[$_]->save();
-    };
-
+    foreach my $character (@$characters) {
+        $character->encounter_id($encounter->id);
+        $character->initiative(0);
+        $character->save();
+    }
 
     redirect '/';
 };
