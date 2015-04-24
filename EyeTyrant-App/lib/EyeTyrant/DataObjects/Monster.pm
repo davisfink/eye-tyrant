@@ -45,6 +45,15 @@ __PACKAGE__->meta->setup(
             key_columns => { cr => 'cr' },
         },
     ],
+
+    relationships => [
+        encounters => {
+            map_class => 'EyeTyrant::DataObjects::MonsterEncounterMap',
+            map_from  => 'monster',
+            map_to    => 'encounter',
+            type      => 'many to many',
+        },
+    ],
 );
 
 1;

@@ -61,7 +61,7 @@
         </div>
         <div class="panel">
             <h5>Traits</h5>
-            <% monster.trait %><br/>
+            <% monster.trait %>
         </div>
         <div class="panel">
             <h5>Attacks</h5>

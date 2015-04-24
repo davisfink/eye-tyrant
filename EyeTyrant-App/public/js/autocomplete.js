@@ -1,5 +1,5 @@
 $(function() {
-    $( "#autocomplete" ).autocomplete({
+    $( ".autocomplete" ).autocomplete({
         source: "/autocomplete-monster/",
         minLength: 3,
         select: function (event, ui) {

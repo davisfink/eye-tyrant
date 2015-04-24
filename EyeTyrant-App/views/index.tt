@@ -1,16 +1,42 @@
 <div class="row">
-    <div class="medium-12 columns">
+    <div class="medium-6 columns">
         <div class="panel">
             <div id="InitiativeList">
                 <% FOREACH person IN people %>
                 <div class="entry">
-                    <input class="inish" value="">
-                    <input class="name" value="<% person.name %>">
-                    <input class='damage' value='0' tabindex="-1">
+                    <input class="inish" value="<% person.initiative %>">
+                    <input class="name" value="<% person.name %>" tabindex="-1">
+                    <input class='damage' value='<% person.damage %>' tabindex="-1">
                     <input class='new_damage' value='' tabindex="-1">
                     <a href="#" class="update_damage">Update</a>
                     <a href="#" class="remove">X</a>
                 </div>
+                <% END %>
+                <% FOREACH monster IN monsters %>
+                <div class="entry">
+                    <input class="inish" value="<% monster.initiative %>">
+                    <input class="name" value="<% monster.monster.name %>" disabled>
+                    <input class='damage' value='<% monster.damage %>' tabindex="-1">
+                    <input class='new_damage' value='' tabindex="-1">
+                    <a href="#" class="update_damage">Update</a>
+                    <a href="#" class="remove">X</a>
+                </div>
+                <% END %>
+            </div>
+        </div>
+    </div>
+    <div class="medium-6 columns">
+        <div class="panel">
+            <div id="InitiativeList">
+                <form method="POST" action="/add-monster/">
+                    <label for="autocomplete">Find a Monster</label>
+                    <input class="autocomplete" type="text" name="id"/>
+                    <input type="submit" class="button" value="Add">
+                </form>
+                <h5>Monsters</h5>
+                <% FOREACH monster IN monsters %>
+                <% monster.monster.name %> <% monster.damage %><br/>
+
                 <% END %>
             </div>
         </div>
@@ -20,15 +46,7 @@
     <div class="medium-12 columns">
         <div class="buttons">
             <a href="#" id="SortInitiative" class="button">Sort</a>
-            <a href="#" id="NewEntry" class="button">New Initiative Member</a>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="medium-12 columns">
-        <div class="search">
-            <label for="autocomplete">Find a Monster</label>
-            <input id="autocomplete" name="monster"/>
+            <a href="/new-encounter/" class="button">New Encounter</a>
         </div>
     </div>
 </div>

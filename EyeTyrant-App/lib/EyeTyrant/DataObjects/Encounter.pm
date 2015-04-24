@@ -9,13 +9,19 @@ __PACKAGE__->meta->setup(
     table  => 'encounter',
 
     columns => [
-        id          => { type => 'serial', not_null => 1 },
-        initiative  => { type => 'integer' },
-        damage      => { type => 'integer' },
-        create_time => { type => 'timestamp' },
+        id => { type => 'serial', not_null => 1 },
     ],
 
     primary_key_columns => [ 'id' ],
+
+    relationships => [
+        monsters => {
+            map_class => 'EyeTyrant::DataObjects::MonsterEncounterMap',
+            map_from  => 'encounter',
+            map_to    => 'monster',
+            type      => 'many to many',
+        },
+    ],
 );
 
 1;
