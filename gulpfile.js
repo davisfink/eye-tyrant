@@ -12,7 +12,7 @@
  * `npm install`
  * `gulp`
  */
-var devPath = 'localhost:5000';
+var devPath = 'eye-tyrant.dev:5000';
 
 /* Required gulp plugins */
 
@@ -25,22 +25,6 @@ del             = require('del'),
 rename          = require('gulp-rename');
 
 var $ = require('gulp-load-plugins')();
-
-
-//all autoprefixer options
-
-var prefixerOptions = [
-    'last 2 version',
-    'safari 5',
-    'ie 8',
-    'ie 9',
-    'opera 12.1',
-    'ios 6',
-    'android 4'
-];
-
-
-
 function showError(err, file) {
 
     //show notification window
@@ -67,15 +51,17 @@ gulp.task('browser-sync', function() {
 
 gulp.task('watch', ['browser-sync'], function () {
     /* our app scss files */
-    gulp.watch('EyeTyrant-App/public/scss/**/*.scss', function(file) {
+    gulp.watch('EyeTyrant-App/public/scss/*.scss', function(file) {
         gulp.src('EyeTyrant-App/public/scss/app.scss')
         .pipe(sass())
         .on('error', function(err){showError(err, file);})
+
+        .pipe(gulp.dest('EyeTyrant-App/public/css'))
     });
 
     //watch when css files are changed, and trigger browser sync to refresh any attached browsers
 
-    gulp.watch('EyeTyrant-App/public/css/**/*.css', function(file) {
+    gulp.watch('EyeTyrant-App/public/css/*.css', function(file) {
         gulp.src(file.path)
         .pipe(browserSync.reload({stream:true}));
     });
