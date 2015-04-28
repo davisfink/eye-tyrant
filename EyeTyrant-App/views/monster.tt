@@ -1,7 +1,7 @@
 <% USE Comma %>
 <div class="search">
     <form method="GET">
-        <input id="autocomplete" type="text" name="id"/>
+        <input class="autocomplete" type="text" name="id"/>
         <input type="submit" class="button"/>
     </form>
 </div>

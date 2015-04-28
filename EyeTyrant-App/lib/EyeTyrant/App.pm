@@ -29,16 +29,54 @@ get '/' => sub {
         sort_by => 'id DESC',
         limit   => 1,
     )->[0];
+    my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects(
+        require_objects => [qw(experience)],
+    );
     my $monster_participants = EyeTyrant::DataObjects::MonsterEncounterMap::Manager->get_objects(
         query => [
             encounter_id => $encounter->id,
         ],
-        require_objects => [qw(monster)],
+        require_objects => [qw(monster.experience)],
     );
 
+    my @participants;
+    my @sorted_participants;
+    my $total_exp = 0;
+    my $character_exp = 0;
+    my $mob_number = 0;
+
+    foreach my $character (@$characters) {
+        push @participants, {
+            name       => $character->name,
+            initiative => $character->initiative + 0,
+            damage     => $character->damage,
+            id         => $character->id,
+            type       => "character",
+        };
+    };
+
+    foreach my $monster (@$monster_participants) {
+        $mob_number += 1;
+        push @participants, {
+            name       => $monster->monster->name . ' ' . $mob_number,
+            initiative => $monster->initiative + 0,
+            damage     => $monster->damage,
+            id         => $monster->id,
+            monster_id => $monster->monster_id,
+            type       => "monster",
+        };
+
+        $total_exp += $monster->monster->experience->exp;
+    };
+
+    @sorted_participants = sort { $b->{initiative} <=> $a->{initiative} } @participants;
+
+    $character_exp = $total_exp / scalar @$characters;
+
     template 'index', {
-        'people'    => $characters,
-        'monsters'  => $monster_participants,
+        'participants'  => \@sorted_participants,
+        'total_exp'     => $total_exp,
+        'character_exp' => $character_exp,
     };
 };
 
@@ -94,7 +132,7 @@ post '/add-monster/' => sub {
         encounter_id => $encounter->id,
         monster_id   => params->{id},
         damage       => 0,
-        initiative   => 1,
+        initiative   => 0,
         is_active    => 1,
     );
 
@@ -116,6 +154,38 @@ get '/new-encounter/' => sub {
         $character->initiative(0);
         $character->save();
     }
+
+    redirect '/';
+};
+
+post '/update-character/' => sub {
+    my $character = EyeTyrant::DataObjects::Character::Manager->get_objects(
+        query => [
+            is_active => 1,
+            id        => params->{id},
+        ],
+        limit => 1,
+    )->[0];
+
+    $character->initiative(params->{inish});
+    $character->damage(params->{damage} + params->{new_damage});
+    $character->save();
+
+    redirect '/';
+};
+
+post '/update-monster/' => sub {
+    my $monster = EyeTyrant::DataObjects::MonsterEncounterMap::Manager->get_objects(
+        query => [
+            id         => params->{id},
+            monster_id => params->{monster_id},
+        ],
+        limit => 1,
+    )->[0];
+
+    $monster->initiative(params->{inish});
+    $monster->damage(params->{damage} + params->{new_damage});
+    $monster->save();
 
     redirect '/';
 };

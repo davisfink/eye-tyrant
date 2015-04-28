@@ -6,8 +6,6 @@ $(function () {
 
         $init_div.empty();
         for (item = sorted_list.length -1; item >= 0; item--) {
-        //for (item in sorted_list) {
-        console.log(item);
             if (sorted_list[item]['name'] != "" || sorted_list[item]['inish'] != "") {
                 NewInitshDiv(sorted_list[item]['inish'],sorted_list[item]['name'], "disabled");
             }
