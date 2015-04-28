@@ -1,33 +1,47 @@
+<% USE Comma %>
 <div class="row">
-    <div class="large-6 columns">
-        <div class="panel">
-            Total EXP: <% total_exp %>xp <br/>
-            EXP Per Character: <% character_exp %>xp
-            <div id="InitiativeList">
-                <% FOREACH participant IN participants %>
-                <div class="entry">
-                    <% IF participant.type == 'character' %>
-                    <form method="POST" action="/update-character/">
-                    <% ELSE %>
-                    <form method="POST" action="/update-monster/">
-                    <% END %>
-                        <input class="inish" value="<% participant.initiative %>" name="inish">
-                        <input class="name" value="<% participant.name %>" tabindex="-1">
-                        <input class='damage' value='<% participant.damage %>' tabindex="-1" name="damage">
-                        <input type="hidden" value="<% participant.id %>" name="id">
-                        <% IF participant.monster_id %>
-                            <input type="hidden" value="<% participant.monster_id %>" name="monster_id">
-                        <% end %>
-                        <input class='new_damage' value='' tabindex="-1" name="new_damage">
-                        <input type="submit" value="Update">
-                        <a href="#" class="remove">X</a>
-                    </form>
-                </div>
+    <div class="large-12 columns">
+        Total EXP: <% total_exp | comma %>xp <br/>
+        EXP Per Character: <% character_exp | comma %>xp
+    </div>
+</div>
+<div class="row">
+    <div class="large-6 medium-8 columns">
+        <div id="InitiativeList">
+            <% FOREACH participant IN participants %>
+            <% IF participant.is_active != '0' %>
+            <div class="entry">
+            <% ELSE %>
+            <div class="inactive entry">
+            <% END %>
+                <% IF participant.type == 'character' %>
+                <form method="POST" action="/update-character/">
+                <% ELSE %>
+                <form method="POST" action="/update-monster/">
                 <% END %>
+                    <div class="row">
+                        <div class="small-1 columns">
+                            <input class="inish" value="<% participant.initiative %>" name="inish">
+                        </div>
+                        <div class="small-6 columns">
+                            <span class="name"><% participant.name %></span>
+                        </div>
+                        <div class="small-5 columns text-right">
+                            <span class="damage"><% participant.damage %></span>
+                            <input type="hidden" value="<% participant.id %>" name="id">
+                            <% IF participant.monster_id %>
+                            <input type="hidden" value="<% participant.monster_id %>" name="monster_id">
+                            <% end %>
+                            <input class='new_damage' value='' tabindex="-1" name="new_damage">
+                            <input type="submit" value="Update" class="button">
+                        </div>
+                    </div>
+                </form>
             </div>
+            <% END %>
         </div>
     </div>
-    <div class="large-6 columns">
+    <div class="large-6 medium-4 columns">
         <div class="panel">
             <div id="InitiativeList">
                 <form method="POST" action="/add-monster/">
@@ -35,11 +49,6 @@
                     <input class="autocomplete" type="text" name="id"/>
                     <input type="submit" class="button" value="Add">
                 </form>
-                <h5>Monsters</h5>
-                <% FOREACH monster IN monsters %>
-                <% monster.monster.name %> <% monster.damage %><br/>
-
-                <% END %>
             </div>
         </div>
     </div>

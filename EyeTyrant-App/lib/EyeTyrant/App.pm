@@ -64,6 +64,7 @@ get '/' => sub {
             id         => $monster->id,
             monster_id => $monster->monster_id,
             type       => "monster",
+            is_active  => $monster->is_active,
         };
 
         $total_exp += $monster->monster->experience->exp;
@@ -183,7 +184,11 @@ post '/update-monster/' => sub {
         limit => 1,
     )->[0];
 
-    $monster->initiative(params->{inish});
+    if (params->{inish} == -1) {
+        $monster->is_active(0);
+    } else {
+        $monster->initiative(params->{inish});
+    }
     $monster->damage(params->{damage} + params->{new_damage});
     $monster->save();
 

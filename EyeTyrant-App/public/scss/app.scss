@@ -53,26 +53,39 @@ html, body {
     display:block;
 }
 
+.button {
+    padding: .25em;
+    margin: 0;
+}
+
 .entry {
     padding: .25em;
+    margin: .25em;
+
+    background-color: rgba(202,203,209, 1);
+    border: solid 1px #aaa;
+    box-shadow: 1px 1px 1px #ccc;
+
+    &.inactive {
+        background-color: rgba(170,80,80,.7);
+        opacity: .6;
+    }
+
+    .damage {
+        color: rgb(120,20,20);
+    }
+
+    .inish,
+    .name,
+    .new_damage {
+        margin: auto .25rem;
+    }
+    .inish,
+    .new_damage {
+        width: 30px;
+    }
 }
 
-.inish,
-.name,
-.damage,
-.new_damage {
-    margin: auto .25rem;
-}
-.inish,
-.damage,
-.new_damage {
-    width: 20px;
-}
-
-.damage,
-.new_damage {
-
-}
 
 .search {
     display: block;

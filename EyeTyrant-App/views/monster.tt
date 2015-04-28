@@ -10,7 +10,7 @@
     <div class="monster">
         <h3><% monster.name %></h3>
         <div class="row">
-            <div class="medium-4 columns">
+            <div class="large-4 medium-6 columns">
                 <div class="panel">
                     Size: <% monster.size %><br/>
                     Type: <% monster.type %><br/>
@@ -18,7 +18,7 @@
                     Challenge Rating: <% monster.cr %> (<% monster.experience.exp | comma %>xp)<br/>
                 </div>
             </div>
-            <div class="medium-4 columns end">
+            <div class="large-4 medium-6 columns end">
                 <div class="panel">
                     Senses: <% monster.seses %><br/>
                     Passive Perception: <% monster.passive %><br/>
@@ -31,12 +31,12 @@
                 <div class="panel">
                     <h5>Stats</h5>
                     <div class="row">
-                        <div class="medium-8 columns">
+                        <div class="large-8 columns">
                             Armor Class: <% monster.ac %><br/>
                             Health: <% monster.hp %><br/>
                             Movement: <% monster.speed %><br/>
                         </div>
-                        <div class="medium-4 columns">
+                        <div class="large-4 columns">
                             Strength: <% monster.str %><br/>
                             Dexterity: <% monster.dex %><br/>
                             Constitution: <% monster.con %><br/>
