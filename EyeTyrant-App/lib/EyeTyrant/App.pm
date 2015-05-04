@@ -60,6 +60,7 @@ get '/' => sub {
         push @participants, {
             name       => $monster->monster->name . ' ' . $mob_number,
             initiative => $monster->initiative + 0,
+            hitpoints  => $monster->hitpoints,
             damage     => $monster->damage,
             id         => $monster->id,
             monster_id => $monster->monster_id,
@@ -116,11 +117,14 @@ get '/get-monster/' => sub {
         ],
         sort_by => 'name ASC',
         require_objects => [qw(experience)],
-    );
+    )->[0];
+
 
     template 'monster', {
         'monsters' => $monsters,
     };
+
+
 };
 
 post '/add-monster/' => sub {
@@ -129,9 +133,27 @@ post '/add-monster/' => sub {
         limit   => 1,
     )->[0];
 
+   my $monster = EyeTyrant::DataObjects::Monster::Manager->get_objects (
+        query => [
+            id => params->{id},
+        ],
+        sort_by => 'name ASC',
+        require_objects => [qw(experience)],
+    )->[0];
+
+    my $hitpoints = $monster->{hp};
+    my ($hp_to_calculate) = ($hitpoints =~ /\(([^\)]+)\)/);
+    my ($multiplier, $dice, $base) = ($hp_to_calculate =~ /\d{1,3}/g);
+    my $hp = $base;
+
+    for (my $i=0; $i <= $multiplier; $i++) {
+        $hp += int(rand($dice))+1;
+    }
+
     my $new_encounter_map = EyeTyrant::DataObjects::MonsterEncounterMap->new(
         encounter_id => $encounter->id,
         monster_id   => params->{id},
+        hitpoints    => $hp,
         damage       => 0,
         initiative   => 0,
         is_active    => 1,
@@ -184,12 +206,10 @@ post '/update-monster/' => sub {
         limit => 1,
     )->[0];
 
-    if (params->{inish} == -1) {
+    $monster->damage($monster->damage + params->{new_damage});
+    if ($monster->damage > $monster->hitpoints) {
         $monster->is_active(0);
-    } else {
-        $monster->initiative(params->{inish});
     }
-    $monster->damage(params->{damage} + params->{new_damage});
     $monster->save();
 
     redirect '/';

@@ -11,6 +11,7 @@ __PACKAGE__->meta->setup(
     columns => [
         damage       => { type => 'integer' },
         encounter_id => { type => 'integer', not_null => 1 },
+        hitpoints    => { type => 'integer' },
         id           => { type => 'serial', not_null => 1 },
         initiative   => { type => 'integer' },
         is_active    => { type => 'integer', default => 1, not_null => 1 },
