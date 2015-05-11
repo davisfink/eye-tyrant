@@ -6,12 +6,13 @@
                 timer_speed:10000;
                 pause_on_hover:false;
                 animation_speed:500;
-                navigation_arrows:false;
+                navigation_arrows:true;
                 bullets:true;
-                slide_number:false;">
+                slide_number:false;
+                timer:false;">
                 <% FOREACH participant IN participants %>
-                <li>
-                    <% IF participant.img %><img src="<% participant.image %>"><% END %>
+                <li class="inish_list">
+                    <% IF participant.image_uri %><img src="<% participant.image_uri %>"><% END %>
                     <h1><% participant.name %></h1>
                 </li>
                 <% END %>

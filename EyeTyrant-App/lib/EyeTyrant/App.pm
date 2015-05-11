@@ -249,6 +249,7 @@ get '/initiative/' => sub {
             initiative => $character->initiative + 0,
             damage     => $character->damage,
             id         => $character->id,
+            image_uri  => $character->image_uri,
             type       => "character",
         };
     };
