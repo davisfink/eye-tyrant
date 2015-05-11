@@ -5,6 +5,7 @@
         <input type="submit" class="button"/>
     </form>
 </div>
+<% hitpoints %>
 <div id="Result">
     <% FOREACH monster IN monsters %>
     <div class="monster">

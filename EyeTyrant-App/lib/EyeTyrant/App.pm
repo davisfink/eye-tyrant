@@ -133,7 +133,7 @@ post '/add-monster/' => sub {
         limit   => 1,
     )->[0];
 
-   my $monster = EyeTyrant::DataObjects::Monster::Manager->get_objects (
+    my $monster = EyeTyrant::DataObjects::Monster::Manager->get_objects (
         query => [
             id => params->{id},
         ],
@@ -146,8 +146,8 @@ post '/add-monster/' => sub {
     my ($multiplier, $dice, $base) = ($hp_to_calculate =~ /\d{1,3}/g);
     my $hp = $base;
 
-    for (my $i=0; $i <= $multiplier; $i++) {
-        $hp += int(rand($dice))+1;
+    for (my $i=0; $i < $multiplier; $i++) {
+        $hp += int(rand($dice)+1);
     }
 
     my $new_encounter_map = EyeTyrant::DataObjects::MonsterEncounterMap->new(
@@ -207,12 +207,77 @@ post '/update-monster/' => sub {
     )->[0];
 
     $monster->damage($monster->damage + params->{new_damage});
-    if ($monster->damage > $monster->hitpoints) {
+    if ($monster->damage >= $monster->hitpoints) {
         $monster->is_active(0);
     }
+    $monster->initiative(params->{inish});
     $monster->save();
 
     redirect '/';
+};
+
+get '/initiative/' => sub {
+    my $characters = EyeTyrant::DataObjects::Character::Manager->get_objects(
+        query => [
+            is_active => 1,
+        ],
+    );
+    my $encounter = EyeTyrant::DataObjects::Encounter::Manager->get_objects(
+        sort_by => 'id DESC',
+        limit   => 1,
+    )->[0];
+
+    my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects(
+        require_objects => [qw(experience)],
+    );
+    my $monster_participants = EyeTyrant::DataObjects::MonsterEncounterMap::Manager->get_objects(
+        query => [
+            encounter_id => $encounter->id,
+        ],
+        require_objects => [qw(monster.experience)],
+    );
+
+    my @participants;
+    my @sorted_participants;
+    my $total_exp = 0;
+    my $character_exp = 0;
+    my $mob_number = 0;
+
+    foreach my $character (@$characters) {
+        push @participants, {
+            name       => $character->name,
+            initiative => $character->initiative + 0,
+            damage     => $character->damage,
+            id         => $character->id,
+            type       => "character",
+        };
+    };
+
+    foreach my $monster (@$monster_participants) {
+        $mob_number += 1;
+        push @participants, {
+            name       => $monster->monster->name . ' ' . $mob_number,
+            initiative => $monster->initiative + 0,
+            hitpoints  => $monster->hitpoints,
+            damage     => $monster->damage,
+            id         => $monster->id,
+            monster_id => $monster->monster_id,
+            type       => "monster",
+            is_active  => $monster->is_active,
+        };
+
+        $total_exp += $monster->monster->experience->exp;
+    };
+
+    @sorted_participants = sort { $b->{initiative} <=> $a->{initiative} } @participants;
+
+    $character_exp = $total_exp / scalar @$characters;
+
+    template 'initiative', {
+        'participants'  => \@sorted_participants,
+        'total_exp'     => $total_exp,
+        'character_exp' => $character_exp,
+    };
 };
 
 true;

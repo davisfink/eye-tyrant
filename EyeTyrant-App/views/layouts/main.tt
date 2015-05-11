@@ -18,8 +18,13 @@
         </div>
         <div class="footer">
             <script src="<% request.uri_base %>/javascripts/jquery.js"></script>
+            <script src="<% request.uri_base %>/js/foundation/foundation.js"></script>
+            <script src="<% request.uri_base %>/js/foundation/foundation.orbit.js"></script>
             <script src="<% request.uri_base %>/jquery-ui/jquery-ui.js"></script>
             <script src="<% request.uri_base %>/js/autocomplete.js"></script>
+            <script>
+                $(document).foundation();
+            </script>
         </div>
     </body>
 </html>

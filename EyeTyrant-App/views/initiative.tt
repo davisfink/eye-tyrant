@@ -1,0 +1,20 @@
+<% USE Comma %>
+<div class="row">
+    <div class="small-12 columns text-center">
+            <ul class="orbit-slider" data-orbit="data-orbit"
+                data-options="animation:slide;
+                timer_speed:10000;
+                pause_on_hover:false;
+                animation_speed:500;
+                navigation_arrows:false;
+                bullets:true;
+                slide_number:false;">
+                <% FOREACH participant IN participants %>
+                <li>
+                    <% IF participant.img %><img src="<% participant.image %>"><% END %>
+                    <h1><% participant.name %></h1>
+                </li>
+                <% END %>
+            </ul>
+    </div>
+</div>
