@@ -44,13 +44,15 @@
     </div>
     <div class="large-6 medium-4 columns">
         <div class="panel">
-            <div id="InitiativeList">
-                <form method="POST" action="/add-monster/">
-                    <label for="autocomplete">Find a Monster</label>
-                    <input class="autocomplete" type="text" name="id"/>
-                    <input type="submit" class="button" value="Add">
-                </form>
-            </div>
+            <form method="POST" action="/add-monster/">
+                <label for="autocomplete">Find a Monster</label>
+                <input class="autocomplete" type="text" name="id"/>
+                <input type="submit" class="button" value="Add">
+            </form>
+        </div>
+        <div class="panel">
+            <label for="autocomplete-spell">Find a Spell</label>
+            <input class="autocomplete-spell" type="text" name="id"/>
         </div>
     </div>
 </div>
@@ -63,7 +65,7 @@
 </div>
 <div class="row">
     <div class="medium-12 columns">
-        <div id="FoundMonster">
+        <div id="FoundResult">
         </div>
     </div>
 </div>

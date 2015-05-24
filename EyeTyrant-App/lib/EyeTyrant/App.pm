@@ -13,6 +13,8 @@ use EyeTyrant::DataObjects::Monster;
 use EyeTyrant::DataObjects::Monster::Manager;
 use EyeTyrant::DataObjects::Encounter;
 use EyeTyrant::DataObjects::Encounter::Manager;
+use EyeTyrant::DataObjects::Spell;
+use EyeTyrant::DataObjects::Spell::Manager;
 use EyeTyrant::DataObjects::MonsterEncounterMap;
 use EyeTyrant::DataObjects::MonsterEncounterMap::Manager;
 use Rose::DB::Object::Helpers qw( as_tree as_json );
@@ -214,6 +216,35 @@ post '/update-monster/' => sub {
     $monster->save();
 
     redirect '/';
+};
+
+get '/autocomplete-spell/' => sub {
+    content_type 'application/json';
+
+    my $spells = EyeTyrant::DataObjects::Spell::Manager->get_objects (
+        query => [
+            name => { like => ['%'.params->{term}.'%']}
+        ],
+        sort_by => 'name ASC',
+    );
+
+    my $spell_map = [ map { {label => $_->name, value => $_->id } } @$spells ];
+    return to_json ($spell_map);
+};
+
+get '/get-spell/' => sub {
+    my $spells = EyeTyrant::DataObjects::Spell::Manager->get_objects (
+        query => [
+            id => params->{id},
+        ],
+        sort_by => 'name ASC',
+    )->[0];
+
+
+    template 'spell', {
+        'spells' => $spells,
+    };
+
 };
 
 get '/initiative/' => sub {
