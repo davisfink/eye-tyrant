@@ -1,0 +1,39 @@
+<% USE Comma %>
+<div class="search">
+    <form method="GET">
+        <input class="autocomplete-spell" type="text" name="id"/>
+        <input type="submit" class="button"/>
+    </form>
+</div>
+<div id="Result">
+    <% FOREACH spell IN spells %>
+    <div class="spell">
+        <h3><% spell.name %></h3>
+        <div class="row">
+            <div class="large-4 medium-6 columns">
+                <div class="panel">
+                    Casting Time: <% spell.time %><br/>
+                    Components: <% spell.components %><br/>
+                    Duration: <% spell.duration %><br/>
+                    Classes: <% spell.classes %><br/>
+                </div>
+            </div>
+            <div class="large-4 medium-6 columns">
+                <div class="panel">
+                    Spell Level: <% spell.level %><br/>
+                    Range: <% spell.range %><br/>
+                    School: <% spell.school %><br/>
+                    Rital: <% spell.ritual %><br/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-12 columns">
+                <div class="panel">
+                    <% spell.text %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% END %>
+</div>
