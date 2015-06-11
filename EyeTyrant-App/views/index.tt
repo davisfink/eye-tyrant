@@ -6,6 +6,22 @@
         EXP Per Character: <% character_exp | comma %>xp
     </div>
 </div>
+<hr/>
+<div class="row">
+    <div class="large-6 medium-8 columns">
+        <div class="row">
+            <div class="small-1 columns">
+                inish
+            </div>
+            <div class="small-6 columns">
+                name
+            </div>
+            <div class="small-5 columns">
+                hp/dmg
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="large-6 medium-8 columns">
         <div id="InitiativeList">

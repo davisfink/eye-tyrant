@@ -5677,7 +5677,7 @@ html, body {
 
 .entry {
   padding: .25em;
-  margin: .25em;
+  margin: .25em 0;
   background-color: #cacbd1;
   border: solid 1px #aaa;
   box-shadow: 1px 1px 1px #ccc; }
