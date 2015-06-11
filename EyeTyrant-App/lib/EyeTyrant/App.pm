@@ -113,17 +113,13 @@ get '/autocomplete-monster/' => sub {
 };
 
 get '/get-monster/' => sub {
-    my $monsters = EyeTyrant::DataObjects::Monster::Manager->get_objects (
-        query => [
-            id => params->{id},
-        ],
-        sort_by => 'name ASC',
-        require_objects => [qw(experience)],
-    )->[0];
-
+    my $monster = EyeTyrant::DataObjects::Monster->new(id => params->{id});
+    if (params->{id}) {
+        $monster->load();
+    }
 
     template 'monster', {
-        'monsters' => $monsters,
+        'monsters' => $monster,
     };
 
 
@@ -200,18 +196,18 @@ post '/update-character/' => sub {
 };
 
 post '/update-monster/' => sub {
-    my $monster = EyeTyrant::DataObjects::MonsterEncounterMap::Manager->get_objects(
-        query => [
-            id         => params->{id},
-            monster_id => params->{monster_id},
-        ],
-        limit => 1,
-    )->[0];
+    my $monster = EyeTyrant::DataObjects::MonsterEncounterMap->new(id => params->{id}, monster_id => params->{monster_id});
+    $monster->load();
 
     $monster->damage($monster->damage + params->{new_damage});
     if ($monster->damage >= $monster->hitpoints) {
+        $monster->damage($monster->hitpoints);
         $monster->is_active(0);
     }
+    if ($monster->is_active == 0 and $monster->damage < $monster->hitpoints) {
+        $monster->is_active(1);
+    }
+
     $monster->initiative(params->{inish});
     $monster->save();
 
@@ -233,26 +229,25 @@ get '/autocomplete-spell/' => sub {
 };
 
 get '/get-spell/' => sub {
-    my $spells = EyeTyrant::DataObjects::Spell::Manager->get_objects (
-        query => [
-            id => params->{id},
-        ],
-        sort_by => 'name ASC',
-    )->[0];
-
+    my $spell = EyeTyrant::DataObjects::Spell->new(id => params->{id});
+    if (params->{id}) {
+        $spell->load();
+    }
 
     template 'spell', {
-        'spells' => $spells,
+        'spells' => $spell,
     };
 
 };
 
 get '/initiative/' => sub {
+    #get all active characters
     my $characters = EyeTyrant::DataObjects::Character::Manager->get_objects(
         query => [
             is_active => 1,
         ],
     );
+    #get latest encounter
     my $encounter = EyeTyrant::DataObjects::Encounter::Manager->get_objects(
         sort_by => 'id DESC',
         limit   => 1,

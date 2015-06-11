@@ -1,8 +1,18 @@
 <% USE Comma %>
+<h1>big nasties</h1>
+<p>
+    curious what a mob can do? look no further. use the long rectangle below to type out a monster name
+    and if you're lucky and i'm not lazy you'll find something. new, rare, or named monsters will not show up.
+</p>
 <div class="search">
     <form method="GET">
-        <input class="autocomplete" type="text" name="id"/>
-        <input type="submit" class="button"/>
+        <div class="row">
+            <div class="medium-6 small-12 columns">
+                <label for="id">mob search</label>
+                <input class="autocomplete" type="text" name="id"/>
+                <input type="submit" class="button"/>
+            </div>
+        </div>
     </form>
 </div>
 <% hitpoints %>

@@ -1,4 +1,5 @@
 <% USE Comma %>
+<h1>order up</h1>
 <div class="row">
     <div class="large-12 columns">
         Total EXP: <% total_exp | comma %>xp <br/>
@@ -45,12 +46,14 @@
     <div class="large-6 medium-4 columns">
         <div class="panel">
             <form method="POST" action="/add-monster/">
+                <a href="/get-monster/" class="right" target="_blank">full page</a>
                 <label for="autocomplete">Find a Monster</label>
                 <input class="autocomplete" type="text" name="id"/>
                 <input type="submit" class="button" value="Add">
             </form>
         </div>
         <div class="panel">
+            <a href="/get-spell/" class="right" target="_blank">full page</a>
             <label for="autocomplete-spell">Find a Spell</label>
             <input class="autocomplete-spell" type="text" name="id"/>
         </div>

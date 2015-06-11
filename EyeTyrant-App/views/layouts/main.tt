@@ -11,7 +11,6 @@
     <body>
         <div class="row">
             <div class="medium-12 columns">
-                <h1>eye tyrant</h1>
                 <div class="content">
                     <% content %>
                 </div>

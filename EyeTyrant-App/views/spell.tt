@@ -1,8 +1,20 @@
 <% USE Comma %>
+<h1>find a spell</h1>
+<p>
+    looking for a spell? step right up and type in what you're looking for.
+    if it doesn't show up, then you can't cast it... or its missing, probably missing.
+    this is typically used to tell the players that they are casting their spell wrong,
+    or they don't have the required item to cast item.
+</p>
 <div class="search">
     <form method="GET">
-        <input class="autocomplete-spell" type="text" name="id"/>
-        <input type="submit" class="button"/>
+        <div class="row">
+            <div class="medium-6 small-12 columns">
+                <label for="id">spell search</label>
+                <input class="autocomplete-spell" type="text" name="id"/>
+                <input type="submit" class="button"/>
+            </div>
+        </div>
     </form>
 </div>
 <div id="Result">
@@ -18,7 +30,7 @@
                     Classes: <% spell.classes %><br/>
                 </div>
             </div>
-            <div class="large-4 medium-6 small-12 columns">
+            <div class="large-4 medium-6 small-12 columns end">
                 <div class="panel">
                     Spell Level: <% spell.level %><br/>
                     Range: <% spell.range %><br/>
