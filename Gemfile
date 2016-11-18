@@ -2,4 +2,6 @@
 source "https://rubygems.org" do
     gem 'sinatra'
     gem 'tilt'
+    gem 'sequel'
+    gem 'mysql'
 end
