@@ -5674,16 +5674,24 @@ html, body {
 .button {
   padding: .25em;
   margin: 0; }
+  .button.small {
+    padding: .25em; }
 
 .entry {
   padding: .25em;
   margin: .25em 0;
   background-color: #cacbd1;
   border: solid 1px #aaa;
-  box-shadow: 1px 1px 1px #ccc; }
+  box-shadow: 1px 1px 1px #ccc;
+  transition: all 150ms; }
   .entry.inactive {
     background-color: rgba(170, 80, 80, 0.7);
     opacity: .6; }
+  .entry.active {
+    background-color: #d2aefb;
+    border: solid 1px #333;
+    font-size: 1.25rem;
+    font-weight: bold; }
   .entry .damage {
     color: #781414; }
   .entry .inish, .entry .name, .entry .new_damage {

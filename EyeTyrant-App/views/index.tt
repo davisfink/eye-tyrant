@@ -1,10 +1,16 @@
 <% USE Comma %>
 <h1>order up</h1>
 <div class="row">
-    <div class="large-12 columns">
+    <div class="large-6 medium-8 columns">
         Total EXP: <% total_exp | comma %>xp <br/>
         EXP Per Character: <% character_exp | comma %>xp
     </div>
+    <div class="large-6 medium-4 columns">
+        <div class="buttons">
+            <a href="/new-encounter/" class="button big">New Encounter</a>
+        </div>
+    </div>
+
 </div>
 <hr/>
 <div class="row">
@@ -16,8 +22,11 @@
             <div class="small-6 columns">
                 name
             </div>
-            <div class="small-5 columns">
+            <div class="small-2 columns">
                 hp/dmg
+            </div>
+            <div class="small-3 columns">
+                <a id="next" class="button small expand">next</a>
             </div>
         </div>
     </div>
@@ -27,9 +36,9 @@
         <div id="InitiativeList">
             <% FOREACH participant IN participants %>
             <% IF participant.is_active != '0' %>
-            <div class="entry">
+            <div class="entry" data-id="<% participant.id %>">
             <% ELSE %>
-            <div class="inactive entry">
+            <div class="inactive entry" data-id="<% participant.id %>">
             <% END %>
                 <% IF participant.type == 'character' %>
                 <form method="POST" action="/update-character/">
@@ -77,9 +86,6 @@
 </div>
 <div class="row">
     <div class="medium-12 columns">
-        <div class="buttons">
-            <a href="/new-encounter/" class="button">New Encounter</a>
-        </div>
     </div>
 </div>
 <div class="row">

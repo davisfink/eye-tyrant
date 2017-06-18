@@ -22,6 +22,7 @@
             <script src="<% request.uri_base %>/js/foundation/foundation.orbit.js"></script>
             <script src="<% request.uri_base %>/jquery-ui/jquery-ui.js"></script>
             <script src="<% request.uri_base %>/js/autocomplete.js"></script>
+            <script src="<% request.uri_base %>/js/actions.js"></script>
             <script>
                 $(document).foundation();
             </script>

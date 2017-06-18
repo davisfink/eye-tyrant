@@ -56,6 +56,10 @@ html, body {
 .button {
     padding: .25em;
     margin: 0;
+
+    &.small {
+        padding: .25em;
+    }
 }
 
 .entry {
@@ -66,9 +70,19 @@ html, body {
     border: solid 1px #aaa;
     box-shadow: 1px 1px 1px #ccc;
 
+    transition: all 150ms;
+
     &.inactive {
         background-color: rgba(170,80,80,.7);
         opacity: .6;
+    }
+    &.active {
+        background-color: rgba(210,174,251, 1);
+        border: solid 1px #333;
+        font-size: 1.25rem;
+        font-weight:bold;
+        .inish {
+        }
     }
 
     .damage {
