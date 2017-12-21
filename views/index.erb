@@ -1,0 +1,16 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Eye Tyrant</title>
+        <link rel="stylesheet" href="/css/app.css">
+    </head>
+
+    <body>
+        <p>Welcome Friends to the wonderful world of WAT?!</p>
+        <% @participants.each do |p| %>
+            <h1><%= Monster.find(id: p[:monster_id]).name %></h1>
+        <% end %>
+    </body>
+</html>
