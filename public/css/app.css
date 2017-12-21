@@ -1,0 +1,31 @@
+.container {
+    margin-top: 1rem;
+}
+.panel {
+    background: #fffaf0;
+    border: 1px solid #5f0d0a;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.panel h3, .panel h4, .panel strong {
+    color: #5f0d0a;
+}
+
+.panel hr {
+    border-color: #5f0d0a;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.statblock {
+    text-align: center;
+}
+.statblock .stat {
+    color: #5f0d0a;
+    display:block;
+    text-transform: uppercase;
+    font-weight: bold;
+}
