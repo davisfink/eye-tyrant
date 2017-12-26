@@ -10,6 +10,7 @@ require './models/encounter_participant.rb'
 require './models/experience.rb'
 #require './models/spell.rb'
 #require './models/action.rb'
+require './modules//participant_actions.rb'
 
 get '/' do
     @current_encounter = Encounter.where(:active, "1").first

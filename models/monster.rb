@@ -1,3 +1,4 @@
+require './modules/participant_actions.rb'
 class Monster < Sequel::Model(:monster)
-    dataset
+    include ParticipantActions
 end
