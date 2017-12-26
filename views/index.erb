@@ -12,9 +12,9 @@
             <div class="row">
                 <div class="col-md">
                     <% @participants.each do |p| %>
-                        <% p[:monster_id] == NIL ? participant = Character.find(id: p[:character_id]) : participant = Monster.find(id: p[:monster_id]) %>
                         <div class="panel">
-                            <h3><%= participant.name %></h3>
+                            <h3><%= p.id %></h3>
+                            <h3><%= p.name %></h3>
                             <form action="/set-initiative/">
                                 Initiative: <%= p[:initiative]%>
                                 <input type="hidden" name="id" value="<%= p.id %>">

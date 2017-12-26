@@ -14,7 +14,7 @@ require './modules//participant_actions.rb'
 
 get '/' do
     @current_encounter = Encounter.where(:active, "1").first
-    @participants = []
+    @participants = @current_encounter.participants
 
     erb :index
 end

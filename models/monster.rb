@@ -1,4 +1,7 @@
-require './modules/participant_actions.rb'
 class Monster < Sequel::Model
-    include ParticipantActions
+    one_to_one :monster_type
+    def initialize(params = {})
+        super(params)
+        @details = MonsterType.find(id: @monster_id)
+    end
 end
