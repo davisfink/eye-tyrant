@@ -3,10 +3,6 @@ class Participant < Sequel::Model
     one_to_one :monster
     one_to_one :character
 
-    def initialize(id)
-        #Participant.find_or_create(id)
-    end
-
     def actor
         case
         when monster then monster
