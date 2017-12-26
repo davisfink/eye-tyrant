@@ -1,3 +1,3 @@
-class MonsterType < Sequel::Model(:monster_type)
+class MonsterType < Sequel::Model
     dataset
 end

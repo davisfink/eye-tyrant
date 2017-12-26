@@ -1,5 +1,6 @@
 require './modules/participant_actions.rb'
-class Participant < Sequel::Model(:participant)
+class Participant < Sequel::Model
+    many_to_many :encounters, class: :Encounter
     include ParticipantActions
 
     def initialize(id)

@@ -1,3 +1,3 @@
-class Character < Sequel::Model(:character)
+class Character < Sequel::Model
     dataset
 end

@@ -1,4 +1,4 @@
 require './modules/participant_actions.rb'
-class Monster < Sequel::Model(:monster)
+class Monster < Sequel::Model
     include ParticipantActions
 end
