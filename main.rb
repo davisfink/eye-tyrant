@@ -3,6 +3,7 @@ require 'erb'
 require './database.rb'
 require './models/encounter.rb'
 require './models/monster.rb'
+require './models/character.rb'
 require './models/encounter_participant.rb'
 require './models/experience.rb'
 #require './models/spell.rb'
@@ -15,11 +16,17 @@ get '/' do
     erb :index
 end
 
-get '/find-monster/:search_term/*' do
+get '/find-monster/' do
     @search_term = params[:search_term]
     @mob = Monster.where(Sequel.ilike(:name, "%#{@search_term}%"))
 
-    erb :index
+    erb :monster
+end
+
+get '/get-monster/' do
+    @mob = Monster.find(id: params[:id])
+
+    erb :monster
 end
 
 get '/set-initiative/' do
