@@ -1,3 +1,4 @@
 class Character < Sequel::Model
-    dataset
+    Character.unrestrict_primary_key
+    one_to_one :participant
 end

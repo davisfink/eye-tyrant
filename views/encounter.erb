@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Eye Tyrant</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/app.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+                    <% @participants.each do |p| %>
+                        <div class="panel">
+                            <h3><%= p.actor.name %></h3>
+                            <form action="/set-initiative/">
+                                Initiative: <%= p[:initiative]%>
+                                <input type="hidden" name="id" value="<%= p.id %>">
+                                <input type="input" name="value" value="" placeholder="0">
+                                <input type="submit" class="button" value="Submit">
+                            </form>
+                            <form action="/set-damage/">
+                                Damage: <%= p[:damage]%>
+                                <input type="hidden" name="id" value="<%= p.id %>">
+                                <input type="input" name="value" value="" placeholder="0">
+                                <input type="submit" class="button" value="Submit">
+                            </form>
+                        </div>
+                    <%end%>
+                </div>
+                <div class="col-md">
+                    <a class="button" href="addmonster/">Add New Monster</a>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

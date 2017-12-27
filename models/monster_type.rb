@@ -1,3 +1,3 @@
 class MonsterType < Sequel::Model
-    dataset
+    one_to_many :monsters
 end

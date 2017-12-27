@@ -11,14 +11,16 @@ class Participant < Sequel::Model
     end
 
     def take_damage(value)
-        @damage + value < hitpoints ? @damage + value : hitpoints
+        self.damage = [damage + value, hitpoints].min
+        self.save_changes
     end
 
     def heal_damage(value)
-        @damage - heal > 0 ? @damage - heal : 0
+        self.damage = [damage - value, 0].max
+        self.save_changes
     end
 
     def set_initiative(value)
-        @initiative = value
+        self.initiative = value
     end
 end

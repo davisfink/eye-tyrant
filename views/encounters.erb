@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Eye Tyrant</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/app.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+                    <% @encounters.each do |e| %>
+                        <div class="panel">
+                            <h3><%= e.id %></h3>
+                            <a href="/encounter/<%=e.id%>/" class="button">Go to Encounter</a>
+                        </div>
+                    <%end%>
+                </div>
+                <div class="col-md">
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
+
