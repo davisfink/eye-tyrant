@@ -6,6 +6,7 @@ require './models/participant.rb'
 require './models/monster.rb'
 require './models/monster_type.rb'
 require './models/character.rb'
+require './models/party.rb'
 require './models/encounter_participant.rb'
 require './models/experience.rb'
 #require './models/spell.rb'
@@ -16,8 +17,6 @@ require './models/experience.rb'
 #puts @party[1].actor.monster_type.name
 
 get '/' do
-    @latest_encounter = Encounter.where(:active, "1").first
-
     erb :index
 end
 
@@ -65,3 +64,32 @@ get '/get-monster/' do
     erb :monster
 end
 
+get '/parties/' do
+    @parties = Party.where(:active, "1")
+    erb :parties
+end
+
+get '/party/:id/' do
+    party_id = params[:id]
+    @members = Party.find(id: party_id).characters
+
+    erb :party
+end
+
+get '/party/:id/addmember/' do
+    @party_id = params[:id]
+
+    erb :addmember
+end
+
+post '/party/:id/addmember/' do
+    party_id = params[:id]
+    #find party
+    party = Party.find(id: party_id)
+    #find the character from the query params
+    member = Character.find(participant_id: params[:character_id])
+    #add the character to the party
+    party.add_character(member)
+
+    redirect "/party/#{party_id}/"
+end

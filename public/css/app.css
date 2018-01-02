@@ -1,3 +1,7 @@
+h1,h2,h3,h4,h5,h6 {
+    color: #5f0d0a;
+}
+
 .container {
     margin-top: 1rem;
 }
@@ -28,4 +32,20 @@
     display:block;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.button {
+    display:inline-block;
+    background: #5f0d0a;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #eee;
+    box-shadow: 1px 2px 2px #e0e5e5;
+}
+
+.button:hover {
+    text-decoration: none;
+    color: #eee;
+    background: #5f0d0a;
 }

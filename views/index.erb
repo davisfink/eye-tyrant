@@ -11,26 +11,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md">
-                    <% @participants.each do |p| %>
-                        <div class="panel">
-                            <h3><%= p.id %></h3>
-                            <h3><%= p.name %></h3>
-                            <form action="/set-initiative/">
-                                Initiative: <%= p[:initiative]%>
-                                <input type="hidden" name="id" value="<%= p.id %>">
-                                <input type="input" name="value" value="" placeholder="0">
-                                <input type="submit" class="button" value="Submit">
-                            </form>
-                            <form action="/set-damage/">
-                                Damage: <%= p[:damage]%>
-                                <input type="hidden" name="id" value="<%= p.id %>">
-                                <input type="input" name="value" value="" placeholder="0">
-                                <input type="submit" class="button" value="Submit">
-                            </form>
-                        </div>
-                    <%end%>
+                    <h1>Welcome to Eye Tyrant</h1>
+                    <p>
+                        here you can do stuff like... the things listed...?
+                    </p>
                 </div>
                 <div class="col-md">
+                    <h3>Check out the Encounters</h3>
+                    <a href="/encounters/" class="button big">encounters</a>
+                    <h3>Look at Parties</h3>
+                    <a href="/parties/" class="button big">parties</a>
+                    <h3>Monsters are cool</h3>
+                    <a href="/monsters/" class="button big">monsters</a>
+                    <h3>Why not spells?</h3>
+                    <a href="/spells/" class="button big">spells</a>
+                </div>
+                </div>
                 </div>
             </div>
         </div>
