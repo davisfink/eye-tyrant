@@ -49,3 +49,7 @@ h1,h2,h3,h4,h5,h6 {
     color: #eee;
     background: #5f0d0a;
 }
+
+.monster-search {
+    width: 100%;
+}

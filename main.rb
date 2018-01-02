@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'json'
 require 'erb'
 require './database.rb'
 require './models/encounter.rb'
@@ -13,7 +14,8 @@ require './models/experience.rb'
 #require './models/action.rb'
 
 #leaving this here for easier testing in IRB
-#@party = Encounter.find(active:1).participants
+@encounter = Encounter.where(active: "1").first
+@party = Encounter.where(active: "1").first.participants
 #puts @party[1].actor.monster_type.name
 
 get '/' do
@@ -21,7 +23,7 @@ get '/' do
 end
 
 get '/encounters/' do
-    @encounters = Encounter.where(:active, "1")
+    @encounters = Encounter.where(:active, "1").reverse(:id)
     erb :encounters
 end
 
@@ -30,6 +32,24 @@ get '/encounter/:id/' do
     @participants = @encounter.participants
 
     erb :encounter
+end
+
+get '/newencounter/' do
+    @parties = Party.where(active: "1")
+    erb :newencounter
+end
+
+post '/newencounter/' do
+    members = Party.find(id: params[:party_id]).characters
+    encounter = Encounter.create()
+    #hey maybe take a look at this sometime and make it suck slightly less.
+    #consider looking at the "participant" model and return itself based on
+    #a monster or character object
+    members.each do |member|
+        encounter.add_participant(Participant.find(id: member.participant_id))
+    end
+
+    redirect "/encounter/#{encounter.id}/"
 end
 
 get '/encounter/:id/addmonster/' do
@@ -51,8 +71,36 @@ post '/encounter/:id/addmonster/' do
 
 end
 
+get '/participant/:id/damage/' do
+    participant = Participant.where(id: params[:id]).first
+    @pid = participant.id
+
+    erb :damage
+end
+
+post '/participant/:id/damage/' do
+    participant = Participant.where(id: params[:id]).first
+    participant.take_damage(params[:damage])
+
+    redirect '/encounters/'
+end
+
+get '/participant/:id/heal/' do
+    participant = Participant.where(id: params[:id]).first
+    @pid = participant.id
+
+    erb :heal
+end
+
+post '/participant/:id/heal/' do
+    participant = Participant.where(id: params[:id]).first
+    participant.heal_damage(params[:damage])
+
+    redirect '/encounters/'
+end
+
 get '/find-monster/' do
-    @search_term = params[:search_term]
+    @search_term = params[:term]
     @results = MonsterType.where(Sequel.ilike(:name, "%#{@search_term}%"))
 
     erb :monster
@@ -62,6 +110,16 @@ get '/get-monster/' do
     @mob = MonsterType.find(id: params[:id])
 
     erb :monster
+end
+
+get '/monster-search/' do
+    content_type :json
+    @attrs = params
+    @results = MonsterType.where(Sequel.ilike(:name, "%#{@attrs[:term]}%"))
+    json = @results.map do |result|
+        {id: result.id, text: result.name}
+    end
+    {results: json}.to_json
 end
 
 get '/parties/' do
