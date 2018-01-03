@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Eye Tyrant</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/plugins/css/select2.min.css">
+        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
         <link rel="stylesheet" href="/css/app.css">
     </head>
 
@@ -12,34 +12,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-md">
+                    <h1><%= @details[:party_name]%></h1>
+                    <p><strong><%= @details[:character_experience]%>xp</strong>
+                        ( <%= @details[:total_experience] %>xp )
+                    </p>
+                </div>
+                <div class="col-md text-right">
+                    <a class="button" href="/newencounter/">New Encounter</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
                     <% @participants.each do |p| %>
                         <div class="panel">
                             <h3><%= p.actor.name %></h3>
-                            <form action="/set-initiative/">
+                            <span>hp: <%= p.hitpoints %></span>
+                            <form action="/participant/<%= p.id %>/initiative/" method="post">
                                 Initiative: <%= p[:initiative]%>
-                                <input type="hidden" name="id" value="<%= p.id %>">
-                                <input type="input" name="value" value="" placeholder="0">
+                                <input type="input" name="initiative" value="" placeholder="0">
                                 <input type="submit" class="button" value="Submit">
                             </form>
-                            <form action="/set-damage/">
+                            <form action="/participant/<%= p.id %>/damage/" method="post">
                                 Damage: <%= p[:damage]%>
-                                <input type="hidden" name="id" value="<%= p.id %>">
-                                <input type="input" name="value" value="" placeholder="0">
+                                <input type="input" name="damage" value="" placeholder="0">
                                 <input type="submit" class="button" value="Submit">
                             </form>
                         </div>
                     <%end%>
                 </div>
-                <div class="col-md">
-                    <a class="button" href="addmonster/">Add New Monster</a>
+                <div class="col-md text-right">
+                    <form action="/encounter/<%=@encounter_id%>/addmonster/" method="post">
+                        <select class="monster-search" name="monster_type_id"></select>
+                        <input type="submit" class="button" value="Add New Monster"/>
+                    </form>
                 </div>
             </div>
         </div>
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/js/vendor/jquery-2.1.0.js"></script>
-        <script src="/plugins/js/select2.full.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+        <script src="/plugins/select2/js/select2.full.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/actions.js"></script>
     </body>
 

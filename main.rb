@@ -16,7 +16,7 @@ require './models/experience.rb'
 #leaving this here for easier testing in IRB
 @encounter = Encounter.where(active: "1").first
 @party = Encounter.where(active: "1").first.participants
-#puts @party[1].actor.monster_type.name
+@mob = @party[2]
 
 get '/' do
     erb :index
@@ -28,8 +28,14 @@ get '/encounters/' do
 end
 
 get '/encounter/:id/' do
+    @encounter_id = params[:id]
     @encounter = Encounter.find(id: params[:id])
-    @participants = @encounter.participants
+    @details = {
+        total_experience: @encounter.total_experience,
+        character_experience: @encounter.per_party_experience,
+        party_name: @encounter.party.name
+    }
+    @participants = @encounter.participants.sort_by {|member| member.initiative}.reverse
 
     erb :encounter
 end
@@ -41,7 +47,7 @@ end
 
 post '/newencounter/' do
     members = Party.find(id: params[:party_id]).characters
-    encounter = Encounter.create()
+    encounter = Encounter.create(party_id: params[:party_id])
     #hey maybe take a look at this sometime and make it suck slightly less.
     #consider looking at the "participant" model and return itself based on
     #a monster or character object
@@ -65,6 +71,7 @@ post '/encounter/:id/addmonster/' do
     monster = MonsterType.find(id: params[:monster_type_id])
 
     Monster.create(participant_id: participant.id, monster_type_id: monster.id, name: monster.name)
+    participant.calculate_hitpoints
     encounter.add_participant(participant)
 
     redirect "/encounter/#{params[:id]}/"
@@ -82,7 +89,7 @@ post '/participant/:id/damage/' do
     participant = Participant.where(id: params[:id]).first
     participant.take_damage(params[:damage])
 
-    redirect '/encounters/'
+    redirect request.referrer
 end
 
 get '/participant/:id/heal/' do
@@ -97,6 +104,13 @@ post '/participant/:id/heal/' do
     participant.heal_damage(params[:damage])
 
     redirect '/encounters/'
+end
+
+post '/participant/:id/initiative/' do
+    participant = Participant.where(id: params[:id]).first
+    participant.set_initiative(params[:initiative])
+
+    redirect request.referrer
 end
 
 get '/find-monster/' do
