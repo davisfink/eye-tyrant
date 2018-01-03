@@ -1,90 +1,14 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Eye Tyrant</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <form>
-                        <select class="monster-search"></select>
-                    </form>
-                </div>
-            </div>
-            <%if @mob != nil %>
-                <div id="Details" class="row">
-                    <div class="col-md">
-                        <% mob = @mob  %>
-                        <% xp = Experience.find(cr: mob.cr).xp %>
-                        <div class="panel">
-                            <h3><%= mob.name %></h3>
-                            <p class="italic">
-                                <%= mob.size %> <%= mob.type %>, <%= mob.alignment %>
-                            </p>
-                            <hr />
-                            <p><strong>Armor Class</strong> <%= mob.ac %></p>
-                            <p><strong>Hit Points</strong> <%= mob.hp %></p>
-                            <p><strong>Speed:</strong> <%= mob.speed %></p>
-                            <hr/>
-                            <div class="row statblock">
-                                <div class="col">
-                                    <span class="stat">Str</span>
-                                    <%= mob.str %>
-                                </div>
-                                <div class="col">
-                                    <span class="stat">Dex</span>
-                                    <%= mob.dex %>
-                                </div>
-                                <div class="col">
-                                    <span class="stat">Con</span>
-                                    <%= mob.con %>
-                                </div>
-                                <div class="col">
-                                    <span class="stat">Int</span>
-                                    <%= mob.int %>
-                                </div>
-                                <div class="col">
-                                    <span class="stat">Wis</span>
-                                    <%= mob.wis %>
-                                </div>
-                                <div class="col">
-                                    <span class="stat">Cha</span>
-                                    <%= mob.cha %>
-                                </div>
-                            </div>
-                            <hr/>
-                            <p><strong>Saves</strong> <%= mob.save %></p>
-                            <hr/>
-                            <p><strong>Skills</strong> <%= mob.skill %></p>
-                            <hr/>
-                            <p><strong>Immunities</strong> <%= mob.immune %></p>
-                            <p><strong>Condition Immunities</strong> <%= mob.conditionImmune %></p>
-                            <p><strong>Vulnerabilities</strong> <%= mob.vulnerable %></p>
-                            <p><strong>Senses</strong> <%= mob.senses %></p>
-                            <p><strong>Passive Perception</strong> <%= mob.passive %></p>
-                            <p><strong>Languages</strong> <%= mob.languages %></p>
-                            <p><strong>Challange Rating</strong> <%= mob.cr %> ( <%= xp %>xp )</p>
-                            <p><strong>Resistances</strong> <%= mob.resist %></p>
-                            <hr/>
-                            <p><%= mob.trait %></p>
-                            <hr/>
-                            <h4>Actions</h4>
-                            <p><%= mob.action %></p>
-                        </div>
-                    </div>
-                <%end%>
-            </div>
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <form>
+                <select class="monster-search"></select>
+            </form>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/plugins/select2/js/select2.full.min.js"></script>
-        <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="/js/actions.js"></script>
-
-    </body>
-</html>
+    </div>
+    <%if @mob != nil %>
+        <%= erb :monstertemplate %>
+    <%end%>
+</div>
+<%= erb :footer %>

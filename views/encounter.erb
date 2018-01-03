@@ -1,15 +1,7 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Eye Tyrant</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-    </head>
-
-    <body>
-        <div class="container">
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
             <div class="row">
                 <div class="col-md">
                     <h1><%= @details[:party_name]%></h1>
@@ -18,40 +10,70 @@
                     </p>
                 </div>
                 <div class="col-md text-right">
-                    <a class="button" href="/newencounter/">New Encounter</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-                    <% @participants.each do |p| %>
-                        <div class="panel">
-                            <h3><%= p.actor.name %></h3>
-                            <span>hp: <%= p.hitpoints %></span>
-                            <form action="/participant/<%= p.id %>/initiative/" method="post">
-                                Initiative: <%= p[:initiative]%>
-                                <input type="input" name="initiative" value="" placeholder="0">
-                                <input type="submit" class="button" value="Submit">
-                            </form>
-                            <form action="/participant/<%= p.id %>/damage/" method="post">
-                                Damage: <%= p[:damage]%>
-                                <input type="input" name="damage" value="" placeholder="0">
-                                <input type="submit" class="button" value="Submit">
-                            </form>
-                        </div>
-                    <%end%>
-                </div>
-                <div class="col-md text-right">
-                    <form action="/encounter/<%=@encounter_id%>/addmonster/" method="post">
-                        <select class="monster-search" name="monster_type_id"></select>
-                        <input type="submit" class="button" value="Add New Monster"/>
+                    <form action="/encounter/<%= @encounter_id %>/next-turn/" method="post">
+                        <input type="hidden" value="@encounter_id" name="id"/>
+                        <input type="submit" class="button" value="Next Participant">
                     </form>
                 </div>
             </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/plugins/select2/js/select2.full.min.js"></script>
-        <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="/js/actions.js"></script>
-    </body>
-
-</html>
+        <div class="col-md text-right">
+            <a class="button" href="/newencounter/">New Encounter</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <% @participants.each do |p| %>
+                <div class="panel participant">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5><%= p.actor.name %></h5>
+                        </div>
+                        <div class="col">
+                            <span class="hitpoints">hp: <%= p.damage%>/<%= p.hitpoints %></span>
+                            <span class="initiative"><%= p.initiative%></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <form action="/participant/<%= p.id %>/initiative/" method="post">
+                                <input type="input" name="initiative" value="" placeholder="0">
+                                <input type="submit" class="button" value="Submit">
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form action="/participant/<%= p.id %>/damage/" method="post">
+                                <input type="input" name="damage" value="" placeholder="0">
+                                <input type="submit" class="button" value="Damage">
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form action="/participant/<%= p.id %>/heal/" method="post">
+                                <input type="input" name="damage" value="" placeholder="0">
+                                <input type="submit" class="button" value="Heal">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <%end%>
+        </div>
+        <div class="col-md">
+            <div class="row">
+                <div class="col-md">
+                    <h3>Add a monster</h3>
+                </div>
+                <div class="col-md text-right">
+                    <%= erb :addmonster %>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col">
+                <%if @mob != nil %>
+                    <%= erb :monstertemplate %>
+                <%end%>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<%= erb :footer %>

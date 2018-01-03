@@ -14,20 +14,19 @@ require './models/experience.rb'
 #require './models/action.rb'
 
 #leaving this here for easier testing in IRB
-@encounter = Encounter.where(active: "1").first
-@party = Encounter.where(active: "1").first.participants
-@mob = @party[2]
+@encounter = Encounter.where(active: "1").last
+@party = @encounter.turn_order
 
 get '/' do
     erb :index
 end
 
-get '/encounters/' do
+get '/encounters/?' do
     @encounters = Encounter.where(:active, "1").reverse(:id)
     erb :encounters
 end
 
-get '/encounter/:id/' do
+get '/encounter/:id/?' do
     @encounter_id = params[:id]
     @encounter = Encounter.find(id: params[:id])
     @details = {
@@ -35,36 +34,49 @@ get '/encounter/:id/' do
         character_experience: @encounter.per_party_experience,
         party_name: @encounter.party.name
     }
-    @participants = @encounter.participants.sort_by {|member| member.initiative}.reverse
+    @participants = @encounter.turn_order
+    current_monster = @encounter.next_monster
+    @mob = MonsterType.find(id: current_monster.monster_type_id)
+    @xp = Experience.find(cr: @mob.cr)
 
     erb :encounter
 end
 
-get '/newencounter/' do
+post '/encounter/:id/next-turn/?' do
+    encounter = Encounter.find(id: params[:id])
+    encounter.next_participant
+
+    redirect request.referrer
+end
+
+
+get '/newencounter/?' do
     @parties = Party.where(active: "1")
     erb :newencounter
 end
 
-post '/newencounter/' do
+post '/newencounter/?' do
     members = Party.find(id: params[:party_id]).characters
     encounter = Encounter.create(party_id: params[:party_id])
     #hey maybe take a look at this sometime and make it suck slightly less.
     #consider looking at the "participant" model and return itself based on
     #a monster or character object
     members.each do |member|
-        encounter.add_participant(Participant.find(id: member.participant_id))
+        participant = Participant.find(id: member.participant_id)
+        participant.set_initiative(0)
+        encounter.add_participant(participant)
     end
 
     redirect "/encounter/#{encounter.id}/"
 end
 
-get '/encounter/:id/addmonster/' do
+get '/encounter/:id/addmonster/?' do
     @encounter_id = params[:id]
 
     erb :addmonster
 end
 
-post '/encounter/:id/addmonster/' do
+post '/encounter/:id/addmonster/?' do
     @encounter_id = params[:id]
     encounter = Encounter.find(id: @encounter_id)
     participant = Participant.create()
@@ -78,55 +90,55 @@ post '/encounter/:id/addmonster/' do
 
 end
 
-get '/participant/:id/damage/' do
+get '/participant/:id/damage/?' do
     participant = Participant.where(id: params[:id]).first
     @pid = participant.id
 
     erb :damage
 end
 
-post '/participant/:id/damage/' do
+post '/participant/:id/damage/?' do
     participant = Participant.where(id: params[:id]).first
     participant.take_damage(params[:damage])
 
     redirect request.referrer
 end
 
-get '/participant/:id/heal/' do
+get '/participant/:id/heal/?' do
     participant = Participant.where(id: params[:id]).first
     @pid = participant.id
 
     erb :heal
 end
 
-post '/participant/:id/heal/' do
+post '/participant/:id/heal/?' do
     participant = Participant.where(id: params[:id]).first
     participant.heal_damage(params[:damage])
 
-    redirect '/encounters/'
+    redirect '/encounters/?'
 end
 
-post '/participant/:id/initiative/' do
+post '/participant/:id/initiative/?' do
     participant = Participant.where(id: params[:id]).first
     participant.set_initiative(params[:initiative])
 
     redirect request.referrer
 end
 
-get '/find-monster/' do
+get '/find-monster/?' do
     @search_term = params[:term]
     @results = MonsterType.where(Sequel.ilike(:name, "%#{@search_term}%"))
 
     erb :monster
 end
 
-get '/get-monster/' do
+get '/get-monster/?' do
     @mob = MonsterType.find(id: params[:id])
 
     erb :monster
 end
 
-get '/monster-search/' do
+get '/monster-search/?' do
     content_type :json
     @attrs = params
     @results = MonsterType.where(Sequel.ilike(:name, "%#{@attrs[:term]}%"))
@@ -136,25 +148,25 @@ get '/monster-search/' do
     {results: json}.to_json
 end
 
-get '/parties/' do
+get '/parties/?' do
     @parties = Party.where(:active, "1")
     erb :parties
 end
 
-get '/party/:id/' do
+get '/party/:id/?' do
     party_id = params[:id]
     @members = Party.find(id: party_id).characters
 
     erb :party
 end
 
-get '/party/:id/addmember/' do
+get '/party/:id/addmember/?' do
     @party_id = params[:id]
 
     erb :addmember
 end
 
-post '/party/:id/addmember/' do
+post '/party/:id/addmember/?' do
     party_id = params[:id]
     #find party
     party = Party.find(id: party_id)

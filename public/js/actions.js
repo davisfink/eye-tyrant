@@ -3,6 +3,7 @@ $(document).ready(function() {
         ajax: {
             url: '/monster-search/',
             dataType: 'json'
-        }
+        },
+        minimumInputLength: 1
     });
 });
