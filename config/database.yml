@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: eye_tyrant
+  pool: 2
+  username: davisfink
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: eye_tyrant
+  pool: 2
+  username: davisfink
+  password:

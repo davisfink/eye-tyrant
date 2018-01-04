@@ -1,5 +1,5 @@
 class Encounter < Sequel::Model
-    many_to_many :participants, class: :Participant
+    many_to_many :participants
     many_to_one :party
 
     def total_experience
@@ -13,7 +13,9 @@ class Encounter < Sequel::Model
     def turn_order
         order = self.participants.sort_by {|member| member.initiative}.reverse
         active = order.select {|member| member.id == self.active_participant_id }
-        order.rotate(order.index(active.first))
+        next_index = active.first || 0
+        next_index = order.index(active.first) || 0
+        order.rotate(next_index)
     end
 
     def next_participant

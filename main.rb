@@ -8,7 +8,7 @@ require './models/monster.rb'
 require './models/monster_type.rb'
 require './models/character.rb'
 require './models/party.rb'
-require './models/encounter_participant.rb'
+#require './models/encounter_participant.rb'
 require './models/experience.rb'
 #require './models/spell.rb'
 #require './models/action.rb'
@@ -22,7 +22,7 @@ get '/' do
 end
 
 get '/encounters/?' do
-    @encounters = Encounter.where(:active, "1").reverse(:id)
+    @encounters = Encounter.where(active: "1").reverse(:id)
     erb :encounters
 end
 
@@ -115,7 +115,7 @@ post '/participant/:id/heal/?' do
     participant = Participant.where(id: params[:id]).first
     participant.heal_damage(params[:damage])
 
-    redirect '/encounters/?'
+    redirect '/encounters/'
 end
 
 post '/participant/:id/initiative/?' do

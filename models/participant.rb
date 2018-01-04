@@ -1,5 +1,5 @@
 class Participant < Sequel::Model
-    many_to_many :encounters, class: :Encounter
+    many_to_many :encounters
     one_to_one :monster
     one_to_one :character
 

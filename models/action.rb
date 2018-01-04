@@ -1,3 +1,2 @@
-class Action < Sequel::Model(:action)
-    dataset
+class Action < Sequel::Model
 end

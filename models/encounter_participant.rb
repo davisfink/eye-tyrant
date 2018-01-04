@@ -1,3 +1,2 @@
-class EncounterParticipant < Sequel::Model(:encounter_participant)
-    dataset
+class EncounterParticipant < Sequel::Model
 end
