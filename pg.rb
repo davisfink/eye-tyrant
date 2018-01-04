@@ -1,7 +1,8 @@
 require 'sinatra'
 require 'json'
 require 'erb'
-require './database.rb'
+require './config/database.rb'
+require './models/spell.rb'
 
 get '/' do
     puts 'this works'

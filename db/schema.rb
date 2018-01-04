@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104180853) do
+ActiveRecord::Schema.define(version: 20180104201931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "actions", force: :cascade do |t|
     t.string "name"
-    t.text "text"
     t.string "attack"
+    t.text "text", array: true
+    t.bigint "monster_type_id"
+    t.index ["monster_type_id"], name: "index_actions_on_monster_type_id"
   end
 
   create_table "characters", force: :cascade do |t|
@@ -46,8 +48,10 @@ ActiveRecord::Schema.define(version: 20180104180853) do
 
   create_table "legendary", force: :cascade do |t|
     t.string "name"
-    t.text "text"
     t.string "attack"
+    t.text "text", array: true
+    t.bigint "monster_type_id"
+    t.index ["monster_type_id"], name: "index_legendary_on_monster_type_id"
   end
 
   create_table "monster_types", force: :cascade do |t|
@@ -78,12 +82,6 @@ ActiveRecord::Schema.define(version: 20180104180853) do
     t.string "spells"
     t.string "slots"
     t.string "description"
-    t.bigint "actions_id"
-    t.bigint "legendary_id"
-    t.bigint "traits_id"
-    t.index ["actions_id"], name: "index_monster_types_on_actions_id"
-    t.index ["legendary_id"], name: "index_monster_types_on_legendary_id"
-    t.index ["traits_id"], name: "index_monster_types_on_traits_id"
   end
 
   create_table "monster_types_spells", id: false, force: :cascade do |t|
@@ -118,11 +116,14 @@ ActiveRecord::Schema.define(version: 20180104180853) do
     t.text "classes"
     t.text "text", array: true
     t.text "roll", array: true
+    t.string "level"
   end
 
   create_table "traits", force: :cascade do |t|
     t.string "name"
-    t.text "text"
+    t.text "text", array: true
+    t.bigint "monster_type_id"
+    t.index ["monster_type_id"], name: "index_traits_on_monster_type_id"
   end
 
 end

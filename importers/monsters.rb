@@ -6,12 +6,13 @@ require './models/monster_type.rb'
 require './models/action.rb'
 require './models/lengedary.rb'
 require './models/trait.rb'
+require './models/spell.rb'
 
 file_location = ARGV[0] || ''
 doc = File.open(file_location) { |f| Nokogiri::XML(f) }
 
 doc.xpath('//monster').each do |m|
-    mob_to_add = MonsterType.new(
+    mob_to_add = MonsterType.find_or_create(
         name: m.xpath('name').text,
         size: m.xpath('size').text,
         type: m.xpath('type').text,
@@ -32,32 +33,41 @@ doc.xpath('//monster').each do |m|
         immune: m.xpath('immune').text,
         conditionimmune: m.xpath('conditionImmune').text,
         resist: m.xpath('resist').text,
-        spells: m.xpath('spells').text,
         description: m.xpath('description').text,
         slots: m.xpath('slots').text
     )
 
     m.xpath('action').each do |action|
-        action_to_add = Action.new(
+        text_to_add = action.xpath('text').collect do |t| t.xpath('.').text end
+        action_to_add = Action.find_or_create(
             name: action.xpath('name').text,
-            text: action.xpath('text').collect do |t| t.xpath('.').text end,
+            text: Sequel.pg_array(text_to_add),
             attack: action.xpath('attack').text
         )
-        pp action_to_add
+        mob_to_add.add_action(action_to_add)
     end
     m.xpath('legendary').each do |leg|
-        leg_to_add = Legendary.new(
+        text_to_add = leg.xpath('text').collect do |t| t.xpath('.').text end
+        leg_to_add = Legendary.find_or_create(
             name: leg.xpath('name').text,
-            text: leg.xpath('text').collect do |t| t.xpath('.').text end,
+            text: Sequel.pg_array(text_to_add),
             attack: leg.xpath('attack').text
         )
-        pp leg_to_add
+        leg_to_add.save_changes
+        mob_to_add.add_legendary(leg_to_add)
     end
     m.xpath('trait').each do |trait|
-        trait_to_add = Trait.new(
+        text_to_add = trait.xpath('text').collect do |t| t.xpath('.').text end
+        trait_to_add = Trait.find_or_create(
             name: trait.xpath('name').text,
-            text: trait.xpath('text').collect do |t| t.xpath('.').text end,
+            text: Sequel.pg_array(text_to_add)
         )
-        pp trait_to_add
+        trait_to_add.save_changes
+        mob_to_add.add_trait(trait_to_add)
+    end
+    m.xpath('spells').text.split(', ').each do |s|
+        spell = Spell.where(Sequel.ilike(:name, s)).first
+        match_spell = mob_to_add.spells.collect do |s| spell == s end
+        mob_to_add.add_spell(spell) if match_spell.count == 0 and spell
     end
 end
