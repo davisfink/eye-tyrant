@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104160129) do
+ActiveRecord::Schema.define(version: 20180104180853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,11 +75,20 @@ ActiveRecord::Schema.define(version: 20180104160129) do
     t.string "languages"
     t.string "cr"
     t.string "trait"
-    t.string "action"
-    t.text "legendary"
     t.string "spells"
     t.string "slots"
     t.string "description"
+    t.bigint "actions_id"
+    t.bigint "legendary_id"
+    t.bigint "traits_id"
+    t.index ["actions_id"], name: "index_monster_types_on_actions_id"
+    t.index ["legendary_id"], name: "index_monster_types_on_legendary_id"
+    t.index ["traits_id"], name: "index_monster_types_on_traits_id"
+  end
+
+  create_table "monster_types_spells", id: false, force: :cascade do |t|
+    t.bigint "monster_type_id", null: false
+    t.bigint "spell_id", null: false
   end
 
   create_table "monsters", force: :cascade do |t|
@@ -97,6 +106,23 @@ ActiveRecord::Schema.define(version: 20180104160129) do
   create_table "parties", force: :cascade do |t|
     t.string "name"
     t.boolean "active"
+  end
+
+  create_table "spells", force: :cascade do |t|
+    t.string "name"
+    t.string "school"
+    t.string "time"
+    t.string "range"
+    t.string "components"
+    t.string "duration"
+    t.text "classes"
+    t.text "text", array: true
+    t.text "roll", array: true
+  end
+
+  create_table "traits", force: :cascade do |t|
+    t.string "name"
+    t.text "text"
   end
 
 end
