@@ -1,3 +1,3 @@
 class Action < Sequel::Model
-    many_to_one :monster_type
+    many_to_many :monster_types
 end

@@ -24,7 +24,7 @@ class Encounter < Sequel::Model
     end
 
     def next_monster
-        monster_list.first.monster
+        monster_list.first.monster if monster_list.count > 0
     end
 
     private

@@ -1,8 +1,7 @@
 <div id="Details" class="row">
     <div class="col-md">
         <% mob = @mob  %>
-        <% xp = @xp %>
-        <div class="panel">
+        <div class="panel monster-template">
             <h3><%= mob.name %></h3>
             <p class="italic">
                 <%= mob.size %> <%= mob.type %>, <%= mob.alignment %>
@@ -39,23 +38,55 @@
                 </div>
             </div>
             <hr/>
-            <p><strong>Saves</strong> <%= mob.save %></p>
-            <hr/>
+            <%if mob[:save] != '' %><p><strong>Saves</strong> <%= mob[:save] %></p><hr/><%end%>
             <p><strong>Skills</strong> <%= mob.skill %></p>
             <hr/>
-            <p><strong>Immunities</strong> <%= mob.immune %></p>
-            <p><strong>Condition Immunities</strong> <%= mob.conditionImmune %></p>
-            <p><strong>Vulnerabilities</strong> <%= mob.vulnerable %></p>
-            <p><strong>Senses</strong> <%= mob.senses %></p>
-            <p><strong>Passive Perception</strong> <%= mob.passive %></p>
-            <p><strong>Languages</strong> <%= mob.languages %></p>
-            <p><strong>Challange Rating</strong> <%= mob.cr %> ( <%= xp %>xp )</p>
-            <p><strong>Resistances</strong> <%= mob.resist %></p>
+            <%if mob.immune != '' %><p><strong>Immunities</strong> <%= mob.immune %></p><%end%>
+            <%if mob.conditionimmune != '' %><p><strong>Condition Immunities</strong> <%= mob.conditionimmune %></p><%end%>
+            <%if mob.vulnerable != '' %><p><strong>Vulnerabilities</strong> <%= mob.vulnerable %></p><%end%>
+            <%if mob.senses != '' %><p><strong>Senses</strong> <%= mob.senses %></p><%end%>
+            <%if mob.passive != '' %><p><strong>Passive Perception</strong> <%= mob.passive %></p><%end%>
+            <%if mob.languages != '' %><p><strong>Languages</strong> <%= mob.languages %></p><%end%>
+            <p><strong>Challange Rating</strong> <%= mob.cr %> ( <%= @xp %>xp )</p>
+            <%if mob.resist != '' %><p><strong>Resistances</strong> <%= mob.resist %></p><%end%>
             <hr/>
-            <p><%= mob.trait %></p>
-            <hr/>
+            <% if mob.traits.count > 0 %>
+                <h4>Traits</h4>
+                <% mob.traits.each do |a| %>
+                    <h5><%= a.name %></h5>
+                    <% a.text.each do |t| %>
+                        <p><%= t %></p>
+                    <% end %>
+                <% end %>
+                <% if mob.spells.count > 0 %>
+                    <h6>Spells</h6>
+                    <select>
+                        <option value="">Choose a Spell</option>
+                        <% mob.spells.each do |s| %>
+                            <option><p><%= s.name %></p></option>
+                        <%end%>
+                    </select>
+                <%end%>
+                <hr/>
+            <%end%>
+            <% if mob.legendaries.count > 0 %>
+                <h4>Legendary Actions</h4>
+                <% mob.legendaries.each do |a| %>
+                    <h5><%= a.name %></h5>
+                    <% a.text.each do |t| %>
+                        <p><%= t %></p>
+                    <% end %>
+                <% end %>
+                <hr/>
+            <% end %>
             <h4>Actions</h4>
-            <p><%= mob.action %></p>
+            <% mob.actions.each do |a| %>
+                <h5><%= a.name %></h5>
+                <% a.text.each do |t| %>
+                    <p><%= t %></p>
+                <% end %>
+                <p><%= a.attack %></p>
+            <% end %>
         </div>
     </div>
 </div>

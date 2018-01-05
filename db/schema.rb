@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104201931) do
+ActiveRecord::Schema.define(version: 20180105012649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 20180104201931) do
     t.index ["monster_type_id"], name: "index_actions_on_monster_type_id"
   end
 
+  create_table "actions_monster_types", id: false, force: :cascade do |t|
+    t.bigint "monster_type_id", null: false
+    t.bigint "action_id", null: false
+  end
+
   create_table "characters", force: :cascade do |t|
     t.integer "participant_id"
     t.string "name"
@@ -31,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180104201931) do
   end
 
   create_table "encounters", force: :cascade do |t|
-    t.boolean "active"
+    t.boolean "active", default: true
     t.integer "party_id"
     t.integer "active_participant_id"
   end
@@ -46,12 +51,15 @@ ActiveRecord::Schema.define(version: 20180104201931) do
     t.integer "xp"
   end
 
-  create_table "legendary", force: :cascade do |t|
+  create_table "legendaries", force: :cascade do |t|
     t.string "name"
     t.string "attack"
     t.text "text", array: true
-    t.bigint "monster_type_id"
-    t.index ["monster_type_id"], name: "index_legendary_on_monster_type_id"
+  end
+
+  create_table "legendaries_monster_types", id: false, force: :cascade do |t|
+    t.bigint "legendary_id", null: false
+    t.bigint "monster_type_id", null: false
   end
 
   create_table "monster_types", force: :cascade do |t|
@@ -78,8 +86,6 @@ ActiveRecord::Schema.define(version: 20180104201931) do
     t.string "passive"
     t.string "languages"
     t.string "cr"
-    t.string "trait"
-    t.string "spells"
     t.string "slots"
     t.string "description"
   end
@@ -89,6 +95,11 @@ ActiveRecord::Schema.define(version: 20180104201931) do
     t.bigint "spell_id", null: false
   end
 
+  create_table "monster_types_traits", id: false, force: :cascade do |t|
+    t.bigint "monster_type_id", null: false
+    t.bigint "trait_id", null: false
+  end
+
   create_table "monsters", force: :cascade do |t|
     t.integer "participant_id"
     t.string "name"
@@ -96,14 +107,14 @@ ActiveRecord::Schema.define(version: 20180104201931) do
   end
 
   create_table "participants", force: :cascade do |t|
-    t.integer "damage"
-    t.integer "hitpoints"
-    t.integer "initiative"
+    t.integer "damage", default: 0
+    t.integer "hitpoints", default: 0
+    t.integer "initiative", default: 0
   end
 
   create_table "parties", force: :cascade do |t|
     t.string "name"
-    t.boolean "active"
+    t.boolean "active", default: true
   end
 
   create_table "spells", force: :cascade do |t|

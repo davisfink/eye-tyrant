@@ -4,7 +4,7 @@ require 'pp'
 require './config/database.rb'
 require './models/monster_type.rb'
 require './models/action.rb'
-require './models/lengedary.rb'
+require './models/legendary.rb'
 require './models/trait.rb'
 require './models/spell.rb'
 
@@ -26,6 +26,9 @@ doc.xpath('//monster').each do |m|
         int: m.xpath('int').text.to_i,
         wis: m.xpath('wis').text.to_i,
         cha: m.xpath('cha').text.to_i,
+        senses: m.xpath('senses').text,
+        vulnerable: m.xpath('vulnerable').text,
+        save: m.xpath('save').text,
         skill: m.xpath('skill').text,
         passive: m.xpath('passive').text,
         languages: m.xpath('languages').text,
@@ -65,9 +68,9 @@ doc.xpath('//monster').each do |m|
         trait_to_add.save_changes
         mob_to_add.add_trait(trait_to_add)
     end
-    m.xpath('spells').text.split(', ').each do |s|
-        spell = Spell.where(Sequel.ilike(:name, s)).first
-        match_spell = mob_to_add.spells.collect do |s| spell == s end
+    m.xpath('spells').text.split(',').each do |s|
+        spell = Spell.where(Sequel.ilike(:name, s.strip)).first
+        match_spell = mob_to_add.spells.select do |s| spell == s end
         mob_to_add.add_spell(spell) if match_spell.count == 0 and spell
     end
 end

@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md">
             <div class="row">
-                <div class="col-md">
+                <div class="col-md-8">
                     <h1><%= @details[:party_name]%></h1>
                     <p><strong><%= @details[:character_experience]%>xp</strong>
                         ( <%= @details[:total_experience] %>xp )
@@ -26,21 +26,17 @@
             <% @participants.each do |p| %>
                 <div class="panel participant">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-7">
                             <h5><%= p.actor.name %></h5>
                         </div>
                         <div class="col">
-                            <span class="hitpoints">hp: <%= p.damage%>/<%= p.hitpoints %></span>
+                            <span class="hitpoints">hp:</span> <%= p.damage%>/<%= p.hitpoints %>
+                        </div>
+                        <div class="col">
                             <span class="initiative"><%= p.initiative%></span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
-                            <form action="/participant/<%= p.id %>/initiative/" method="post">
-                                <input type="input" name="initiative" value="" placeholder="0">
-                                <input type="submit" class="button" value="Submit">
-                            </form>
-                        </div>
                         <div class="col">
                             <form action="/participant/<%= p.id %>/damage/" method="post">
                                 <input type="input" name="damage" value="" placeholder="0">
@@ -51,6 +47,12 @@
                             <form action="/participant/<%= p.id %>/heal/" method="post">
                                 <input type="input" name="damage" value="" placeholder="0">
                                 <input type="submit" class="button" value="Heal">
+                            </form>
+                        </div>
+                        <div class="col text-right">
+                            <form action="/participant/<%= p.id %>/initiative/" method="post">
+                                <input type="input" name="initiative" value="" placeholder="0">
+                                <input type="submit" class="button" value="Inish">
                             </form>
                         </div>
                     </div>

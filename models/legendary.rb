@@ -1,3 +1,3 @@
-class Trait < Sequel::Model
+class Legendary < Sequel::Model
     many_to_many :monster_types
 end
