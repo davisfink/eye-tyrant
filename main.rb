@@ -115,7 +115,7 @@ post '/participant/:id/heal/?' do
     participant = Participant.where(id: params[:id]).first
     participant.heal_damage(params[:damage])
 
-    redirect '/encounters/'
+    redirect request.referrer
 end
 
 post '/participant/:id/initiative/?' do

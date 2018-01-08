@@ -3,9 +3,15 @@
     <div class="row">
         <div class="col-md">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md">
                     <h1><%= @details[:party_name]%></h1>
-                    <p><strong><%= @details[:character_experience]%>xp</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <p>
+                        Encounter:
+                        <strong><%= @details[:character_experience]%>xp</strong>
                         ( <%= @details[:total_experience] %>xp )
                     </p>
                 </div>
@@ -16,65 +22,84 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-md text-right">
-            <a class="button" href="/newencounter/">New Encounter</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md">
-            <% @participants.each do |p| %>
-                <div class="panel participant">
-                    <div class="row">
-                        <div class="col-7">
-                            <h5><%= p.actor.name %></h5>
+            <div class="row">
+                <div class="col-md">
+                    <% @participants.each do |p| %>
+                        <div class="panel participant">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5><%= p.actor.name %></h5>
+                                    <% if p.hitpoints > 0 %>
+                                        <span class="hitpoints">hp:</span>
+                                        <%= p.damage%>/<%= p.hitpoints %>
+                                    <% end %>
+                                </div>
+                                <div class="col text-right">
+                                    <form action="/participant/<%= p.id %>/damage/" method="post">
+                                        <input type="input" name="damage" value="" placeholder="Dmg">
+                                        <input type="submit" class="button" value="-">
+                                    </form>
+                                    <form action="/participant/<%= p.id %>/heal/" method="post">
+                                        <input type="input" name="damage" value="" placeholder="Heal">
+                                        <input type="submit" class="button" value="+">
+                                    </form>
+                                    <form action="/participant/<%= p.id %>/initiative/" method="post">
+                                        <input type="input" name="initiative" value="<%= p.initiative %>" placeholder="Inish">
+                                        <input type="submit" class="button" value="~">
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col">
-                            <span class="hitpoints">hp:</span> <%= p.damage%>/<%= p.hitpoints %>
-                        </div>
-                        <div class="col">
-                            <span class="initiative"><%= p.initiative%></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <form action="/participant/<%= p.id %>/damage/" method="post">
-                                <input type="input" name="damage" value="" placeholder="0">
-                                <input type="submit" class="button" value="Damage">
-                            </form>
-                        </div>
-                        <div class="col">
-                            <form action="/participant/<%= p.id %>/heal/" method="post">
-                                <input type="input" name="damage" value="" placeholder="0">
-                                <input type="submit" class="button" value="Heal">
-                            </form>
-                        </div>
-                        <div class="col text-right">
-                            <form action="/participant/<%= p.id %>/initiative/" method="post">
-                                <input type="input" name="initiative" value="" placeholder="0">
-                                <input type="submit" class="button" value="Inish">
-                            </form>
-                        </div>
-                    </div>
+                    <%end%>
+                    <% if @inactive.count > 0 %>
+                        <hr/>
+                        <% @inactive.each do |p| %>
+                            <div class="panel participant inactive">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5><%= p.actor.name %></h5>
+                                        <% if p.hitpoints > 0 %>
+                                            <span class="hitpoints">hp:</span>
+                                            <%= p.damage%>/<%= p.hitpoints %>
+                                        <% end %>
+                                    </div>
+                                    <div class="col text-right">
+                                        <form action="/participant/<%= p.id %>/heal/" method="post">
+                                            <input type="input" name="damage" value="" placeholder="Heal">
+                                            <input type="submit" class="button" value="+">
+                                        </form>
+                                        <form action="/participant/<%= p.id %>/initiative/" method="post">
+                                            <input type="input" name="initiative" value="<%= p.initiative %>" placeholder="Inish" disabled>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        <%end%>
+                    <%end%>
                 </div>
-            <%end%>
+            </div>
         </div>
         <div class="col-md">
+            <div class="row">
+                <div class="col-md text-right">
+                    <a class="button" href="/newencounter/">New Encounter</a>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md">
                     <h3>Add a monster</h3>
                 </div>
-                <div class="col-md text-right">
-                    <%= erb :addmonster %>
+            </div>
+            <div class=margin-bottom>
+                <%= erb :addmonster %>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <%if @mob != nil %>
+                        <%= erb :monstertemplate %>
+                    <%end%>
                 </div>
             </div>
-        <div class="row">
-            <div class="col">
-                <%if @mob != nil %>
-                    <%= erb :monstertemplate %>
-                <%end%>
-            </div>
-        </div>
         </div>
     </div>
 </div>

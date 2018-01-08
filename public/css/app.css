@@ -25,6 +25,11 @@ h1,h2,h3,h4,h5,h6 {
 .container {
     margin-top: 1rem;
 }
+
+.margin-bottom {
+    margin-bottom: .25rem;
+}
+
 .panel {
     background: #fffaf0;
     border: 1px solid #5f0d0a;
@@ -41,19 +46,27 @@ h1,h2,h3,h4,h5,h6 {
     border-color: #5f0d0a;
 }
 
-.panel.participant form input[type="input"] {
-    width: 40px;
+.panel.participant form {
+    display: inline-block;
 }
-.panel.participant .initiative {
-    position: absolute;
-    top: -.25rem;
-    right: .75rem;
+.panel.participant form input[type="input"] {
+    width: 45px;
+}
+.panel.participant form input[name="initiative"] {
+    width: 30px;
     color: #5f0d0a;
     font-weight: bold;
 }
+.panel.participant form .button {
+    background-color: #b56054;
+}
+
 .panel.participant .hitpoints {
     color: #5f0d0a;
     font-weight: bold;
+}
+.panel.participant.inactive {
+    background: #d79265;
 }
 
 .panel.monster-template p {
@@ -79,6 +92,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .button {
+    cursor: pointer;
     border:none;
     display:inline-block;
     background: #5f0d0a;

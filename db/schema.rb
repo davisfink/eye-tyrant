@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180105012649) do
+ActiveRecord::Schema.define(version: 20180108152153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 20180105012649) do
     t.integer "damage", default: 0
     t.integer "hitpoints", default: 0
     t.integer "initiative", default: 0
+    t.boolean "active", default: true
   end
 
   create_table "parties", force: :cascade do |t|
@@ -134,6 +135,7 @@ ActiveRecord::Schema.define(version: 20180105012649) do
     t.string "name"
     t.text "text", array: true
     t.bigint "monster_type_id"
+    t.text "attack"
     t.index ["monster_type_id"], name: "index_traits_on_monster_type_id"
   end
 

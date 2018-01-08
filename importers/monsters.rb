@@ -47,7 +47,8 @@ doc.xpath('//monster').each do |m|
             text: Sequel.pg_array(text_to_add),
             attack: action.xpath('attack').text
         )
-        mob_to_add.add_action(action_to_add)
+        match_action = mob_to_add.actions.select do |a| a == action_to_add end
+        mob_to_add.add_action(action_to_add) if match_action.count == 0
     end
     m.xpath('legendary').each do |leg|
         text_to_add = leg.xpath('text').collect do |t| t.xpath('.').text end
@@ -56,8 +57,8 @@ doc.xpath('//monster').each do |m|
             text: Sequel.pg_array(text_to_add),
             attack: leg.xpath('attack').text
         )
-        leg_to_add.save_changes
-        mob_to_add.add_legendary(leg_to_add)
+        match_leggo = mob_to_add.legendaries.select do |l| l == leg_to_add end
+        mob_to_add.add_legendary(leg_to_add) if match_leggo.count == 0
     end
     m.xpath('trait').each do |trait|
         text_to_add = trait.xpath('text').collect do |t| t.xpath('.').text end
@@ -65,12 +66,13 @@ doc.xpath('//monster').each do |m|
             name: trait.xpath('name').text,
             text: Sequel.pg_array(text_to_add)
         )
-        trait_to_add.save_changes
-        mob_to_add.add_trait(trait_to_add)
+        match_trait = mob_to_add.traits.select do |t| t == trait_to_add end
+        mob_to_add.add_trait(trait_to_add) if match_trait.count == 0
     end
     m.xpath('spells').text.split(',').each do |s|
         spell = Spell.where(Sequel.ilike(:name, s.strip)).first
         match_spell = mob_to_add.spells.select do |s| spell == s end
         mob_to_add.add_spell(spell) if match_spell.count == 0 and spell
     end
+    pp mob_to_add.name
 end

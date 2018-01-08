@@ -20,11 +20,13 @@ class Participant < Sequel::Model
 
     def take_damage(value)
         self.damage = [damage + value.to_i, hitpoints].min
+        if damage == hitpoints then self.active = false end
         self.save_changes
     end
 
     def heal_damage(value)
         self.damage = [damage - value.to_i, 0].max
+        if active == false then self.active = true end
         self.save_changes
     end
 

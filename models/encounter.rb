@@ -18,6 +18,14 @@ class Encounter < Sequel::Model
         order.rotate(next_index)
     end
 
+    def active_participants
+        turn_order.select {|member| member.active == true }
+    end
+
+    def inactive_participants
+        self.participants.select {|member| member.active == false }
+    end
+
     def next_participant
         self.active_participant_id = turn_order[1].id
         self.save_changes
@@ -41,7 +49,7 @@ class Encounter < Sequel::Model
     end
 
     def monster_list
-        monsters = turn_order
+        monsters = active_participants
         monsters.select do |p| p.is_monster? end
     end
 

@@ -31,9 +31,9 @@ get '/encounter/:id/?' do
         character_experience: @encounter.per_party_experience,
         party_name: @encounter.party.name
     }
-    @participants = @encounter.turn_order
+    @participants = @encounter.active_participants
+    @inactive = @encounter.inactive_participants
     current_monster = @encounter.next_monster
-    puts current_monster
     @mob = MonsterType.find(id: current_monster.monster_type_id) if current_monster
     @xp = Experience.find(cr: @mob.cr).xp if current_monster
 
@@ -113,7 +113,7 @@ post '/participant/:id/heal/?' do
     participant = Participant.where(id: params[:id]).first
     participant.heal_damage(params[:damage])
 
-    redirect '/encounters/'
+    redirect request.referrer
 end
 
 post '/participant/:id/initiative/?' do
