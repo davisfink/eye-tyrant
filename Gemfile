@@ -32,3 +32,6 @@ gem "nokogiri", "~> 1.8"
 
 # Added at 2018-01-04 10:22:58 -0500 by davisfink:
 gem "pp", "~> 0.1.1"
+
+# Added at 2018-01-09 14:23:32 -0500 by davisfink:
+gem "sass", "~> 3.5"
