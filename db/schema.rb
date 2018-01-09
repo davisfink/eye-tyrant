@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108152153) do
+ActiveRecord::Schema.define(version: 20180109155222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(version: 20180108152153) do
     t.string "name"
     t.string "race"
     t.integer "party_id"
+  end
+
+  create_table "conditions", force: :cascade do |t|
+    t.string "name"
+    t.text "description", array: true
+  end
+
+  create_table "conditions_participants", id: false, force: :cascade do |t|
+    t.bigint "participant_id", null: false
+    t.bigint "condition_id", null: false
   end
 
   create_table "encounters", force: :cascade do |t|

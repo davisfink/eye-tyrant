@@ -3,17 +3,7 @@ require 'json'
 require 'erb'
 require 'pp'
 require './config/database.rb'
-require './models/encounter.rb'
-require './models/participant.rb'
-require './models/monster.rb'
-require './models/monster_type.rb'
-require './models/character.rb'
-require './models/party.rb'
-require './models/experience.rb'
-require './models/spell.rb'
-require './models/legendary.rb'
-require './models/trait.rb'
-require './models/action.rb'
+Dir["./models/*.rb"].each {|file| require file }
 
 get '/' do
     erb :index
@@ -37,6 +27,7 @@ get '/encounter/:id/?' do
     current_monster = @encounter.next_monster
     @mob = MonsterType.find(id: current_monster.monster_type_id) if current_monster
     @xp = Experience.find(cr: @mob.cr).xp if current_monster
+    @conditions = Condition.all
 
     erb :encounter
 end
@@ -120,6 +111,37 @@ end
 post '/participant/:id/initiative/?' do
     participant = Participant.where(id: params[:id]).first
     participant.set_initiative(params[:initiative])
+
+    redirect request.referrer
+end
+
+get '/participant/:id/add-condition/?' do
+    @current_participant = Participant.where(id: params[:id]).first
+    @conditions = Condition.reject do |c| @current_participant.conditions.include?(c) end
+
+    erb :addcondition
+end
+
+post '/participant/:id/add-condition/?' do
+    participant = Participant.where(id: params[:id]).first
+    condition = Condition.where(id: params[:condition]).first
+    match_condition = participant.conditions.select do |c| condition == c end
+    participant.add_condition(condition) if match_condition.count == 0
+
+    redirect request.referrer
+end
+
+get '/participant/:id/remove-condition/?' do
+    @current_participant = Participant.where(id: params[:id]).first
+    @conditions = Condition.all
+
+    erb :removecondition
+end
+
+post '/participant/:id/remove-condition/?' do
+    participant = Participant.where(id: params[:id]).first
+    condition = Condition.where(id: params[:condition]).first
+    participant.remove_condition(condition)
 
     redirect request.referrer
 end

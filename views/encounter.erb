@@ -26,8 +26,18 @@
                 <div class="col-md">
                     <% @participants.each do |p| %>
                         <div class="panel participant">
+                            <% if p.conditions.count > 0 %>
+                                <% p.conditions.each do |c| %>
+                                    <a href="/participant/<%=p.id%>/remove-condition/" data-condition="<%=c.id%>" class="condition <%= c.name %>">
+                                        <%= c.name %>
+                                        <% c.description do |d| %>
+                                            <p><%= d %></p>
+                                        <%end%>
+                                    </a>
+                                <%end%>
+                            <%end%>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-5">
                                     <h5><%= p.actor.name %></h5>
                                     <% if p.hitpoints > 0 %>
                                         <span class="hitpoints">hp:</span>
@@ -35,6 +45,8 @@
                                     <% end %>
                                 </div>
                                 <div class="col text-right">
+                                    <% @current_participant = p %>
+                                    <%= erb :addcondition %>
                                     <form action="/participant/<%= p.id %>/damage/" method="post">
                                         <input type="input" name="damage" value="" placeholder="Dmg">
                                         <input type="submit" class="button" value="-">
