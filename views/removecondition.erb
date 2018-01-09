@@ -1,0 +1,11 @@
+<form name="add-condition" action="/participant/<%=@current_participant.id%>/remove-condition/" method="post">
+    <select class="condition-list" name="condition">
+        <option value="">Choose a Condition</option>
+        <% if @current_participant.conditions.count > 0 %>
+            <% @current_participant.conditions.each do |c| %>
+                <option value="<%=c.id%>"><p><%= c.name %></p></option>
+            <%end%>
+        <%end%>
+    </select>
+    <input type="submit" class="button" value="Submit">
+</form>
