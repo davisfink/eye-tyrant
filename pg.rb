@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'erb'
+require 'pp'
 require './config/database.rb'
 require './models/encounter.rb'
 require './models/participant.rb'
@@ -130,6 +131,20 @@ get '/find-monster/?' do
     erb :monster
 end
 
+get '/monsters/?' do
+    @mob = MonsterType.where(id: params[:monster_type_id]).first
+    @xp = Experience.find(cr: @mob.cr).xp if @mob
+
+    erb :monster
+end
+
+get '/monsters/:id/?' do
+    @mob = MonsterType.where(id: params[:monster_type_id]).first
+    @xp = Experience.find(cr: @mob.cr).xp if @mob
+
+    erb :monster
+end
+
 get '/get-monster/?' do
     @mob = MonsterType.find(id: params[:id])
 
@@ -176,3 +191,18 @@ post '/party/:id/addmember/?' do
     redirect "/party/#{party_id}/"
 end
 
+get '/spells/?' do
+    @spell = Spell.where(id: params[:spell_id]).first
+
+    erb :spell
+end
+
+get '/spell-search/?' do
+    content_type :json
+    @attrs = params
+    @results = Spell.where(Sequel.ilike(:name, "%#{@attrs[:term]}%"))
+    json = @results.map do |result|
+        {id: result.id, text: result.name}
+    end
+    {results: json}.to_json
+end

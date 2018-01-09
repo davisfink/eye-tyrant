@@ -1,0 +1,17 @@
+<div id="SpellDetail" class="row">
+    <div class="col-md">
+        <div class="panel monster-template">
+            <h3><%= @spell.name %></h3>
+            <p class="italic">
+                <%= @spell.level + '-'+ @spell.school %>
+            </p>
+            <p><strong>Casting Time:</strong> <%= @spell.time%></p>
+            <p><strong>Range:</strong> <%= @spell.range%></p>
+            <p><strong>Components:</strong> <%= @spell.components%></p>
+            <p><strong>Duration:</strong> <%= @spell.duration%></p>
+            <% @spell.text.each do |t| %>
+                <p><%= t %></p>
+            <% end %>
+        </div>
+    </div>
+</div>

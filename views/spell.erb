@@ -2,14 +2,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
-            <h1>Go ahead. Search for a monster. See if I care.</h1>
-            <%= erb :findmonster %>
+            <h1>That spell probably doesn't do what you think it does</h1>
+            <%= erb :findspell %>
         </div>
     </div>
     <div class="row">
         <div class="col-md-8">
-            <%if @mob != nil %>
-                <%= erb :monstertemplate %>
+            <%if @spell != nil %>
+                <%= erb :spelltemplate %>
             <%end%>
         </div>
     </div>

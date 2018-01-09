@@ -109,6 +109,7 @@ h1,h2,h3,h4,h5,h6 {
     background: #5f0d0a;
 }
 
-.monster-search {
+.monster-search,
+.spell-search {
     width: 100%;
 }

@@ -60,12 +60,13 @@
                 <% end %>
                 <% if mob.spells.count > 0 %>
                     <h6>Spells</h6>
-                    <select>
+                    <select class="spell-list">
                         <option value="">Choose a Spell</option>
                         <% mob.spells.each do |s| %>
-                            <option><p><%= s.name %></p></option>
+                            <option value="<%=s.id%>"><p><%= s.name %></p></option>
                         <%end%>
                     </select>
+                    <div class="spell-container"></div>
                 <%end%>
                 <hr/>
             <%end%>
@@ -85,7 +86,7 @@
                 <% a.text.each do |t| %>
                     <p><%= t %></p>
                 <% end %>
-                <p><%= a.attack %></p>
+                <p><strong><%= a.attack %></strong></p>
             <% end %>
         </div>
     </div>
