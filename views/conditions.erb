@@ -1,12 +1,9 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <% @conditions.each do |c| %>
-                <h3><%= c.name %></h3>
-                <% c.description.each do |d| %>
-                    <p><%= d %></p>
-                <%end%>
-            <%end%>
-        </div>
+<% @conditions.each do |c| %>
+    <div class="panel condition <%= c.name%>" data-id="<%=c.id%>">
+        <div class="condition-icon <%= c.name%>"></div>
+        <h3><%= c.name %></h3>
+        <% c.description.each do |d| %>
+            <p><%= d %></p>
+        <%end%>
     </div>
-</div>
+<%end%>

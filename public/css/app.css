@@ -1,122 +1,185 @@
 html {
-    height: 100%;
-    background-attachment:fixed;
-    /* IE10+ */
-    background-image: -ms-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%);
+  height: 100%;
+  background-attachment: fixed;
+  /* IE10+ */
+  background-image: -ms-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%);
+  /* Mozilla Firefox */
+  background-image: -moz-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%);
+  /* Opera */
+  background-image: -o-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%);
+  /* Webkit (Safari/Chrome 10) */
+  background-image: -webkit-gradient(radial, left top, 0, left top, 572, color-stop(0, #D9BA91), color-stop(50, #EBC99D), color-stop(75, #CCAE88), color-stop(87.5, #E6C599), color-stop(93.75, #F2D0A2), color-stop(100, #D4B58D));
+  /* Webkit (Chrome 11+) */
+  background-image: -webkit-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%); }
 
-    /* Mozilla Firefox */
-    background-image: -moz-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%);
+body {
+  background: transparent; }
 
-    /* Opera */
-    background-image: -o-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(radial, left top, 0, left top, 572, color-stop(0, #D9BA91), color-stop(50, #EBC99D), color-stop(75, #CCAE88), color-stop(87.5, #E6C599), color-stop(93.75, #F2D0A2), color-stop(100, #D4B58D));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-radial-gradient(left top, ellipse farthest-corner, #D9BA91 0%, #EBC99D 50%, #CCAE88 75%, #E6C599 87.5%, #F2D0A2 93.75%, #D4B58D 100%);
-}
-body {background: transparent; }
-
-h1,h2,h3,h4,h5,h6 {
-    color: #5f0d0a;
-}
+h1, h2, h3, h4, h5, h6 {
+  color: #5f0d0a; }
 
 .container {
-    margin-top: 1rem;
-}
+  margin-top: 1rem; }
 
 .margin-bottom {
-    margin-bottom: .25rem;
-}
+  margin-bottom: .25rem; }
 
 .panel {
-    background: #fffaf0;
-    border: 1px solid #5f0d0a;
-    padding: .5rem;
-    margin-bottom: .5rem;
-    position: relative;
-}
+  background: #fffaf0;
+  border: 1px solid #5f0d0a;
+  padding: 1rem;
+  margin-bottom: .5rem;
+  position: relative; }
 
 .panel h3, .panel h4, .panel strong {
-    color: #5f0d0a;
-}
+  color: #5f0d0a; }
 
 .panel hr {
-    border-color: #5f0d0a;
-}
+  border-color: #5f0d0a; }
 
-.panel.participant form {
-    display: inline-block;
-}
-.panel.participant form select {
-    color: #888;
-    padding: .25rem 0;
-    width: 50px;
-}
-.panel.participant form input[type="input"] {
-    width: 45px;
-}
-.panel.participant form input[name="initiative"] {
-    width: 30px;
+.panel.participant {
+  position: relative; }
+  .panel.participant form {
+    display: inline-block; }
+    .panel.participant form select {
+      color: #888;
+      padding: .25rem 0;
+      width: 50px; }
+    .panel.participant form input[type="input"] {
+      width: 45px; }
+    .panel.participant form input[name="initiative"] {
+      width: 30px;
+      color: #5f0d0a;
+      font-weight: bold; }
+    .panel.participant form .button {
+      background-color: #b56054; }
+  .panel.participant .hitpoints {
     color: #5f0d0a;
-    font-weight: bold;
-}
-.panel.participant form .button {
-    background-color: #b56054;
-}
-
-.panel.participant .hitpoints {
-    color: #5f0d0a;
-    font-weight: bold;
-}
-.panel.participant.inactive {
-    background: #d79265;
-}
+    font-weight: bold; }
+  .panel.participant.inactive {
+    background: #d79265; }
+  .panel.participant .conditions {
+    position: absolute;
+    top: -.75rem;
+    left: -.5rem;
+    width: 100%;
+    z-index: 999; }
+    .panel.participant .conditions .details {
+      display: none; }
 
 .panel.monster-template p {
-    margin-bottom: .5rem;
-    line-height: 1.2;
-}
+  margin-bottom: .5rem;
+  line-height: 1.2; }
+
 .panel.monster-template hr {
-    margin: .25rem 0;
-}
+  margin: .25rem 0; }
 
 .italic {
-    font-style: italic;
-}
+  font-style: italic; }
 
 .statblock {
-    text-align: center;
-}
+  text-align: center; }
+
 .statblock .stat {
-    color: #5f0d0a;
-    display:block;
-    text-transform: uppercase;
-    font-weight: bold;
-}
+  color: #5f0d0a;
+  display: block;
+  text-transform: uppercase;
+  font-weight: bold; }
 
 .button {
-    cursor: pointer;
-    border:none;
-    display:inline-block;
-    background: #5f0d0a;
-    border-radius: 5px;
-    padding: 0.25rem .5rem;
-    text-decoration: none;
-    color: #eee;
-    box-shadow: 1px 2px 2px #d2b48c;
-}
+  cursor: pointer;
+  border: none;
+  display: inline-block;
+  background: #5f0d0a;
+  border-radius: 5px;
+  padding: 0.25rem .5rem;
+  text-decoration: none;
+  color: #eee;
+  box-shadow: 1px 2px 2px #d2b48c; }
 
 .button:hover {
-    text-decoration: none;
-    color: #eee;
-    background: #5f0d0a;
-}
+  text-decoration: none;
+  color: #eee;
+  background: #5f0d0a; }
 
 .monster-search,
 .spell-search {
-    width: 100%;
-}
+  width: 100%; }
 
-.condition {}
+.condition-icon {
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  margin-right: .25rem;
+  float: left; }
+  .condition-icon.Blinded {
+    color: purple;
+    background: url("/images/blinded.png");
+    background-size: cover; }
+  .condition-icon.Charmed {
+    color: purple;
+    background: url("/images/charmed.png");
+    background-size: cover; }
+  .condition-icon.Deafened {
+    color: purple;
+    background: url("/images/deafened.png");
+    background-size: cover; }
+  .condition-icon.Frightened {
+    color: purple;
+    background: url("/images/frightened.png");
+    background-size: cover; }
+  .condition-icon.Grappled {
+    color: purple;
+    background: url("/images/grappled.png");
+    background-size: cover; }
+  .condition-icon.Incapacitated {
+    color: purple;
+    background: url("/images/incapacitated.png");
+    background-size: cover; }
+  .condition-icon.Invisible {
+    color: purple;
+    background: url("/images/invisible.png");
+    background-size: cover; }
+  .condition-icon.Paralyzed {
+    color: purple;
+    background: url("/images/paralyzed.png");
+    background-size: cover; }
+  .condition-icon.Petrified {
+    color: purple;
+    background: url("/images/petrified.png");
+    background-size: cover; }
+  .condition-icon.Poisoned {
+    color: purple;
+    background: url("/images/poisoned.png");
+    background-size: cover; }
+  .condition-icon.Prone {
+    color: purple;
+    background: url("/images/prone.png");
+    background-size: cover; }
+  .condition-icon.Restrained {
+    color: purple;
+    background: url("/images/restrained.png");
+    background-size: cover; }
+  .condition-icon.Stunned {
+    color: purple;
+    background: url("/images/stunned.png");
+    background-size: cover; }
+  .condition-icon.Unconscious {
+    color: purple;
+    background: url("/images/unconscious.png");
+    background-size: cover; }
+
+#Conditions {
+  position: absolute;
+  top: 0;
+  left: 0; }
+  #Conditions .panel {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    min-width: 600px;
+    max-width: 700px;
+    transition: opacity 150ms;
+    z-index: -1; }

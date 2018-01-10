@@ -1,3 +1,9 @@
+//Icons sourced from https://opengameart.org/content/700-rpg-icons
+
+//Colors
+$primary-color:#5f0d0a;
+$secondary-color:lighten(#5f0d0a, 20%);
+
 html {
     height: 100%;
     background-attachment:fixed;
@@ -19,7 +25,7 @@ html {
 body {background: transparent; }
 
 h1,h2,h3,h4,h5,h6 {
-    color: #5f0d0a;
+    color: $primary-color;
 }
 
 .container {
@@ -32,46 +38,65 @@ h1,h2,h3,h4,h5,h6 {
 
 .panel {
     background: #fffaf0;
-    border: 1px solid #5f0d0a;
-    padding: .5rem;
+    border: 1px solid $primary-color;
+    padding: 1rem;
     margin-bottom: .5rem;
     position: relative;
 }
 
 .panel h3, .panel h4, .panel strong {
-    color: #5f0d0a;
+    color: $primary-color;
 }
 
 .panel hr {
-    border-color: #5f0d0a;
+    border-color: $primary-color;
 }
 
-.panel.participant form {
-    display: inline-block;
-}
-.panel.participant form select {
-    color: #888;
-    padding: .25rem 0;
-    width: 50px;
-}
-.panel.participant form input[type="input"] {
-    width: 45px;
-}
-.panel.participant form input[name="initiative"] {
-    width: 30px;
-    color: #5f0d0a;
-    font-weight: bold;
-}
-.panel.participant form .button {
-    background-color: #b56054;
-}
+.panel.participant{
+    position: relative;
+    form {
+        display: inline-block;
 
-.panel.participant .hitpoints {
-    color: #5f0d0a;
-    font-weight: bold;
-}
-.panel.participant.inactive {
-    background: #d79265;
+        select {
+            color: #888;
+            padding: .25rem 0;
+            width: 50px;
+        }
+
+        input[type="input"] {
+            width: 45px;
+        }
+
+        input[name="initiative"] {
+            width: 30px;
+            color: $primary-color;
+            font-weight: bold;
+        }
+
+        .button {
+            background-color: #b56054;
+        }
+    }
+
+    .hitpoints {
+        color: $primary-color;
+        font-weight: bold;
+    }
+
+    &.inactive {
+        background: #d79265;
+    }
+
+    .conditions {
+        position: absolute;
+        top: -.75rem;
+        left: -.5rem;
+        width: 100%;
+        z-index: 999;
+        .details {
+            display:none;
+        }
+    }
 }
 
 .panel.monster-template p {
@@ -90,7 +115,7 @@ h1,h2,h3,h4,h5,h6 {
     text-align: center;
 }
 .statblock .stat {
-    color: #5f0d0a;
+    color: $primary-color;
     display:block;
     text-transform: uppercase;
     font-weight: bold;
@@ -100,7 +125,7 @@ h1,h2,h3,h4,h5,h6 {
     cursor: pointer;
     border:none;
     display:inline-block;
-    background: #5f0d0a;
+    background: $primary-color;
     border-radius: 5px;
     padding: 0.25rem .5rem;
     text-decoration: none;
@@ -111,7 +136,7 @@ h1,h2,h3,h4,h5,h6 {
 .button:hover {
     text-decoration: none;
     color: #eee;
-    background: #5f0d0a;
+    background: $primary-color;
 }
 
 .monster-search,
@@ -119,4 +144,97 @@ h1,h2,h3,h4,h5,h6 {
     width: 100%;
 }
 
-.condition {}
+.condition-icon {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    margin-right: .25rem;
+    float: left;
+    &.Blinded {
+        color: purple;
+        background: url('/images/blinded.png');
+        background-size: cover;
+    }
+    &.Charmed {
+        color: purple;
+        background: url('/images/charmed.png');
+        background-size: cover;
+    }
+    &.Deafened {
+        color: purple;
+        background: url('/images/deafened.png');
+        background-size: cover;
+    }
+    &.Frightened {
+        color: purple;
+        background: url('/images/frightened.png');
+        background-size: cover;
+    }
+    &.Grappled {
+        color: purple;
+        background: url('/images/grappled.png');
+        background-size: cover;
+    }
+    &.Incapacitated {
+        color: purple;
+        background: url('/images/incapacitated.png');
+        background-size: cover;
+    }
+    &.Invisible {
+        color: purple;
+        background: url('/images/invisible.png');
+        background-size: cover;
+    }
+    &.Paralyzed {
+        color: purple;
+        background: url('/images/paralyzed.png');
+        background-size: cover;
+    }
+    &.Petrified {
+        color: purple;
+        background: url('/images/petrified.png');
+        background-size: cover;
+    }
+    &.Poisoned {
+        color: purple;
+        background: url('/images/poisoned.png');
+        background-size: cover;
+    }
+    &.Prone {
+        color: purple;
+        background: url('/images/prone.png');
+        background-size: cover;
+    }
+    &.Restrained {
+        color: purple;
+        background: url('/images/restrained.png');
+        background-size: cover;
+    }
+    &.Stunned {
+        color: purple;
+        background: url('/images/stunned.png');
+        background-size: cover;
+    }
+    &.Unconscious {
+        color: purple;
+        background: url('/images/unconscious.png');
+        background-size: cover;
+    }
+}
+
+#Conditions {
+    position:absolute;
+    top: 0;
+    left: 0;
+    .panel {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        min-width: 600px;
+        max-width: 700px;
+        transition: opacity 150ms;
+        z-index: -1;
+    }
+}

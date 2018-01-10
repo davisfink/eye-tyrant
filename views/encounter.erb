@@ -27,14 +27,11 @@
                     <% @participants.each do |p| %>
                         <div class="panel participant">
                             <% if p.conditions.count > 0 %>
-                                <% p.conditions.each do |c| %>
-                                    <a href="/participant/<%=p.id%>/remove-condition/" data-condition="<%=c.id%>" class="condition <%= c.name %>">
-                                        <%= c.name %>
-                                        <% c.description do |d| %>
-                                            <p><%= d %></p>
-                                        <%end%>
-                                    </a>
-                                <%end%>
+                                <div class="conditions">
+                                    <% p.conditions.each do |c| %>
+                                        <a href="/participant/<%=p.id%>/remove-condition/" data-condition="<%=c.id%>" class="condition-icon <%= c.name %>"></a>
+                                    <%end%>
+                                </div>
                             <%end%>
                             <div class="row">
                                 <div class="col-5">
@@ -114,5 +111,8 @@
             </div>
         </div>
     </div>
+</div>
+<div id="Conditions">
+    <%= erb :conditions %>
 </div>
 <%= erb :footer %>

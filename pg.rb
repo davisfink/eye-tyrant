@@ -228,3 +228,9 @@ get '/spell-search/?' do
     end
     {results: json}.to_json
 end
+
+get '/conditions/?' do
+    @conditions = Condition.all
+
+    erb :condition
+end
