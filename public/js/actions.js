@@ -56,4 +56,17 @@ $(document).ready(function() {
         descriptor.css({opacity: 0})
         descriptor.hide(150);
     });
+
+    $('body').on('click', 'a.remove-character', function(e) {
+        e.preventDefault();
+        href = $(this).attr('href');
+        data = $(this).data('participant_id');
+        $form = $("<form></form>");
+        $form.attr("action", href);
+        $form.attr('method', 'POST');
+        $form.append("<input type='hidden' value='" + data  + "' name='participant_id'></input>");
+        $('body').append($form);
+        $form.submit();
+    });
+
 });

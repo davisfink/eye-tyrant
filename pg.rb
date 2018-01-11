@@ -189,19 +189,19 @@ get '/parties/?' do
 end
 
 get '/party/:id/?' do
-    party_id = params[:id]
-    @members = Party.find(id: party_id).characters
+    @party = Party.where(id: params[:id]).first
+    @members = Party.find(id: @party.id).characters
 
     erb :party
 end
 
-get '/party/:id/addmember/?' do
+get '/party/:id/add-member/?' do
     @party_id = params[:id]
 
     erb :addmember
 end
 
-post '/party/:id/addmember/?' do
+post '/party/:id/add-member/?' do
     party_id = params[:id]
     #find party
     party = Party.find(id: party_id)
@@ -211,6 +211,37 @@ post '/party/:id/addmember/?' do
     party.add_character(member)
 
     redirect "/party/#{party_id}/"
+end
+
+get '/party/:id/new-character/?' do
+    @party = Party.where(id: params[:id]).first
+
+    erb :newcharacter
+end
+
+post '/party/:id/new-character/?' do
+    party = Party.where(id: params[:id]).first
+    participant = Participant.create()
+    character = Character.new(participant_id: participant.id, name: params[:name], race: params[:race] )
+
+    party.add_character(character)
+
+    redirect "/party/#{party.id}/"
+end
+
+get '/party/:id/remove-character/?' do
+    @party = Party.where(id: params[:id]).first
+
+    erb :newcharacter
+end
+
+post '/party/:id/remove-character/?' do
+    party = Party.where(id: params[:id]).first
+    character = Character.where(participant_id: params[:participant_id]).first
+
+    party.remove_character(character)
+
+    redirect "/party/#{party.id}/"
 end
 
 get '/spells/?' do
@@ -234,3 +265,4 @@ get '/conditions/?' do
 
     erb :condition
 end
+

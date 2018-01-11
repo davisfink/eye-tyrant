@@ -1,0 +1,19 @@
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>New Character</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Add a new charater to <%= @party.name %></h3>
+            <form action="/party/<%=@party.id%>/new-character/" method="post">
+                <input type="input" name="name" value="" placeholder="name">
+                <input type="input" name="race" value="" placeholder="race">
+                <input type="submit" class="button" value="Create">
+            </form>
+        </div>
+    </div>
+</div>
+<%= erb :footer %>

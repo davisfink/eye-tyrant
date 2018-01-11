@@ -1,28 +1,32 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Eye Tyrant</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <% @members.each do |m| %>
-                        <div class="panel">
-                            <h3><%= m.name %></h3>
-                            <p><<%= m.race %></p>
-                        </div>
-                    <%end%>
-                </div>
-                <div class="col-md">
-                    <a href="addmember/" class="button">Add New Member</a>
-                </div>
-            </div>
+<%= erb :header %>
+<div class="container">
+<div class="row">
+        <div class="col-md">
+            <h1><%= @party.name %></h1>
         </div>
-    </body>
+        <div class="col-md">
+            <a href=/parties/ class="button">Parties</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <% @members.each do |m| %>
+                <div class="panel">
+                    <h3><%= m.name %></h3>
+                    <p><<%= m.race %></p>
+                    <a href="/party/<%=@party.id%>/remove-character/"
+                        class="remove-character button"
+                        data-participant_id="<%=m.participant_id%>">
+                        Remove
+                    </a>
 
-</html>
+                </div>
+            <%end%>
+        </div>
+        <div class="col-md">
+            <a href="add-member/" class="button">Add New Member</a>
+            <a href="new-character/" class="button">Create New Character</a>
+        </div>
+    </div>
+</div>
+<%= erb :footer %>
