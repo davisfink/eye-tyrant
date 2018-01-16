@@ -190,7 +190,7 @@ end
 
 get '/party/:id/?' do
     @party = Party.where(id: params[:id]).first
-    @members = Party.find(id: @party.id).characters
+    @members = @party.characters
 
     erb :party
 end
@@ -215,6 +215,7 @@ end
 
 get '/party/:id/new-character/?' do
     @party = Party.where(id: params[:id]).first
+    @races = Race.order(:name)
 
     erb :newcharacter
 end
@@ -222,7 +223,7 @@ end
 post '/party/:id/new-character/?' do
     party = Party.where(id: params[:id]).first
     participant = Participant.create()
-    character = Character.new(participant_id: participant.id, name: params[:name], race: params[:race] )
+    character = Character.new(participant_id: participant.id, name: params[:name], races_id: params[:race] )
 
     party.add_character(character)
 

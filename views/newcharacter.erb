@@ -10,7 +10,12 @@
             <h3>Add a new charater to <%= @party.name %></h3>
             <form action="/party/<%=@party.id%>/new-character/" method="post">
                 <input type="input" name="name" value="" placeholder="name">
-                <input type="input" name="race" value="" placeholder="race">
+                <select class="race-list" name="race">
+                    <option value="">Select a Race</option>
+                    <% @races.each do |r| %>
+                        <option value="<%= r.id %>"><p><%= r.name %></p></option>
+                    <%end%>
+                </select>
                 <input type="submit" class="button" value="Create">
             </form>
         </div>

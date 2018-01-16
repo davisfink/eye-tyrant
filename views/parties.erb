@@ -1,35 +1,24 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Eye Tyrant</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <h1>Wow. Such party. Many character</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md">
-                    <% @parties.each do |p| %>
-                        <div class="panel">
-                            <h3><%= p.name %></h3>
-                            <% p.characters.each do |c| %>
-                                <h6><%= c.name %> the <%= c.race %></h6>
-                            <%end%>
-                            <a href="/party/<%=p.id%>/" class="button">Go to Party Page</a>
-                        </div>
-                    <%end%>
-                </div>
-                <div class="col-md">
-                </div>
-            </div>
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>Wow. Such party. Many character</h1>
         </div>
-    </body>
-
-</html>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <% @parties.each do |p| %>
+                <div class="panel">
+                    <h3><%= p.name %></h3>
+                    <% p.characters.each do |c| %>
+                        <h6><%= c.name %> the <%= c.race %></h6>
+                    <%end%>
+                    <a href="/party/<%=p.id%>/" class="button">Go to Party Page</a>
+                </div>
+            <%end%>
+        </div>
+        <div class="col-md">
+        </div>
+    </div>
+</div>
+<%= erb :footer %>

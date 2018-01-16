@@ -1,35 +1,22 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Eye Tyrant</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <h1>Welcome to Eye Tyrant</h1>
-                    <p>
-                        here you can do stuff like... the things listed...?
-                    </p>
-                </div>
-                <div class="col-md">
-                    <h3>Check out the Encounters</h3>
-                    <a href="/encounters/" class="button big">encounters</a>
-                    <h3>Look at Parties</h3>
-                    <a href="/parties/" class="button big">parties</a>
-                    <h3>Monsters are cool</h3>
-                    <a href="/monsters/" class="button big">monsters</a>
-                    <h3>Why not spells?</h3>
-                    <a href="/spells/" class="button big">spells</a>
-                </div>
-                </div>
-                </div>
-            </div>
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>Welcome to Eye Tyrant</h1>
+            <p>
+                here you can do stuff like... the things listed...?
+            </p>
         </div>
-    </body>
-
-</html>
+        <div class="col-md">
+            <h3>Check out the Encounters</h3>
+            <a href="/encounters/" class="button big">encounters</a>
+            <h3>Look at Parties</h3>
+            <a href="/parties/" class="button big">parties</a>
+            <h3>Monsters are cool</h3>
+            <a href="/monsters/" class="button big">monsters</a>
+            <h3>Why not spells?</h3>
+            <a href="/spells/" class="button big">spells</a>
+        </div>
+    </div>
+</div>
+<%= erb :footer %>

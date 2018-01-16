@@ -1,30 +1,19 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Eye Tyrant</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <% @encounters.each do |e| %>
-                        <div class="panel">
-                            <h3><%= e.party.name %></h3>
-                            <h4><%= e.total_experience %>xp</h4>
-                            <a href="/encounter/<%=e.id%>/" class="button">Go to Encounter</a>
-                        </div>
-                    <%end%>
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <% @encounters.each do |e| %>
+                <div class="panel">
+                    <h3><%= e.party.name %></h3>
+                    <h4><%= e.total_experience %>xp</h4>
+                    <a href="/encounter/<%=e.id%>/" class="button">Go to Encounter</a>
                 </div>
-                <div class="col-md">
-                    <a class="button" href="/newencounter/">New Encounter</a>
-                </div>
-            </div>
+            <%end%>
         </div>
-    </body>
-
-</html>
+        <div class="col-md">
+            <a class="button" href="/newencounter/">New Encounter</a>
+        </div>
+    </div>
+</div>
+<%= erb :footer %>
 

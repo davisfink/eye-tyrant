@@ -1,8 +1,9 @@
 //Icons sourced from https://opengameart.org/content/700-rpg-icons
 
+@import 'bootstrap/bootstrap.scss';
+
 //Colors
-$primary-color:#5f0d0a;
-$secondary-color:lighten(#5f0d0a, 20%);
+$primary-color: $brand-primary;
 
 html {
     height: 100%;
@@ -237,4 +238,8 @@ h1,h2,h3,h4,h5,h6 {
         transition: opacity 150ms;
         z-index: -1;
     }
+}
+
+.nav {
+    border-bottom: 1px solid $brand-primary;
 }
