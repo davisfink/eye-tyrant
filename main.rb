@@ -1,28 +1,16 @@
 require 'sinatra'
 require 'json'
 require 'erb'
-require './database.rb'
-require './models/encounter.rb'
-require './models/participant.rb'
-require './models/monster.rb'
-require './models/monster_type.rb'
-require './models/character.rb'
-require './models/party.rb'
-#require './models/encounter_participant.rb'
-require './models/experience.rb'
-#require './models/spell.rb'
-#require './models/action.rb'
-
-#leaving this here for easier testing in IRB
-@encounter = Encounter.where(active: "1").last
-@party = @encounter.turn_order
+require 'pp'
+require './config/database.rb'
+Dir["./models/*.rb"].each {|file| require file }
 
 get '/' do
     erb :index
 end
 
 get '/encounters/?' do
-    @encounters = Encounter.where(active: "1").reverse(:id)
+    @encounters = Encounter.where(active: TRUE).reverse(:id)
     erb :encounters
 end
 
@@ -34,10 +22,12 @@ get '/encounter/:id/?' do
         character_experience: @encounter.per_party_experience,
         party_name: @encounter.party.name
     }
-    @participants = @encounter.turn_order
+    @participants = @encounter.active_participants
+    @inactive = @encounter.inactive_participants
     current_monster = @encounter.next_monster
-    @mob = MonsterType.find(id: current_monster.monster_type_id)
-    @xp = Experience.find(cr: @mob.cr)
+    @mob = MonsterType.find(id: current_monster.monster_type_id) if current_monster
+    @xp = Experience.find(cr: @mob.cr).xp if current_monster
+    @conditions = Condition.all
 
     erb :encounter
 end
@@ -51,7 +41,7 @@ end
 
 
 get '/newencounter/?' do
-    @parties = Party.where(active: "1")
+    @parties = Party.where(active: TRUE)
     erb :newencounter
 end
 
@@ -125,9 +115,54 @@ post '/participant/:id/initiative/?' do
     redirect request.referrer
 end
 
+get '/participant/:id/add-condition/?' do
+    @current_participant = Participant.where(id: params[:id]).first
+    @conditions = Condition.reject do |c| @current_participant.conditions.include?(c) end
+
+    erb :addcondition
+end
+
+post '/participant/:id/add-condition/?' do
+    participant = Participant.where(id: params[:id]).first
+    condition = Condition.where(id: params[:condition]).first
+    match_condition = participant.conditions.select do |c| condition == c end
+    participant.add_condition(condition) if match_condition.count == 0
+
+    redirect request.referrer
+end
+
+get '/participant/:id/remove-condition/?' do
+    @current_participant = Participant.where(id: params[:id]).first
+    @conditions = Condition.all
+
+    erb :removecondition
+end
+
+post '/participant/:id/remove-condition/?' do
+    participant = Participant.where(id: params[:id]).first
+    condition = Condition.where(id: params[:condition]).first
+    participant.remove_condition(condition)
+
+    redirect request.referrer
+end
+
 get '/find-monster/?' do
     @search_term = params[:term]
     @results = MonsterType.where(Sequel.ilike(:name, "%#{@search_term}%"))
+
+    erb :monster
+end
+
+get '/monsters/?' do
+    @mob = MonsterType.where(id: params[:monster_type_id]).first
+    @xp = Experience.find(cr: @mob.cr).xp if @mob
+
+    erb :monster
+end
+
+get '/monsters/:id/?' do
+    @mob = MonsterType.where(id: params[:monster_type_id]).first
+    @xp = Experience.find(cr: @mob.cr).xp if @mob
 
     erb :monster
 end
@@ -149,24 +184,24 @@ get '/monster-search/?' do
 end
 
 get '/parties/?' do
-    @parties = Party.where(:active, "1")
+    @parties = Party.where(active: TRUE)
     erb :parties
 end
 
 get '/party/:id/?' do
-    party_id = params[:id]
-    @members = Party.find(id: party_id).characters
+    @party = Party.where(id: params[:id]).first
+    @members = @party.characters
 
     erb :party
 end
 
-get '/party/:id/addmember/?' do
+get '/party/:id/add-member/?' do
     @party_id = params[:id]
 
     erb :addmember
 end
 
-post '/party/:id/addmember/?' do
+post '/party/:id/add-member/?' do
     party_id = params[:id]
     #find party
     party = Party.find(id: party_id)
@@ -177,3 +212,58 @@ post '/party/:id/addmember/?' do
 
     redirect "/party/#{party_id}/"
 end
+
+get '/party/:id/new-character/?' do
+    @party = Party.where(id: params[:id]).first
+    @races = Race.order(:name)
+
+    erb :newcharacter
+end
+
+post '/party/:id/new-character/?' do
+    party = Party.where(id: params[:id]).first
+    participant = Participant.create()
+    character = Character.new(participant_id: participant.id, name: params[:name], races_id: params[:race] )
+
+    party.add_character(character)
+
+    redirect "/party/#{party.id}/"
+end
+
+get '/party/:id/remove-character/?' do
+    @party = Party.where(id: params[:id]).first
+
+    erb :newcharacter
+end
+
+post '/party/:id/remove-character/?' do
+    party = Party.where(id: params[:id]).first
+    character = Character.where(participant_id: params[:participant_id]).first
+
+    party.remove_character(character)
+
+    redirect "/party/#{party.id}/"
+end
+
+get '/spells/?' do
+    @spell = Spell.where(id: params[:spell_id]).first
+
+    erb :spell
+end
+
+get '/spell-search/?' do
+    content_type :json
+    @attrs = params
+    @results = Spell.where(Sequel.ilike(:name, "%#{@attrs[:term]}%"))
+    json = @results.map do |result|
+        {id: result.id, text: result.name}
+    end
+    {results: json}.to_json
+end
+
+get '/conditions/?' do
+    @conditions = Condition.all
+
+    erb :condition
+end
+
