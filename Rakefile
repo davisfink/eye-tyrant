@@ -2,4 +2,3 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/activerecord/rake'
-require './database.rb'
