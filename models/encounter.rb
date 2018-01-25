@@ -27,7 +27,7 @@ class Encounter < Sequel::Model
     end
 
     def next_participant
-        self.active_participant_id = turn_order[1].id
+        self.active_participant_id = active_participants[1].id
         self.save_changes
     end
 

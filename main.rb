@@ -69,10 +69,17 @@ end
 post '/encounter/:id/addmonster/?' do
     @encounter_id = params[:id]
     encounter = Encounter.find(id: @encounter_id)
+    participants = encounter.participants
     participant = Participant.create()
     monster = MonsterType.find(id: params[:monster_type_id])
 
-    Monster.create(participant_id: participant.id, monster_type_id: monster.id, name: monster.name)
+    monster_list = participants.select do |p|
+        p.actor.name.include? monster.name
+    end
+
+    name = monster.name + ' ' + (monster_list.count + 1).to_s
+
+    Monster.create(participant_id: participant.id, monster_type_id: monster.id, name: name)
     participant.calculate_hitpoints
     encounter.add_participant(participant)
 
