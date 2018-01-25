@@ -37,7 +37,7 @@ class Encounter < Sequel::Model
 
     private
     def experience
-        mobs = monster_list
+        mobs = total_monster_list
         mobs.inject(0) do |total, participant|
             total + Experience.where(cr: participant.monster.monster_type.cr).first.xp
         end
@@ -50,6 +50,11 @@ class Encounter < Sequel::Model
 
     def monster_list
         monsters = active_participants
+        monsters.select do |p| p.is_monster? end
+    end
+
+    def total_monster_list
+        monsters = self.participants
         monsters.select do |p| p.is_monster? end
     end
 
