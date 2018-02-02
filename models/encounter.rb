@@ -35,6 +35,15 @@ class Encounter < Sequel::Model
         monster_list.first.monster if monster_list.count > 0
     end
 
+    def monsters
+        total_monster_list
+    end
+
+    def archive
+        self.active = false
+        self.save_changes
+    end
+
     private
     def experience
         mobs = total_monster_list

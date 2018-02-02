@@ -9,11 +9,17 @@
         <div class="col-md">
             <% @parties.each do |p| %>
                 <div class="panel">
-                    <h3><%= p.name %></h3>
-                    <% p.characters.each do |c| %>
-                        <h6><%= c.name %> the <%= c.race %></h6>
-                    <%end%>
-                    <a href="/party/<%=p.id%>/" class="button">Go to Party Page</a>
+                    <div class="row">
+                        <div class="col-md">
+                            <h3><%= p.name %></h3>
+                            <% p.characters.each do |c| %>
+                                <h6><%= c.name %> the <%= c.race %></h6>
+                            <%end%>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <a href="/party/<%=p.id%>/" class="button">Go to Party Page</a>
+                        </div>
+                    </div>
                 </div>
             <%end%>
         </div>

@@ -6,6 +6,14 @@ require './config/database.rb'
 Dir["./models/*.rb"].each {|file| require file }
 
 get '/' do
+    @encounter = Encounter.where(active: TRUE).reverse(:id).first
+    @party = @encounter.party
+    @monsters = @encounter.monsters
+
+    pp @party
+    pp @encounter.participants
+    pp @monsters
+
     erb :index
 end
 
@@ -85,6 +93,13 @@ post '/encounter/:id/addmonster/?' do
 
     redirect "/encounter/#{params[:id]}/"
 
+end
+
+post '/encounter/:id/archive/?' do
+    encounter_id = params[:id]
+    Encounter.find(id: encounter_id).archive
+
+    redirect request.referrer
 end
 
 get '/participant/:id/damage/?' do

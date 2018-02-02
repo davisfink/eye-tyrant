@@ -4,9 +4,22 @@
         <div class="col-md">
             <% @encounters.each do |e| %>
                 <div class="panel">
-                    <h3><%= e.party.name %></h3>
-                    <h4><%= e.total_experience %>xp</h4>
-                    <a href="/encounter/<%=e.id%>/" class="button">Go to Encounter</a>
+                    <div class="row">
+                        <div class="col-md">
+                            <h3><%= e.party.name %></h3>
+                            <h4><%= e.total_experience %>xp</h4>
+                            <% e.monsters.each do |c| %>
+                                <h6><%= c.actor.name %></h6>
+                            <%end%>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <a href="/encounter/<%=e.id%>/" class="button margin-bottom">Go to Encounter</a>
+                            <form action="/encounter/<%= e.id %>/archive/" method="post">
+                                <input type="hidden" value="@encounter_id" name="id"/>
+                                <input type="submit" class="button" value="Archive">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             <%end%>
         </div>

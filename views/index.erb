@@ -3,9 +3,37 @@
     <div class="row">
         <div class="col-md">
             <h1>Welcome to Eye Tyrant</h1>
-            <p>
-                here you can do stuff like... the things listed...?
-            </p>
+            <div class="row">
+                <div class="col-md">
+                    <div class="panel">
+                        <div class="row">
+                            <div class="col-md">
+                                <h3><%= @encounter.party.name %></h3>
+                                <h4><%= @encounter.total_experience %>xp</h4>
+                                <% @monsters.each do |m| %>
+                                    <h6><%= m.actor.name %></h6>
+                                <%end%>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <a href="/encounter/<%= @encounter.id %>/" class="button">Go to Encounter</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="row">
+                            <div class="col-md">
+                                <h3><%= @party.name %></h3>
+                                <% @party.characters.each do |c| %>
+                                    <h6><%= c.name %> the <%= c.race %></h6>
+                                <%end%>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <a href="/party/<%=@party.id%>/" class="button">Go to Party Page</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md">
             <h3>Check out the Encounters</h3>
