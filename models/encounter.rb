@@ -44,6 +44,59 @@ class Encounter < Sequel::Model
         self.save_changes
     end
 
+    def self.new_encounter(params)
+        encounter = Encounter.create(party_id: params[:party_id])
+        members = Party.find(id: params[:party_id]).characters
+
+        members.each do |member|
+            participant = Participant.find(id: member.participant_id)
+            participant.set_initiative(0)
+            encounter.add_participant(participant)
+        end
+
+        encounter.generate(params) if params[:cr]
+        return encounter
+    end
+
+    def new_participant(id)
+        participant = Participant.create()
+        monster = MonsterType.find(id: id)
+
+        monster_list = self.participants.select do |p|
+            p.actor.name.include? monster.name
+        end
+
+        name = monster.name + ' ' + (monster_list.count + 1).to_s
+
+        Monster.create(participant_id: participant.id, monster_type_id: monster.id, name: name)
+        participant.calculate_hitpoints
+        self.add_participant(participant)
+    end
+
+    def generate(params)
+        monsters = MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
+        cr = Experience.find(id: params[:cr])
+        mobs = []
+
+        if cr
+            total_xp = 0
+            while total_xp < cr.xp
+                short_list = monsters.select do |m|
+                    m.xp <= cr.xp - total_xp
+                end
+
+                break if short_list.count == 0
+                mob_to_add = short_list.sample
+                mobs.push(mob_to_add)
+                total_xp += mob_to_add.xp
+            end
+        end
+
+        mobs.each do |m|
+            self.new_participant(m.id)
+        end
+    end
+
     private
     def experience
         mobs = total_monster_list
@@ -70,5 +123,6 @@ class Encounter < Sequel::Model
     def character_list
         self.participants.select do |p| p.is_character? end
     end
+
 end
 

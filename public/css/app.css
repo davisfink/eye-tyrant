@@ -6087,6 +6087,16 @@ h1, h2, h3, h4, h5, h6 {
       font-weight: bold; }
     .panel.participant form .button {
       background-color: #b56054; }
+    .panel.participant form.remove-monster .button {
+      color: #5f0d0a;
+      background-color: transparent;
+      font-size: 0.8rem;
+      box-shadow: none;
+      padding: 0;
+      border: none;
+      position: absolute;
+      top: 0;
+      right: 2px; }
   .panel.participant .hitpoints {
     color: #5f0d0a;
     font-weight: bold; }

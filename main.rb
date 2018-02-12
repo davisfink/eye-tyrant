@@ -34,7 +34,6 @@ get '/encounter/:id/?' do
     @inactive = @encounter.inactive_participants
     current_monster = @encounter.next_monster
     @mob = MonsterType.find(id: current_monster.monster_type_id) if current_monster
-    @xp = Experience.find(cr: @mob.cr).xp if current_monster
     @conditions = Condition.all
 
     erb :encounter
@@ -47,23 +46,22 @@ post '/encounter/:id/next-turn/?' do
     redirect request.referrer
 end
 
+get '/generate-encounter/?' do
+    @challenge = Experience.all
+
+    @mobs = Encounter.generate(params[:cr], params)
+
+    erb :generateencounter
+end
 
 get '/newencounter/?' do
     @parties = Party.where(active: TRUE)
+    @challenge = Experience.all
     erb :newencounter
 end
 
 post '/newencounter/?' do
-    members = Party.find(id: params[:party_id]).characters
-    encounter = Encounter.create(party_id: params[:party_id])
-    #hey maybe take a look at this sometime and make it suck slightly less.
-    #consider looking at the "participant" model and return itself based on
-    #a monster or character object
-    members.each do |member|
-        participant = Participant.find(id: member.participant_id)
-        participant.set_initiative(0)
-        encounter.add_participant(participant)
-    end
+    encounter = Encounter.new_encounter(params)
 
     redirect "/encounter/#{encounter.id}/"
 end
@@ -77,23 +75,19 @@ end
 post '/encounter/:id/addmonster/?' do
     @encounter_id = params[:id]
     encounter = Encounter.find(id: @encounter_id)
-    participants = encounter.participants
-    participant = Participant.create()
-    monster = MonsterType.find(id: params[:monster_type_id])
-
-    monster_list = participants.select do |p|
-        p.actor.name.include? monster.name
-    end
-
-    name = monster.name + ' ' + (monster_list.count + 1).to_s
-
-    Monster.create(participant_id: participant.id, monster_type_id: monster.id, name: name)
-    participant.calculate_hitpoints
-    encounter.add_participant(participant)
+    encounter.new_participant(params[:monster_type_id])
 
     redirect "/encounter/#{params[:id]}/"
-
 end
+
+post '/encounter/:id/removemonster/?' do
+    @encounter_id = params[:id]
+    encounter = Encounter.find(id: @encounter_id)
+    encounter.remove_participant(params[:participant_id])
+
+    redirect request.referrer
+end
+
 
 post '/encounter/:id/archive/?' do
     encounter_id = params[:id]
@@ -177,14 +171,12 @@ end
 
 get '/monsters/?' do
     @mob = MonsterType.where(id: params[:monster_type_id]).first
-    @xp = Experience.find(cr: @mob.cr).xp if @mob
 
     erb :monster
 end
 
 get '/monsters/:id/?' do
     @mob = MonsterType.where(id: params[:monster_type_id]).first
-    @xp = Experience.find(cr: @mob.cr).xp if @mob
 
     erb :monster
 end

@@ -1,0 +1,32 @@
+<form method="post" action="/newencounter/">
+    <div class="row margin-bottom">
+        <div class="col-sm">
+            <select name="cr">
+                <option value="">Select a Challenge</option>
+                <% @challenge.each do |c| %>
+                    <option value="<%= c.id %>" <%=p 'selected' if c.id.to_i == params[:cr].to_i %>>
+                    cr: <%= c.cr %> => <%= c.xp %>xp
+                    </option>
+                <%end%>
+            </select>
+        </div>
+        <div class="col-sm">
+            <select name="party_id">
+                <option value="">Select a Party</option>
+                <% @parties.each do |party| %>
+                    <option value="<%= party.id %>">
+                    <%= party.name%>
+                    </option>
+                <%end%>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <input type="input" name="term" value="<%=params[:term]%>" placeholder="Must Include?">
+        </div>
+        <div class="col">
+            <input type="submit" class="button" value="Create Encounter"/>
+        </div>
+    </div>
+</form>

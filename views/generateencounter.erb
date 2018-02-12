@@ -1,0 +1,24 @@
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>Make an encounter?</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <%= erb :createencounter %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <%if @mobs != nil %>
+                <% @mobs.each do |m| %>
+                    <% @mob = m %>
+                    <p><%= m.name %>, cr: <%= m.cr %></p>
+                <%end%>
+            <%end%>
+        </div>
+    </div>
+</div>
+<%= erb :footer %>

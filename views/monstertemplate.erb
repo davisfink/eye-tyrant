@@ -47,7 +47,7 @@
             <%if mob.senses != '' %><p><strong>Senses</strong> <%= mob.senses %></p><%end%>
             <%if mob.passive != '' %><p><strong>Passive Perception</strong> <%= mob.passive %></p><%end%>
             <%if mob.languages != '' %><p><strong>Languages</strong> <%= mob.languages %></p><%end%>
-            <p><strong>Challange Rating</strong> <%= mob.cr %> ( <%= @xp %>xp )</p>
+            <p><strong>Challange Rating</strong> <%= mob.cr %> ( <%= mob.xp %>xp )</p>
             <%if mob.resist != '' %><p><strong>Resistances</strong> <%= mob.resist %></p><%end%>
             <hr/>
             <% if mob.traits.count > 0 %>

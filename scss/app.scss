@@ -77,6 +77,20 @@ h1,h2,h3,h4,h5,h6 {
         .button {
             background-color: #b56054;
         }
+
+        &.remove-monster {
+            .button {
+                color: $brand-primary;
+                background-color: transparent;
+                font-size: 0.8rem;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                position: absolute;
+                top: 0;
+                right: 2px;
+            }
+        }
     }
 
     .hitpoints {
