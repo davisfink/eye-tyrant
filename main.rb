@@ -48,7 +48,7 @@ end
 
 get '/generate-encounter/?' do
     @challenge = Experience.all
-
+    @types = Type.all
     @mobs = Encounter.generate(params)
 
     erb :generateencounter
@@ -57,6 +57,8 @@ end
 get '/newencounter/?' do
     @parties = Party.where(active: TRUE)
     @challenge = Experience.all
+    @types = Type.all
+
     erb :newencounter
 end
 

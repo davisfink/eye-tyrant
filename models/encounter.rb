@@ -80,32 +80,21 @@ class Encounter < Sequel::Model
     end
 
     def self.generate(params)
-        monsters = MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
-        cr = Experience.find(id: params[:cr])
-        pp params
-        min_cr = Experience.find(id: params[:min_cr]) if params[:min_cr] != ''
-        max_cr = Experience.find(id: params[:max_cr]) if params[:max_cr] != ''
+        monsters = params[:type_id] != nil ? MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).where(type_id: params[:type_id]).exclude(cr:'0').all : MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
+        cr = Experience.find(id: params[:cr]) if params[:cr] != ''
+        min_cr = Experience.find(id: params[:min_cr].to_i) || Experience.first
+        max_cr = Experience.find(id: params[:max_cr].to_i) || Experience.last
         mobs = []
-
-       if min_cr != nil
-            monsters.select! do |m|
-                m.xp >= min_cr.xp
-            end
-        end
-
-        if max_cr != nil
-            monsters.select! do |m|
-                m.xp <= max_cr.xp
-            end
-        end
- 
-        pp monsters
 
         if cr
             total_xp = 0
             while total_xp < cr.xp
                 short_list = monsters.select do |m|
-                    m.xp <= cr.xp - total_xp
+                    if
+                        m.xp <= cr.xp - total_xp and
+                            m.xp.between?(min_cr.xp,max_cr.xp)
+                        m
+                    end
                 end
 
                 break if short_list.count == 0
