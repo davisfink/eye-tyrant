@@ -6096,7 +6096,7 @@ h1, h2, h3, h4, h5, h6 {
       border: none;
       position: absolute;
       top: 0;
-      right: 2px; }
+      left: 2px; }
   .panel.participant .hitpoints {
     color: #5f0d0a;
     font-weight: bold; }

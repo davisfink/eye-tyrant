@@ -6,17 +6,62 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <%= erb :createencounter %>
+        <div class="col-md">
+            <form>
+                <div class="row margin-bottom">
+                    <div class="col-sm">
+                        <select name="cr">
+                            <option value="">Select a Challenge</option>
+                            <% @challenge.each do |c| %>
+                                <option value="<%= c.id %>" <%=p 'selected' if c.id.to_i == params[:cr].to_i %>>
+                                cr: <%= c.cr %> => <%= c.xp %>xp
+                                </option>
+                            <%end%>
+                        </select>
+                    </div>
+                </div>
+                <div class="row margin-bottom">
+                    <div class="col-sm">
+                        <select name="min_cr">
+                            <option value="">Select a Min CR</option>
+                            <% @challenge.each do |c| %>
+                                <option value="<%= c.id %>" <%=p 'selected' if c.id.to_i == params[:min_cr].to_i %>>
+                                cr: <%= c.cr %> => <%= c.xp %>xp
+                                </option>
+                            <%end%>
+                        </select>
+                    </div>
+                </div>
+                <div class="row margin-bottom">
+                    <div class="col-sm">
+                        <select name="max_cr">
+                            <option value="">Select a Max CR</option>
+                            <% @challenge.each do |c| %>
+                                <option value="<%= c.id %>" <%=p 'selected' if c.id.to_i == params[:max_cr].to_i %>>
+                                cr: <%= c.cr %> => <%= c.xp %>xp
+                                </option>
+                            <%end%>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <input type="input" name="term" value="<%=params[:term]%>" placeholder="Must Include?">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="button" value="Create Encounter"/>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
+        <div class="col-md">
             <%if @mobs != nil %>
-                <% @mobs.each do |m| %>
-                    <% @mob = m %>
-                    <p><%= m.name %>, cr: <%= m.cr %></p>
-                <%end%>
+                <div class="panel">
+                    <% @mobs.each do |m| %>
+                        <% @mob = m %>
+                        <p><%= m.name %>, cr: <%= m.cr %></p>
+                    <%end%>
+                </div>
             <%end%>
         </div>
     </div>

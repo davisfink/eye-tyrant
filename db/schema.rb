@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111153009) do
+ActiveRecord::Schema.define(version: 20180212180251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 20180111153009) do
   create_table "monster_types", force: :cascade do |t|
     t.string "name"
     t.string "size"
-    t.string "type"
     t.string "alignment"
     t.string "ac"
     t.string "hp"
@@ -99,6 +98,8 @@ ActiveRecord::Schema.define(version: 20180111153009) do
     t.string "cr"
     t.string "slots"
     t.string "description"
+    t.bigint "type_id"
+    t.index ["type_id"], name: "index_monster_types_on_type_id"
   end
 
   create_table "monster_types_spells", id: false, force: :cascade do |t|
@@ -109,6 +110,11 @@ ActiveRecord::Schema.define(version: 20180111153009) do
   create_table "monster_types_traits", id: false, force: :cascade do |t|
     t.bigint "monster_type_id", null: false
     t.bigint "trait_id", null: false
+  end
+
+  create_table "monster_types_types", id: false, force: :cascade do |t|
+    t.bigint "type_id", null: false
+    t.bigint "monster_type_id", null: false
   end
 
   create_table "monsters", force: :cascade do |t|
@@ -155,6 +161,10 @@ ActiveRecord::Schema.define(version: 20180111153009) do
     t.string "level"
   end
 
+  create_table "testerson", force: :cascade do |t|
+    t.string "tacos"
+  end
+
   create_table "traits", force: :cascade do |t|
     t.string "name"
     t.text "text", array: true
@@ -163,5 +173,12 @@ ActiveRecord::Schema.define(version: 20180111153009) do
     t.index ["monster_type_id"], name: "index_traits_on_monster_type_id"
   end
 
+  create_table "types", force: :cascade do |t|
+    t.string "name"
+    t.string "race"
+    t.string "source"
+  end
+
   add_foreign_key "characters", "races", column: "races_id"
+  add_foreign_key "monster_types", "types"
 end

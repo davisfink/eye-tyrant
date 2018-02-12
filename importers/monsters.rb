@@ -2,11 +2,7 @@ require 'sequel'
 require 'nokogiri'
 require 'pp'
 require './config/database.rb'
-require './models/monster_type.rb'
-require './models/action.rb'
-require './models/legendary.rb'
-require './models/trait.rb'
-require './models/spell.rb'
+Dir["./models/*.rb"].each {|file| require file }
 
 file_location = ARGV[0] || ''
 doc = File.open(file_location) { |f| Nokogiri::XML(f) }
@@ -15,7 +11,6 @@ doc.xpath('//monster').each do |m|
     mob_to_add = MonsterType.find_or_create(
         name: m.xpath('name').text,
         size: m.xpath('size').text,
-        type: m.xpath('type').text,
         alignment: m.xpath('alignment').text,
         ac: m.xpath('ac').text,
         hp: m.xpath('hp').text,
@@ -74,5 +69,11 @@ doc.xpath('//monster').each do |m|
         match_spell = mob_to_add.spells.select do |s| spell == s end
         mob_to_add.add_spell(spell) if match_spell.count == 0 and spell
     end
+
+    type_tmp = m.xpath('type').text.split(/\W/)
+    type_name = type_tmp.shift
+    type_to_add = Type.find_or_create(name: type_name)
+    mob_to_add.update(type_id: type_to_add.id)
+
     pp mob_to_add.name
 end

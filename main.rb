@@ -49,7 +49,7 @@ end
 get '/generate-encounter/?' do
     @challenge = Experience.all
 
-    @mobs = Encounter.generate(params[:cr], params)
+    @mobs = Encounter.generate(params)
 
     erb :generateencounter
 end

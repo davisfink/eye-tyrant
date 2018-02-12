@@ -44,20 +44,6 @@ class Encounter < Sequel::Model
         self.save_changes
     end
 
-    def self.new_encounter(params)
-        encounter = Encounter.create(party_id: params[:party_id])
-        members = Party.find(id: params[:party_id]).characters
-
-        members.each do |member|
-            participant = Participant.find(id: member.participant_id)
-            participant.set_initiative(0)
-            encounter.add_participant(participant)
-        end
-
-        encounter.generate(params) if params[:cr]
-        return encounter
-    end
-
     def new_participant(id)
         participant = Participant.create()
         monster = MonsterType.find(id: id)
@@ -73,10 +59,47 @@ class Encounter < Sequel::Model
         self.add_participant(participant)
     end
 
-    def generate(params)
+
+    def self.new_encounter(params)
+        encounter = Encounter.create(party_id: params[:party_id])
+        members = Party.find(id: params[:party_id]).characters
+
+        members.each do |member|
+            participant = Participant.find(id: member.participant_id)
+            participant.set_initiative(0)
+            encounter.add_participant(participant)
+        end
+
+        mobs = Encounter.generate(params) if params[:cr]
+
+        mobs.each do |m|
+            encounter.new_participant(m.id)
+        end
+
+        return encounter
+    end
+
+    def self.generate(params)
         monsters = MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
         cr = Experience.find(id: params[:cr])
+        pp params
+        min_cr = Experience.find(id: params[:min_cr]) if params[:min_cr] != ''
+        max_cr = Experience.find(id: params[:max_cr]) if params[:max_cr] != ''
         mobs = []
+
+       if min_cr != nil
+            monsters.select! do |m|
+                m.xp >= min_cr.xp
+            end
+        end
+
+        if max_cr != nil
+            monsters.select! do |m|
+                m.xp <= max_cr.xp
+            end
+        end
+ 
+        pp monsters
 
         if cr
             total_xp = 0
@@ -92,9 +115,7 @@ class Encounter < Sequel::Model
             end
         end
 
-        mobs.each do |m|
-            self.new_participant(m.id)
-        end
+        return mobs
     end
 
     private

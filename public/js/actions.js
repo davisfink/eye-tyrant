@@ -4,7 +4,8 @@ $(document).ready(function() {
             url: '/monster-search/',
             dataType: 'json'
         },
-        minimumInputLength: 2
+        minimumInputLength: 2,
+        allowDuplicates: true
     });
 
     $('.spell-search').select2({
