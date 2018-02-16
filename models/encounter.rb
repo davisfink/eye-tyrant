@@ -80,7 +80,7 @@ class Encounter < Sequel::Model
     end
 
     def self.generate(params)
-        monsters = params[:type_id] != nil ? MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).where(type_id: params[:type_id]).exclude(cr:'0').all : MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
+        monsters = params[:type_id] != '' ? MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).where(type_id: params[:type_id]).exclude(cr:'0').all : MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
         cr = Experience.find(id: params[:cr]) if params[:cr] != ''
         min_cr = Experience.find(id: params[:min_cr].to_i) || Experience.first
         max_cr = Experience.find(id: params[:max_cr].to_i) || Experience.last
