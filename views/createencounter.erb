@@ -10,6 +10,44 @@
                 <%end%>
             </select>
         </div>
+    </div>
+    <div class="row margin-bottom">
+        <div class="col-sm">
+            <select name="min_cr">
+                <option value="">Select a Min CR</option>
+                <% @challenge.each do |c| %>
+                    <option value="<%= c.id %>" <%= 'selected' if c.id.to_i == params[:min_cr].to_i %>>
+                    cr: <%= c.cr %> => <%= c.xp %>xp
+                    </option>
+                <%end%>
+            </select>
+        </div>
+    </div>
+    <div class="row margin-bottom">
+        <div class="col-sm">
+            <select name="max_cr">
+                <option value="">Select a Max CR</option>
+                <% @challenge.each do |c| %>
+                    <option value="<%= c.id %>" <%= 'selected' if c.id.to_i == params[:max_cr].to_i %>>
+                    cr: <%= c.cr %> => <%= c.xp %>xp
+                    </option>
+                <%end%>
+            </select>
+        </div>
+    </div>
+    <div class="row margin-bottom">
+        <div class="col-sm">
+            <select name="type_id">
+                <option value="">Select a Type</option>
+                <% @types.each do |t| %>
+                    <option value="<%= t.id %>" <%= 'selected' if t.id.to_i == params[:type_id].to_i %>>
+                    <%= t.name %>
+                    </option>
+                <%end%>
+            </select>
+        </div>
+    </div>
+    <div class="row margin-bottom">
         <div class="col-sm">
             <select name="party_id">
                 <option value="">Select a Party</option>
