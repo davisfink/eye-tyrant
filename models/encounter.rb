@@ -6,6 +6,10 @@ class Encounter < Sequel::Model
         @total_experience ||= experience
     end
 
+    def adjusted_experience
+        @total_experience ||= experience
+    end
+
     def per_party_experience
         @per_party_experience ||= party_experience
     end
@@ -27,7 +31,11 @@ class Encounter < Sequel::Model
     end
 
     def next_participant
-        self.active_participant_id = active_participants[1].id
+        current_p = active_participants.first
+        next_p = active_participants[1..-1].find do |p|
+            p.is_character? or (p.actor.monster_type_id != current_p.actor.monster_type_id)
+        end
+        self.active_participant_id = next_p.id
         self.save_changes
     end
 
@@ -59,6 +67,18 @@ class Encounter < Sequel::Model
         self.add_participant(participant)
     end
 
+    def update_initiative(participant, initiative)
+        if participant.is_monster?
+            monster_type = participant.actor.monster_type_id
+            monster_list.each do |m|
+                if m.actor.monster_type_id == monster_type
+                    m.set_initiative(initiative)
+                end
+            end
+        else
+            participant.set_initiative(initiative)
+        end
+    end
 
     def self.new_encounter(params)
         encounter = Encounter.create(party_id: params[:party_id])

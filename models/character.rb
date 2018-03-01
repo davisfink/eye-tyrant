@@ -7,4 +7,8 @@ class Character < Sequel::Model
     def race
         Race.where(id: self.races_id).first.name
     end
+
+    def monster_type_id
+        nil
+    end
 end

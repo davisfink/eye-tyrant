@@ -75,9 +75,11 @@ get '/encounter/:id/addmonster/?' do
 end
 
 post '/encounter/:id/addmonster/?' do
-    @encounter_id = params[:id]
-    encounter = Encounter.find(id: @encounter_id)
-    encounter.new_participant(params[:monster_type_id])
+    encounter = Encounter.find(id: params[:id])
+    count = params[:number_of].to_i || 1
+    (0...count).each do |i|
+        encounter.new_participant(params[:monster_type_id])
+    end
 
     redirect "/encounter/#{params[:id]}/"
 end
@@ -126,9 +128,10 @@ post '/participant/:id/heal/?' do
     redirect request.referrer
 end
 
-post '/participant/:id/initiative/?' do
+post '/participant/:id/initiative/:encounter_id/?' do
+    encounter = Encounter.where(id: params[:encounter_id]).first
     participant = Participant.where(id: params[:id]).first
-    participant.set_initiative(params[:initiative])
+    encounter.update_initiative(participant, params[:initiative])
 
     redirect request.referrer
 end

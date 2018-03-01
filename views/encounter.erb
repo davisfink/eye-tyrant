@@ -52,7 +52,7 @@
                                         <input type="input" name="damage" value="" placeholder="Heal">
                                         <input type="submit" class="button" value="+">
                                     </form>
-                                    <form action="/participant/<%= p.id %>/initiative/" method="post">
+                                    <form action="/participant/<%= p.id %>/initiative/<%= @encounter_id %>/" method="post">
                                         <input type="input" name="initiative" value="<%= p.initiative %>" placeholder="Inish">
                                         <input type="submit" class="button" value="~">
                                     </form>
