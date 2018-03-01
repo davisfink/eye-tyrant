@@ -19,6 +19,13 @@ class Participant < Sequel::Model
         if character then true end
     end
 
+    def type
+        case
+        when monster then "monster"
+        when character then "character"
+        end
+    end
+
     def take_damage(value)
         self.damage = [damage + value.to_i, hitpoints].min
         if damage == hitpoints then self.active = false end

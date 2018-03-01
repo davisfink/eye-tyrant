@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md">
                     <% @participants.each do |p| %>
-                        <div class="panel participant">
+                        <div class="panel participant <%= p.type %>">
                             <% if p.conditions.count > 0 %>
                                 <div class="conditions">
                                     <% p.conditions.each do |c| %>

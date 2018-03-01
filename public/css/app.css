@@ -6060,7 +6060,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .panel {
   background: #fffaf0;
-  border: 1px solid #5f0d0a;
+  border: 8px solid transparent;
+  border-image: url(/images/leaf-border.png) 50 round;
   padding: 1rem;
   margin-bottom: .5rem;
   position: relative; }
@@ -6110,6 +6111,8 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 999; }
     .panel.participant .conditions .details {
       display: none; }
+  .panel.participant.character {
+    background: #ffe1a4; }
 
 .panel.monster-template p {
   margin-bottom: .5rem;
