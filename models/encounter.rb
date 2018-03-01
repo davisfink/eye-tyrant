@@ -72,14 +72,18 @@ class Encounter < Sequel::Model
 
         mobs = Encounter.generate(params) if params[:cr]
 
-        mobs.each do |m|
-            encounter.new_participant(m.id)
+        if mobs
+            mobs.each do |m|
+                encounter.new_participant(m.id)
+            end
         end
 
         return encounter
     end
 
     def self.generate(params)
+        #http://dnd.wizards.com/articles/features/building-adventures-0
+        #these are the rules for encounter CR The current setup is wrong
         monsters = params[:type_id] != '' ? MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).where(type_id: params[:type_id]).exclude(cr:'0').all : MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
         cr = Experience.find(id: params[:cr]) if params[:cr] != ''
         min_cr = Experience.find(id: params[:min_cr].to_i) || Experience.first
