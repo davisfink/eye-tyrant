@@ -6,7 +6,7 @@
                 <div class="panel">
                     <div class="row">
                         <div class="col-md">
-                            <h3><%= e.party.name %></h3>
+                            <h3><%= e.party.name %> <small><%= e.party.level%></small></h3>
                             <h4><%= e.total_experience %>xp</h4>
                             <% e.monsters.each do |c| %>
                                 <h6><%= c.actor.name %></h6>

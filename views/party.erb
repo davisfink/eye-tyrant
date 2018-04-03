@@ -2,14 +2,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
-            <h1><%= @party.name %></h1>
+            <h1><%= @party.name %> <small><%= @party.level %></small></h1>
         </div>
         <div class="col-md text-right">
             <a href=/parties/ class="button">Parties</a>
         </div>
     </div>
     <div class="row">
-        <div class="col-md">
+        <div class="col-md-6">
             <% @members.each do |m| %>
                 <div class="panel">
                     <div class="row">
@@ -30,8 +30,16 @@
             <%end%>
         </div>
         <div class="col-md">
-            <a href="add-member/" class="button">Add New Member</a>
+            <a href="add-member/" class="button margin-bottom">Add New Member</a>
             <a href="new-character/" class="button">Create New Character</a>
+        </div>
+        <div class="col-md">
+            <form action="/party/<%=@party.id%>/level-up/" method="post" class="margin-bottom">
+                <input class="button" type='submit' value="Level Up!"/>
+            </form>
+            <form action="/party/<%=@party.id%>/level-down/" method="post">
+                <input class="button" type='submit' value="Level Down"/>
+            </form>
         </div>
     </div>
 </div>

@@ -22,7 +22,7 @@
                     <div class="panel">
                         <div class="row">
                             <div class="col-md">
-                                <h3><%= @party.name %></h3>
+                                <h3><%= @party.name %> <small><%= @party.level%></small></h3>
                                 <% @party.characters.each do |c| %>
                                     <h6><%= c.name %> the <%= c.race %></h6>
                                 <%end%>

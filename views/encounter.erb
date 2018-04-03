@@ -2,20 +2,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
+            <h1><%= @details[:party_name]%> <small><%= @details[:party_level]%></small></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
             <div class="row">
-                <div class="col-md">
-                    <h1><%= @details[:party_name]%></h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <p>
-                        Encounter:
-                        <strong><%= @details[:character_experience]%>xp</strong>
-                        ( <%= @details[:total_experience] %>, <%= @details[:adjusted_experience] %>xp )
-                    </p>
-                </div>
-                <div class="col-md text-right">
+                <div class="col-md text-right margin-bottom">
                     <form action="/encounter/<%= @encounter_id %>/next-turn/" method="post">
                         <input type="hidden" value="@encounter_id" name="id"/>
                         <input type="submit" class="button" value="Next Participant">
@@ -93,9 +86,74 @@
             </div>
         </div>
         <div class="col-md">
-            <div class="row">
-                <div class="col-md text-right">
-                    <a class="button" href="/newencounter/">New Encounter</a>
+            <div class="panel">
+                <div class="row margin-bottom">
+                    <div class="col-md">
+                        <h4>Encounter:</h4>
+                        <div class="row">
+                            <div class="col-md-7">
+                                Per Character:
+                            </div>
+                            <div class="col-md">
+                                 <strong><%= @details[:character_experience]%>xp</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                Total:
+                            </div>
+                            <div class="col-md">
+                                <%= @details[:total_experience] %>xp
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                Adjusted:
+                            </div>
+                            <div class="col-md">
+                                 <%= @details[:adjusted_experience] %>xp
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="row">
+                            <div class="col-md-7">
+                                easy:
+                            </div>
+                            <div class="col-md">
+                                <%= @details[:easy] %>xp
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                medium:
+                            </div>
+                            <div class="col-md">
+                                <%= @details[:medium] %>xp
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                challenging:
+                            </div>
+                            <div class="col-md">
+                                <%= @details[:challenging] %>xp
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                hard:
+                            </div>
+                            <div class="col-md">
+                                <%= @details[:hard] %>xp
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md text-right">
+                        <a class="button" href="/newencounter/">New Encounter</a>
+                    </div>
                 </div>
             </div>
             <div class="row">

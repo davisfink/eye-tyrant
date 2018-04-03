@@ -7,9 +7,8 @@ class Encounter < Sequel::Model
     end
 
     def adjusted_experience
-        multiplier = monsters.count / character_list.count
-        pp multiplier
-        @total_experience * multiplier
+        multiplier = ChallengeMultiplier.where(value: (monsters.count / character_list.count)).first.multiplier
+        (@total_experience * multiplier).to_i
     end
 
     def per_party_experience

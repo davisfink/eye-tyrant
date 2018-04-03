@@ -25,11 +25,18 @@ end
 get '/encounter/:id/?' do
     @encounter_id = params[:id]
     @encounter = Encounter.find(id: params[:id])
+    difficulty = ChallengeRating.where(level: @encounter.party.level).first
+    character_count = @encounter.party.characters.count
     @details = {
         total_experience: @encounter.total_experience,
         adjusted_experience: @encounter.adjusted_experience,
         character_experience: @encounter.per_party_experience,
-        party_name: @encounter.party.name
+        party_name: @encounter.party.name,
+        party_level: @encounter.party.level,
+        easy: difficulty.easy * character_count,
+        medium: difficulty.medium * character_count,
+        challenging: difficulty.challenging * character_count,
+        hard: difficulty.hard * character_count,
     }
     @participants = @encounter.active_participants
     @inactive = @encounter.inactive_participants
@@ -262,6 +269,20 @@ post '/party/:id/remove-character/?' do
     character = Character.where(participant_id: params[:participant_id]).first
 
     party.remove_character(character)
+
+    redirect "/party/#{party.id}/"
+end
+
+post '/party/:id/level-up/?' do
+    party = Party.where(id: params[:id]).first
+    party.levelUp
+
+    redirect "/party/#{party.id}/"
+end
+
+post '/party/:id/level-down/?' do
+    party = Party.where(id: params[:id]).first
+    party.levelDown
 
     redirect "/party/#{party.id}/"
 end

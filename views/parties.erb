@@ -11,7 +11,7 @@
                 <div class="panel">
                     <div class="row">
                         <div class="col-md">
-                            <h3><%= p.name %></h3>
+                            <h3><%= p.name %> <small><%= p.level %></small></h3>
                             <% p.characters.each do |c| %>
                                 <h6><%= c.name %> the <%= c.race %></h6>
                             <%end%>

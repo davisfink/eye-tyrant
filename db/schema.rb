@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403134412) do
+ActiveRecord::Schema.define(version: 20180403150542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 20180403134412) do
   create_table "actions_monster_types", id: false, force: :cascade do |t|
     t.bigint "monster_type_id", null: false
     t.bigint "action_id", null: false
+  end
+
+  create_table "challenge_multipliers", force: :cascade do |t|
+    t.integer "value"
+    t.float "multiplier"
   end
 
   create_table "challenge_ratings", force: :cascade do |t|
@@ -141,6 +146,7 @@ ActiveRecord::Schema.define(version: 20180403134412) do
   create_table "parties", force: :cascade do |t|
     t.string "name"
     t.boolean "active", default: true
+    t.integer "level", default: 1
   end
 
   create_table "races", force: :cascade do |t|
