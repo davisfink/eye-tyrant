@@ -58,6 +58,8 @@ get '/generate-encounter/?' do
     @challenge = Experience.all
     @types = Type.all
     @mobs = Encounter.generate(params)
+    level = params[:level] || 1
+    @difficulty = ChallengeRating.where(level: level).first
 
     erb :generateencounter
 end

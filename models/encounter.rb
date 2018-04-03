@@ -111,13 +111,23 @@ class Encounter < Sequel::Model
         max_cr = Experience.find(id: params[:max_cr].to_i) || Experience.last
         mobs = []
 
-        if cr
+        character_count = params[:character_count].to_i || 4
+        level_difficulties = ChallengeRating.where(level: params[:level]).first || ChallengeRating.first
+        difficulty = params[:difficulty] || "medium"
+        difficulty_xp = level_difficulties[difficulty.to_sym] * character_count || 0
+        multipler_list = ChallengeMultiplier.all
+
+        pp character_count, level_difficulties, difficulty, multipler_list, level_difficulties[difficulty.to_sym]
+
+        if difficulty
+            adjusted_xp = 0
             total_xp = 0
-            while total_xp < cr.xp
+            while adjusted_xp < difficulty_xp
+                multiplier = multipler_list.select {|m| m.value == (mobs.count + 1 / character_count) }.first.multiplier
                 short_list = monsters.select do |m|
-                    if
-                        m.xp <= cr.xp - total_xp and
-                            m.xp.between?(min_cr.xp,max_cr.xp)
+                    #m.xp.between?(min_cr.xp,max_cr.xp)
+                    tmp_adjusted_xp = ((total_xp + m.xp) * multiplier).to_i
+                    if tmp_adjusted_xp < difficulty_xp
                         m
                     end
                 end
@@ -126,6 +136,7 @@ class Encounter < Sequel::Model
                 mob_to_add = short_list.sample
                 mobs.push(mob_to_add)
                 total_xp += mob_to_add.xp
+                adjusted_xp = (total_xp * multiplier).to_i
             end
         end
 
