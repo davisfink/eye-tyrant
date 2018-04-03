@@ -215,7 +215,8 @@ get '/party/:id/?' do
 end
 
 get '/party/:id/add-member/?' do
-    @party_id = params[:id]
+    @party = Party.where(id: params[:id]).first
+    @characters = Character.all
 
     erb :addmember
 end
@@ -262,6 +263,16 @@ post '/party/:id/remove-character/?' do
     party.remove_character(character)
 
     redirect "/party/#{party.id}/"
+end
+
+get '/character-search/?' do
+    content_type :json
+    @attrs = params
+    @results = Character.where(Sequel.ilike(:name, "%#{@attrs[:term]}%"))
+    json = @results.map do |result|
+        {id: result.id, text: "#{result.name}, #{result.race}"}
+    end
+    {results: json}.to_json
 end
 
 get '/spells/?' do

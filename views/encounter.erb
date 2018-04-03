@@ -58,12 +58,10 @@
                                     </form>
                                 </div>
                             </div>
-                            <% if p.is_monster? %>
                                 <form name="remove-monster" class="remove-monster" action="/encounter/<%= @encounter_id %>/removemonster/" method="post">
                                     <input type="hidden" name="participant_id" value="<%=p.id%>">
                                     <input type="submit" class="button" value="X">
                                 </form>
-                            <% end %>
                         </div>
                     <%end%>
                     <% if @inactive.count > 0 %>

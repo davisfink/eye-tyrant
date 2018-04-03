@@ -16,6 +16,15 @@ $(document).ready(function() {
         minimumInputLength: 2
     });
 
+    $('.character-search').select2({
+        ajax: {
+            url: '/character-search/',
+            dataType: 'json'
+        },
+        minimumInputLength: 2,
+        allowDuplicates: true
+    });
+
     $('body').on('change', '.spell-list', function() {
         spell_id = $(this).val();
         $.get( "/spells/?spell_id=" + spell_id, function( data ) {

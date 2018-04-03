@@ -1,4 +1,30 @@
-<form action="/party/<%=@party_id%>/add-member/" method="post">
-    <input type="input" name="character_id" value="" placeholder="0">
-    <input type="submit" class="button" value="Submit">
-</form>
+<%= erb :header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>Add a party member to <%= @party.name %></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <form action="/party/<%=@party.id%>/add-member/" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <select class="character-search" name="character_id"></select>
+                    </div>
+                    <div class="col-6">
+                        <input type="submit" class="button" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <% @characters.each do |c| %>
+                <h6><%= c.name %>, <%= c.race %></h6>
+            <% end %>
+        </div>
+    </div>
+</div>
+<%= erb :footer %>
