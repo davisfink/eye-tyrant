@@ -119,47 +119,56 @@
         <div class="col-md">
             <%if @mobs != nil %>
                 <div class="panel">
-<div class="col-md">
-                        <div class="row">
-                            <div class="col-md-7">
-                                easy:
-                            </div>
-                            <div class="col-md">
-                                <%= @difficulty.easy %>xp
-                            </div>
+                    <div class="row">
+                        <div class="col-md">
+                            <% @mobs.each do |m| %>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <%= m.name %>
+                                    </div>
+                                    <div class="col-md">
+                                        xp: <%= m.xp %>
+                                    </div>
+                                </div>
+                            <%end%>
                         </div>
-                        <div class="row">
-                            <div class="col-md-7">
-                                medium:
+                        <div class="col-md">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    easy:
+                                </div>
+                                <div class="col-md">
+                                    <%= @difficulty.easy * @count %>xp
+                                </div>
                             </div>
-                            <div class="col-md">
-                                <%= @difficulty.medium %>xp
+                            <div class="row">
+                                <div class="col-md-7">
+                                    medium:
+                                </div>
+                                <div class="col-md">
+                                    <%= @difficulty.medium * @count %>xp
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-7">
-                                challenging:
+                            <div class="row">
+                                <div class="col-md-7">
+                                    challenging:
+                                </div>
+                                <div class="col-md">
+                                    <%= @difficulty.challenging * @count %>xp
+                                </div>
                             </div>
-                            <div class="col-md">
-                                <%= @difficulty.challenging %>xp
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-7">
-                                hard:
-                            </div>
-                            <div class="col-md">
-                                <%= @difficulty.hard %>xp
+                            <div class="row">
+                                <div class="col-md-7">
+                                    hard:
+                                </div>
+                                <div class="col-md">
+                                    <%= @difficulty.hard * @count %>xp
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                    <% @mobs.each do |m| %>
-                        <% @mob = m %>
-                        <p><%= m.name %>, xp: <%= m.xp %></p>
-                    <%end%>
-                </div>
-            <%end%>
+                <%end%>
+            </div>
         </div>
     </div>
 </div>

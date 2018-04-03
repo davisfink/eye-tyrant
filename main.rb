@@ -59,6 +59,8 @@ get '/generate-encounter/?' do
     @types = Type.all
     @mobs = Encounter.generate(params)
     level = params[:level] || 1
+    @count = params[:character_count] || 1
+    @count = @count.to_i
     @difficulty = ChallengeRating.where(level: level).first
 
     erb :generateencounter

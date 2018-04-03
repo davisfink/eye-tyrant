@@ -90,8 +90,9 @@ class Encounter < Sequel::Model
             participant.set_initiative(0)
             encounter.add_participant(participant)
         end
-
-        mobs = Encounter.generate(params) if params[:cr]
+        params[:character_count] = encounter.party.characters.count
+        params[:level] = encounter.party.level
+        mobs = Encounter.generate(params) if params[:difficulty]
 
         if mobs
             mobs.each do |m|
@@ -106,7 +107,6 @@ class Encounter < Sequel::Model
         #http://dnd.wizards.com/articles/features/building-adventures-0
         #these are the rules for encounter CR The current setup is wrong
         monsters = params[:type_id] != '' ? MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).where(type_id: params[:type_id]).exclude(cr:'0').all : MonsterType.where(Sequel.ilike(:name, "%#{params[:term]}%")).exclude(cr:'0').all
-        cr = Experience.find(id: params[:cr]) if params[:cr] != ''
         min_cr = Experience.find(id: params[:min_cr].to_i) || Experience.first
         max_cr = Experience.find(id: params[:max_cr].to_i) || Experience.last
         mobs = []
@@ -117,17 +117,14 @@ class Encounter < Sequel::Model
         difficulty_xp = level_difficulties[difficulty.to_sym] * character_count || 0
         multipler_list = ChallengeMultiplier.all
 
-        pp character_count, level_difficulties, difficulty, multipler_list, level_difficulties[difficulty.to_sym]
-
         if difficulty
             adjusted_xp = 0
             total_xp = 0
-            while adjusted_xp < difficulty_xp
-                multiplier = multipler_list.select {|m| m.value == (mobs.count + 1 / character_count) }.first.multiplier
+            while adjusted_xp <= difficulty_xp
+                multiplier = multipler_list.select {|m| m.value == ((mobs.count + 1) / character_count) }.first.multiplier
                 short_list = monsters.select do |m|
-                    #m.xp.between?(min_cr.xp,max_cr.xp)
                     tmp_adjusted_xp = ((total_xp + m.xp) * multiplier).to_i
-                    if tmp_adjusted_xp < difficulty_xp
+                    if tmp_adjusted_xp <= difficulty_xp and m.xp.between?(min_cr.xp,max_cr.xp)
                         m
                     end
                 end

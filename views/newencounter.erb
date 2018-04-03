@@ -1,21 +1,21 @@
 <%= erb :header %>
-        <div class="container">
-            <div class="row">
-                <div class="col-md">
-                    <% @parties.each do |party| %>
-                        <div class="panel">
-                            <form action="/newencounter/" method="post">
-                                <h1><%= party.name%></h1>
-                                <input type="hidden" name="party_id" value="<%= party.id%>" placeholder="0">
-                                <input type="submit" class="button" value="Select This Party">
-                            </form>
-                        </div>
-                    <%end%>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <% @parties.each do |party| %>
+                <div class="panel">
+                    <form action="/newencounter/" method="post">
+                        <h1><%= party.name%></h1>
+                        <input type="hidden" name="party_id" value="<%= party.id%>" placeholder="0">
+                        <input type="submit" class="button" value="Select This Party">
+                    </form>
                 </div>
-                <div class="col-md">
-                    <a class="button margin-bottom" href="/encounters/">Back to encounters</a>
-                    <%= erb :createencounter %>
-                </div>
-            </div>
+            <%end%>
         </div>
+        <div class="col-md">
+            <a class="button margin-bottom" href="/encounters/">Back to encounters</a>
+            <%= erb :createencounter %>
+        </div>
+    </div>
+</div>
 <%= erb :footer %>
