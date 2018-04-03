@@ -27,6 +27,7 @@ get '/encounter/:id/?' do
     @encounter = Encounter.find(id: params[:id])
     @details = {
         total_experience: @encounter.total_experience,
+        adjusted_experience: @encounter.adjusted_experience,
         character_experience: @encounter.per_party_experience,
         party_name: @encounter.party.name
     }

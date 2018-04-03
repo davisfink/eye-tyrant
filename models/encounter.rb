@@ -7,7 +7,9 @@ class Encounter < Sequel::Model
     end
 
     def adjusted_experience
-        @total_experience ||= experience
+        multiplier = monsters.count / character_list.count
+        pp multiplier
+        @total_experience * multiplier
     end
 
     def per_party_experience
