@@ -7,8 +7,10 @@ class Encounter < Sequel::Model
     end
 
     def adjusted_experience
-        multiplier = ChallengeMultiplier.where(value: (monsters.count / character_list.count)).first.multiplier
-        (@total_experience * multiplier).to_i
+        multiplier_result = ChallengeMultiplier.where(value: (monsters.count)).first
+        multiplier = multiplier_result || ChallengeMultiplier.last
+
+        (@total_experience * multiplier.multiplier).to_i
     end
 
     def per_party_experience
@@ -121,7 +123,7 @@ class Encounter < Sequel::Model
             adjusted_xp = 0
             total_xp = 0
             while adjusted_xp <= difficulty_xp
-                multiplier = multipler_list.select {|m| m.value == ((mobs.count + 1) / character_count) }.first.multiplier
+                multiplier = multipler_list.select {|m| m.value == (mobs.count + 1) }.first.multiplier
                 short_list = monsters.select do |m|
                     tmp_adjusted_xp = ((total_xp + m.xp) * multiplier).to_i
                     if tmp_adjusted_xp <= difficulty_xp and m.xp.between?(min_cr.xp,max_cr.xp)

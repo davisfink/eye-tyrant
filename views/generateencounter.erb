@@ -13,8 +13,8 @@
                         <select name="difficulty">
                             <option value="easy">Easy</option>
                             <option selected value="medium">Medium</option>
-                            <option value="challenging">Challenging</option>
                             <option value="hard">Hard</option>
+                            <option value="deadly">Deadly</option>
                         </select>
                     </div>
                 </div>
@@ -151,18 +151,18 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-7">
-                                    challenging:
-                                </div>
-                                <div class="col-md">
-                                    <%= @difficulty.challenging * @count %>xp
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-7">
                                     hard:
                                 </div>
                                 <div class="col-md">
                                     <%= @difficulty.hard * @count %>xp
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    deadly:
+                                </div>
+                                <div class="col-md">
+                                    <%= @difficulty.deadly * @count %>xp
                                 </div>
                             </div>
                         </div>

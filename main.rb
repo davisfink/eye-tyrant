@@ -35,8 +35,8 @@ get '/encounter/:id/?' do
         party_level: @encounter.party.level,
         easy: difficulty.easy * character_count,
         medium: difficulty.medium * character_count,
-        challenging: difficulty.challenging * character_count,
         hard: difficulty.hard * character_count,
+        deadly: difficulty.deadly * character_count,
     }
     @participants = @encounter.active_participants
     @inactive = @encounter.inactive_participants
