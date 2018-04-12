@@ -40,10 +40,11 @@ h1,h2,h3,h4,h5,h6 {
 .panel {
     background: #fffaf0;
     border: 8px solid transparent;
-    border-image: url(/images/leaf-border.png) 50 round;
+    border-image: url(/images/icons/leaf-border.png) 50 round;
     padding: 1rem;
     margin-bottom: .5rem;
     position: relative;
+
 }
 
 .panel h3, .panel h4, .panel strong {
@@ -172,72 +173,72 @@ h1,h2,h3,h4,h5,h6 {
     float: left;
     &.Blinded {
         color: purple;
-        background: url('/images/blinded.png');
+        background: url('/images/icons/blinded.png');
         background-size: cover;
     }
     &.Charmed {
         color: purple;
-        background: url('/images/charmed.png');
+        background: url('/images/icons/charmed.png');
         background-size: cover;
     }
     &.Deafened {
         color: purple;
-        background: url('/images/deafened.png');
+        background: url('/images/icons/deafened.png');
         background-size: cover;
     }
     &.Frightened {
         color: purple;
-        background: url('/images/frightened.png');
+        background: url('/images/icons/frightened.png');
         background-size: cover;
     }
     &.Grappled {
         color: purple;
-        background: url('/images/grappled.png');
+        background: url('/images/icons/grappled.png');
         background-size: cover;
     }
     &.Incapacitated {
         color: purple;
-        background: url('/images/incapacitated.png');
+        background: url('/images/icons/incapacitated.png');
         background-size: cover;
     }
     &.Invisible {
         color: purple;
-        background: url('/images/invisible.png');
+        background: url('/images/icons/invisible.png');
         background-size: cover;
     }
     &.Paralyzed {
         color: purple;
-        background: url('/images/paralyzed.png');
+        background: url('/images/icons/paralyzed.png');
         background-size: cover;
     }
     &.Petrified {
         color: purple;
-        background: url('/images/petrified.png');
+        background: url('/images/icons/petrified.png');
         background-size: cover;
     }
     &.Poisoned {
         color: purple;
-        background: url('/images/poisoned.png');
+        background: url('/images/icons/poisoned.png');
         background-size: cover;
     }
     &.Prone {
         color: purple;
-        background: url('/images/prone.png');
+        background: url('/images/icons/prone.png');
         background-size: cover;
     }
     &.Restrained {
         color: purple;
-        background: url('/images/restrained.png');
+        background: url('/images/icons/restrained.png');
         background-size: cover;
     }
     &.Stunned {
         color: purple;
-        background: url('/images/stunned.png');
+        background: url('/images/icons/stunned.png');
         background-size: cover;
     }
     &.Unconscious {
         color: purple;
-        background: url('/images/unconscious.png');
+        background: url('/images/icons/unconscious.png');
         background-size: cover;
     }
 }
@@ -261,4 +262,17 @@ h1,h2,h3,h4,h5,h6 {
 
 .nav {
     border-bottom: 1px solid $brand-primary;
+}
+
+#map {
+    border: 8px solid transparent;
+    border-image: url(/images/icons/leaf-border.png) 50 round;
+
+    .token {
+        border-radius: 100px;
+        background-color: #f2f;
+        display: block;
+        height: 100px;
+        width: 100px;
+    }
 }

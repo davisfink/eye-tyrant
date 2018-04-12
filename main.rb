@@ -323,3 +323,6 @@ get '/conditions/?' do
     erb :condition
 end
 
+get '/map/?' do
+    erb :map
+end

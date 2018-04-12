@@ -6061,7 +6061,7 @@ h1, h2, h3, h4, h5, h6 {
 .panel {
   background: #fffaf0;
   border: 8px solid transparent;
-  border-image: url(/images/leaf-border.png) 50 round;
+  border-image: url(/images/icons/leaf-border.png) 50 round;
   padding: 1rem;
   margin-bottom: .5rem;
   position: relative; }
@@ -6162,59 +6162,59 @@ h1, h2, h3, h4, h5, h6 {
   float: left; }
   .condition-icon.Blinded {
     color: purple;
-    background: url("/images/blinded.png");
+    background: url("/images/icons/blinded.png");
     background-size: cover; }
   .condition-icon.Charmed {
     color: purple;
-    background: url("/images/charmed.png");
+    background: url("/images/icons/charmed.png");
     background-size: cover; }
   .condition-icon.Deafened {
     color: purple;
-    background: url("/images/deafened.png");
+    background: url("/images/icons/deafened.png");
     background-size: cover; }
   .condition-icon.Frightened {
     color: purple;
-    background: url("/images/frightened.png");
+    background: url("/images/icons/frightened.png");
     background-size: cover; }
   .condition-icon.Grappled {
     color: purple;
-    background: url("/images/grappled.png");
+    background: url("/images/icons/grappled.png");
     background-size: cover; }
   .condition-icon.Incapacitated {
     color: purple;
-    background: url("/images/incapacitated.png");
+    background: url("/images/icons/incapacitated.png");
     background-size: cover; }
   .condition-icon.Invisible {
     color: purple;
-    background: url("/images/invisible.png");
+    background: url("/images/icons/invisible.png");
     background-size: cover; }
   .condition-icon.Paralyzed {
     color: purple;
-    background: url("/images/paralyzed.png");
+    background: url("/images/icons/paralyzed.png");
     background-size: cover; }
   .condition-icon.Petrified {
     color: purple;
-    background: url("/images/petrified.png");
+    background: url("/images/icons/petrified.png");
     background-size: cover; }
   .condition-icon.Poisoned {
     color: purple;
-    background: url("/images/poisoned.png");
+    background: url("/images/icons/poisoned.png");
     background-size: cover; }
   .condition-icon.Prone {
     color: purple;
-    background: url("/images/prone.png");
+    background: url("/images/icons/prone.png");
     background-size: cover; }
   .condition-icon.Restrained {
     color: purple;
-    background: url("/images/restrained.png");
+    background: url("/images/icons/restrained.png");
     background-size: cover; }
   .condition-icon.Stunned {
     color: purple;
-    background: url("/images/stunned.png");
+    background: url("/images/icons/stunned.png");
     background-size: cover; }
   .condition-icon.Unconscious {
     color: purple;
-    background: url("/images/unconscious.png");
+    background: url("/images/icons/unconscious.png");
     background-size: cover; }
 
 #Conditions {
@@ -6234,3 +6234,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav {
   border-bottom: 1px solid #5f0d0a; }
+
+#map {
+  border: 8px solid transparent;
+  border-image: url(/images/icons/leaf-border.png) 50 round; }
+  #map .token {
+    border-radius: 100px;
+    background-color: #f2f;
+    display: block;
+    height: 100px;
+    width: 100px; }
