@@ -17,7 +17,26 @@
     "nodemon": "^1.14.10"
   },
   "scripts": {
-      "build-css": "node-sass --include-path scss scss/app.scss public/css/app.css",
-      "watch-css": "nodemon -e scss -x \"npm run build-css\""
-  }
+    "build-css": "node-sass --include-path scss scss/app.scss public/css/app.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+  },
+  "name": "eye-tyrant",
+  "description": "D&amp;D DM Framework for Electronic table display",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davisfink/eye-tyrant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davisfink/eye-tyrant/issues"
+  },
+  "homepage": "https://github.com/davisfink/eye-tyrant#readme"
 }

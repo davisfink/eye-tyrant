@@ -28,7 +28,7 @@
                             <%end%>
                             <div class="row">
                                 <div class="col-5">
-                                    <h5><%= p.actor.name %></h5>
+                                    <h5 class="participant_name" data-name="<%= p.actor.name %>" data-id="<%= p.actor.monster_type_id %>"></h5>
                                     <% if p.hitpoints > 0 %>
                                         <span class="hitpoints">hp:</span>
                                         <%= p.damage%>/<%= p.hitpoints %>
@@ -167,7 +167,8 @@
             <div class="row">
                 <div class="col">
                     <%if @mob != nil %>
-                        <%= erb :monstertemplate %>
+                        <div id="monster_id" data-id="<%= @mob.id %>"></div>
+                        <div id="monster_pane"></div>
                     <%end%>
                 </div>
             </div>

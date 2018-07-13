@@ -3,7 +3,20 @@ require 'json'
 require 'erb'
 require 'pp'
 require './config/database.rb'
+Sequel::Model.plugin :json_serializer
 Dir["./models/*.rb"].each {|file| require file }
+
+class Array
+  def to_json(options = {:max_nesting=>false})
+    JSON.generate(self)
+  end
+end
+
+class Hash
+  def to_json(options = {:max_nesting=>false})
+    JSON.generate(self)
+  end
+end
 
 get '/' do
     @encounter = Encounter.where(active: TRUE).reverse(:id).first
@@ -199,9 +212,20 @@ get '/monsters/:id/?' do
 end
 
 get '/get-monster/?' do
-    @mob = MonsterType.find(id: params[:id])
+    content_type :json
+    mob = MonsterType.find(id: params[:id])
 
-    erb :monster
+    mob.to_json(
+        include:
+        [
+            :type,
+            :actions,
+            :legendaries,
+            :traits,
+            :spells,
+            :cr
+        ]
+    )
 end
 
 get '/monster-search/?' do
