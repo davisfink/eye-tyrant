@@ -117,6 +117,11 @@ h1,h2,h3,h4,h5,h6 {
     &.character {
         background: darken(#fffaf0, 15%);
     }
+    &.monster {
+        .participant_name {
+            cursor: pointer;
+        }
+    }
 }
 
 .panel.monster-template p {

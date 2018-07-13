@@ -6113,6 +6113,8 @@ h1, h2, h3, h4, h5, h6 {
       display: none; }
   .panel.participant.character {
     background: #ffe1a4; }
+  .panel.participant.monster .participant_name {
+    cursor: pointer; }
 
 .panel.monster-template p {
   margin-bottom: .5rem;

@@ -1,5 +1,3 @@
-'use strict';
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27,8 +25,11 @@ var Participant = function (_React$Component) {
     _createClass(Participant, [{
         key: 'handleClick',
         value: function handleClick() {
-            var monster = React.createElement(Monster, { id: this.props.id });
-            ReactDOM.render(monster, document.getElementById('monster_pane'));
+            if (this.props.id) {
+                ReactDOM.unmountComponentAtNode(document.getElementById('monster_pane'));
+                var monster = React.createElement(Monster, { id: this.props.id });
+                ReactDOM.render(monster, document.getElementById('monster_pane'));
+            }
         }
     }, {
         key: 'renderName',

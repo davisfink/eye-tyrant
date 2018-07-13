@@ -211,23 +211,6 @@ get '/monsters/:id/?' do
     erb :monster
 end
 
-get '/get-monster/?' do
-    content_type :json
-    mob = MonsterType.find(id: params[:id])
-
-    mob.to_json(
-        include:
-        [
-            :type,
-            :actions,
-            :legendaries,
-            :traits,
-            :spells,
-            :cr
-        ]
-    )
-end
-
 get '/monster-search/?' do
     content_type :json
     @attrs = params
@@ -349,4 +332,57 @@ end
 
 get '/map/?' do
     erb :map
+end
+
+
+#react functions
+get '/get-encounter/?' do
+    content_type :json
+    encounter = Encounter.find(id: params[:id])
+    participants = encounter.active_participants
+    inactive = encounter.inactive_participants
+    current_monster = encounter.next_monster
+
+    {participants: participants, inactive: inactive, current_monster: current_monster}.to_json
+end
+
+get '/get-monster/?' do
+    content_type :json
+
+    MonsterType.find(id: params[:id]).to_json(
+        include:
+        [
+            :type,
+            :actions,
+            :legendaries,
+            :traits,
+            :spells,
+            :cr
+        ]
+    )
+end
+
+get '/get-experience-details/?' do
+    content_type :json
+
+    encounter = Encounter.find(id: params[:encounter_id])
+    difficulty = ChallengeRating.where(level: encounter.party.level).first
+    character_count = encounter.party.characters.count
+
+    details = {
+        total_experience: encounter.total_experience,
+        adjusted_experience: encounter.adjusted_experience,
+        character_experience: encounter.per_party_experience,
+        party_name: encounter.party.name,
+        party_level: encounter.party.level,
+        easy: difficulty.easy * character_count,
+        medium: difficulty.medium * character_count,
+        hard: difficulty.hard * character_count,
+        deadly: difficulty.deadly * character_count,
+    }
+    details.to_json
+end
+
+get '/get-conditions/?' do
+    Condition.all.to_json
 end

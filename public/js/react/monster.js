@@ -25,7 +25,7 @@ var Monster = function (_React$Component) {
     }
 
     _createClass(Monster, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
 
@@ -48,7 +48,7 @@ var Monster = function (_React$Component) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _state = this.state,
                 error = _state.error,
@@ -58,25 +58,24 @@ var Monster = function (_React$Component) {
 
             if (error) {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
-                    'Error: ',
+                    "Error: ",
                     error.message
                 );
             } else if (!isLoaded) {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
-                    'Loading...'
+                    "Loading..."
                 );
             } else if (stats == null) {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
-                    'Monster not found'
+                    "Monster not found"
                 );
             } else {
-                console.log('render called', this.state.stats.id);
                 var saving_throw = void 0,
                     skill = void 0,
                     immune = void 0,
@@ -91,263 +90,263 @@ var Monster = function (_React$Component) {
 
                 if (stats.saving_throw) {
                     saving_throw = React.createElement(
-                        'div',
+                        "div",
                         null,
                         React.createElement(
-                            'p',
+                            "p",
                             null,
                             React.createElement(
-                                'strong',
+                                "strong",
                                 null,
-                                'Saves'
+                                "Saves"
                             ),
-                            ' ',
+                            " ",
                             stats.saving_throw
                         ),
-                        React.createElement('hr', null)
+                        React.createElement("hr", null)
                     );
                 }
                 if (stats.skill) {
                     skill = React.createElement(
-                        'div',
+                        "div",
                         null,
                         React.createElement(
-                            'p',
+                            "p",
                             null,
                             React.createElement(
-                                'strong',
+                                "strong",
                                 null,
-                                'Skills'
+                                "Skills"
                             ),
-                            ' ',
+                            " ",
                             stats.skill
                         ),
-                        React.createElement('hr', null)
+                        React.createElement("hr", null)
                     );
                 }
                 if (stats.vulnerable) {
                     vulnerable = React.createElement(
-                        'p',
+                        "p",
                         null,
                         React.createElement(
-                            'strong',
+                            "strong",
                             null,
-                            'Vulnerabilities'
+                            "Vulnerabilities"
                         ),
-                        ' ',
+                        " ",
                         stats.vulnerable
                     );
                 }
                 if (stats.immune) {
                     immune = React.createElement(
-                        'p',
+                        "p",
                         null,
                         React.createElement(
-                            'strong',
+                            "strong",
                             null,
-                            'Immunities'
+                            "Immunities"
                         ),
-                        ' ',
+                        " ",
                         stats.immune
                     );
                 }
                 if (stats.conditionimmune) {
                     conditionimmune = React.createElement(
-                        'p',
+                        "p",
                         null,
                         React.createElement(
-                            'strong',
+                            "strong",
                             null,
-                            'Condition Immunities'
+                            "Condition Immunities"
                         ),
-                        ' ',
+                        " ",
                         stats.conditionimmune
                     );
                 }
                 if (stats.resist) {
                     resist = React.createElement(
-                        'p',
+                        "p",
                         null,
                         React.createElement(
-                            'strong',
+                            "strong",
                             null,
-                            'Resistances'
+                            "Resistances"
                         ),
-                        ' ',
+                        " ",
                         stats.resist
                     );
                 }
                 senses = React.createElement(
-                    'p',
+                    "p",
                     null,
                     React.createElement(
-                        'strong',
+                        "strong",
                         null,
-                        'Senses'
+                        "Senses"
                     ),
-                    ' ',
+                    " ",
                     stats.senses
                 );
                 passive = React.createElement(
-                    'p',
+                    "p",
                     null,
                     React.createElement(
-                        'strong',
+                        "strong",
                         null,
-                        'Passive Perception'
+                        "Passive Perception"
                     ),
-                    ' ',
+                    " ",
                     stats.passive
                 );
                 languages = React.createElement(
-                    'p',
+                    "p",
                     null,
                     React.createElement(
-                        'strong',
+                        "strong",
                         null,
-                        'Languages'
+                        "Languages"
                     ),
-                    ' ',
+                    " ",
                     stats.languages
                 );
                 challenge = React.createElement(
-                    'p',
+                    "p",
                     null,
                     React.createElement(
-                        'strong',
+                        "strong",
                         null,
-                        'Challenge Rating'
+                        "Challenge Rating"
                     ),
-                    ' ',
+                    " ",
                     stats.cr,
-                    ' (',
+                    " (",
                     stats.xp,
-                    'xp)'
+                    "xp)"
                 );
 
                 return React.createElement(
-                    'div',
-                    { id: 'Details', className: 'row' },
+                    "div",
+                    { id: "Details", className: "row" },
                     React.createElement(
-                        'div',
-                        { className: 'col-md' },
+                        "div",
+                        { className: "col-md" },
                         React.createElement(
-                            'div',
-                            { className: 'panel monster-template' },
+                            "div",
+                            { className: "panel monster-template" },
                             React.createElement(
-                                'h3',
+                                "h3",
                                 null,
                                 stats.name
                             ),
                             React.createElement(
-                                'p',
-                                { className: 'italic' },
+                                "p",
+                                { className: "italic" },
                                 stats.size,
-                                ' ',
+                                " ",
                                 stats.type.name,
-                                ', ',
+                                ", ",
                                 stats.alignment
                             ),
-                            React.createElement('hr', null),
+                            React.createElement("hr", null),
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
                                 React.createElement(
-                                    'strong',
+                                    "strong",
                                     null,
-                                    'Armor class'
+                                    "Armor class"
                                 ),
-                                ' ',
+                                " ",
                                 stats.ac
                             ),
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
                                 React.createElement(
-                                    'strong',
+                                    "strong",
                                     null,
-                                    'Hit Points'
+                                    "Hit Points"
                                 ),
-                                ' ',
+                                " ",
                                 stats.hp
                             ),
                             React.createElement(
-                                'p',
+                                "p",
                                 null,
                                 React.createElement(
-                                    'strong',
+                                    "strong",
                                     null,
-                                    'Speed:'
+                                    "Speed:"
                                 ),
-                                ' ',
+                                " ",
                                 stats.speed
                             ),
-                            React.createElement('hr', null),
+                            React.createElement("hr", null),
                             React.createElement(
-                                'div',
-                                { className: 'row statblock' },
+                                "div",
+                                { className: "row statblock" },
                                 React.createElement(
-                                    'div',
-                                    { className: 'col' },
+                                    "div",
+                                    { className: "col" },
                                     React.createElement(
-                                        'span',
-                                        { className: 'stat' },
-                                        'Str'
+                                        "span",
+                                        { className: "stat" },
+                                        "Str"
                                     ),
                                     stats.str
                                 ),
                                 React.createElement(
-                                    'div',
-                                    { className: 'col' },
+                                    "div",
+                                    { className: "col" },
                                     React.createElement(
-                                        'span',
-                                        { className: 'stat' },
-                                        'Dex'
+                                        "span",
+                                        { className: "stat" },
+                                        "Dex"
                                     ),
                                     stats.dex
                                 ),
                                 React.createElement(
-                                    'div',
-                                    { className: 'col' },
+                                    "div",
+                                    { className: "col" },
                                     React.createElement(
-                                        'span',
-                                        { className: 'stat' },
-                                        'Con'
+                                        "span",
+                                        { className: "stat" },
+                                        "Con"
                                     ),
                                     stats.con
                                 ),
                                 React.createElement(
-                                    'div',
-                                    { className: 'col' },
+                                    "div",
+                                    { className: "col" },
                                     React.createElement(
-                                        'span',
-                                        { className: 'stat' },
-                                        'Int'
+                                        "span",
+                                        { className: "stat" },
+                                        "Int"
                                     ),
                                     stats.int
                                 ),
                                 React.createElement(
-                                    'div',
-                                    { className: 'col' },
+                                    "div",
+                                    { className: "col" },
                                     React.createElement(
-                                        'span',
-                                        { className: 'stat' },
-                                        'Wis'
+                                        "span",
+                                        { className: "stat" },
+                                        "Wis"
                                     ),
                                     stats.wis
                                 ),
                                 React.createElement(
-                                    'div',
-                                    { className: 'col' },
+                                    "div",
+                                    { className: "col" },
                                     React.createElement(
-                                        'span',
-                                        { className: 'stat' },
-                                        'Cha'
+                                        "span",
+                                        { className: "stat" },
+                                        "Cha"
                                     ),
                                     stats.cha
                                 )
                             ),
-                            React.createElement('hr', null),
+                            React.createElement("hr", null),
                             saving_throw,
                             skill,
                             senses,
@@ -356,11 +355,11 @@ var Monster = function (_React$Component) {
                             immune,
                             conditionimmune,
                             vulnerable,
-                            React.createElement('hr', null),
-                            React.createElement(Stats, { props: stats.traits, title: 'Traits', type: 'trait' }),
-                            React.createElement(Spells, { props: stats.spells, title: 'Spells', type: 'spell' }),
-                            React.createElement(Stats, { props: stats.legendaries, title: 'Legendary Actions', type: 'legendary' }),
-                            React.createElement(Stats, { props: stats.actions, title: 'Actions', type: 'action' })
+                            React.createElement("hr", null),
+                            React.createElement(Stats, { props: stats.traits, title: "Traits", type: "trait" }),
+                            React.createElement(Spells, { props: stats.spells, title: "Spells", type: "spell" }),
+                            React.createElement(Stats, { props: stats.legendaries, title: "Legendary Actions", type: "legendary" }),
+                            React.createElement(Stats, { props: stats.actions, title: "Actions", type: "action" })
                         )
                     )
                 );
@@ -375,24 +374,24 @@ function Trait(props) {
     var trait = props.props;
     trait.text = trait.text.map(function (t, i) {
         return React.createElement(
-            'p',
+            "p",
             { key: i },
             t
         );
     });
     return React.createElement(
-        'div',
+        "div",
         null,
         React.createElement(
-            'h5',
+            "h5",
             null,
             trait.name
         ),
         React.createElement(
-            'p',
+            "p",
             null,
             React.createElement(
-                'strong',
+                "strong",
                 null,
                 trait.attack
             )
@@ -414,28 +413,28 @@ var Stats = function (_React$Component2) {
     }
 
     _createClass(Stats, [{
-        key: 'renderStats',
+        key: "renderStats",
         value: function renderStats() {
             return this.stats.map(function (e, i) {
                 return React.createElement(Trait, { props: e, key: i });
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             if (this.stats.length == 0) {
                 return null;
             } else {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
                     React.createElement(
-                        'h4',
+                        "h4",
                         null,
                         this.props.title
                     ),
                     this.renderStats(),
-                    React.createElement('hr', null)
+                    React.createElement("hr", null)
                 );
             }
         }
@@ -448,68 +447,68 @@ function Spell(props) {
     var spell = props.props;
     spell.text = spell.text.map(function (t, i) {
         return React.createElement(
-            'p',
+            "p",
             { key: i },
             t
         );
     });
     return React.createElement(
-        'div',
-        { className: 'panel monster-template' },
+        "div",
+        { className: "panel monster-template" },
         React.createElement(
-            'h3',
+            "h3",
             null,
             spell.name
         ),
         React.createElement(
-            'p',
-            { className: 'italic' },
+            "p",
+            { className: "italic" },
             spell.level,
-            ' - ',
+            " - ",
             spell.school
         ),
         React.createElement(
-            'p',
+            "p",
             null,
             React.createElement(
-                'strong',
+                "strong",
                 null,
-                'Casting Time:'
+                "Casting Time:"
             ),
-            ' ',
+            " ",
             spell.time
         ),
         React.createElement(
-            'p',
+            "p",
             null,
             React.createElement(
-                'strong',
+                "strong",
                 null,
-                'Range:'
+                "Range:"
             ),
-            ' ',
+            " ",
             spell.range
         ),
         React.createElement(
-            'p',
+            "p",
             null,
             React.createElement(
-                'strong',
+                "strong",
                 null,
-                'Components:'
+                "Components:"
             ),
-            ' ',
+            " ",
             spell.components
         ),
         React.createElement(
-            'p',
+            "p",
             null,
             React.createElement(
-                'strong',
+                "strong",
                 null,
-                'Duration:'
+                "Duration:"
             ),
-            ' ',
+            " ",
             spell.duration
         ),
         spell.text
@@ -529,7 +528,7 @@ var Spells = function (_React$Component3) {
     }
 
     _createClass(Spells, [{
-        key: 'handleChange',
+        key: "handleChange",
         value: function handleChange() {
             var spell_id = document.getElementById('spellSelect').value;
 
@@ -542,47 +541,47 @@ var Spells = function (_React$Component3) {
             ReactDOM.render(spell, document.getElementById('spell-container'));
         }
     }, {
-        key: 'renderSpellList',
+        key: "renderSpellList",
         value: function renderSpellList() {
             var _this5 = this;
 
             var spell_list = [React.createElement(
-                'option',
-                { value: '', key: 'spell_list_select_Key' },
-                'Choose a Spell'
+                "option",
+                { value: "", key: "spell_list_select_Key" },
+                "Choose a Spell"
             )];
             spell_list.push(this.spells.map(function (e, i) {
                 return React.createElement(
-                    'option',
+                    "option",
                     { value: e.id, key: i },
                     e.name
                 );
             }));
             return React.createElement(
-                'select',
-                { id: 'spellSelect', onChange: function onChange() {
+                "select",
+                { id: "spellSelect", onChange: function onChange() {
                         return _this5.handleChange();
                     } },
                 spell_list
             );
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             if (this.spells.length == 0) {
                 return null;
             } else {
                 return React.createElement(
-                    'div',
+                    "div",
                     null,
                     React.createElement(
-                        'h4',
+                        "h4",
                         null,
-                        'Spell List'
+                        "Spell List"
                     ),
                     this.renderSpellList(),
-                    React.createElement('div', { id: 'spell-container' }),
-                    React.createElement('hr', null)
+                    React.createElement("div", { id: "spell-container" }),
+                    React.createElement("hr", null)
                 );
             }
         }
@@ -590,57 +589,5 @@ var Spells = function (_React$Component3) {
 
     return Spells;
 }(React.Component);
-
-function Name(props) {
-    return React.createElement('span', { className: "participant_name", onClick: props.onClick }, props.name);
-}
-
-var Participant = function (_React$Component4) {
-    _inherits(Participant, _React$Component4);
-
-    function Participant(props) {
-        _classCallCheck(this, Participant);
-
-        var _this6 = _possibleConstructorReturn(this, (Participant.__proto__ || Object.getPrototypeOf(Participant)).call(this, props));
-
-        _this6.state = { name: '' };
-        return _this6;
-    }
-
-    _createClass(Participant, [{
-        key: 'handleClick',
-        value: function handleClick() {
-            ReactDOM.unmountComponentAtNode(document.getElementById('monster_pane'));
-            var monster = React.createElement(Monster, { id: this.props.id });
-            ReactDOM.render(monster, document.getElementById('monster_pane'));
-        }
-    }, {
-        key: 'renderName',
-        value: function renderName(n) {
-            var _this7 = this;
-
-            return React.createElement(Name, {
-                name: this.props.name,
-                onClick: function onClick() {
-                    return _this7.handleClick();
-                }
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return this.renderName();
-        }
-    }]);
-
-    return Participant;
-}(React.Component);
-
-document.querySelectorAll('.participant_name').forEach(function (domContainer) {
-    // Read the name and ID from a data-* attribute.
-    var name = domContainer.dataset.name;
-    var id = domContainer.dataset.id;
-    ReactDOM.render(React.createElement(Participant, { name: name, id: id }), domContainer);
-});
 
 ReactDOM.render(React.createElement(Monster, { id: $('#monster_id').data('id') }), document.getElementById('monster_pane'));

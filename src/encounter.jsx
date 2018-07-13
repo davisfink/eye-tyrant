@@ -1,5 +1,3 @@
-'use strict';
-
 function Name(props) {
     return (
           React.createElement(
@@ -17,11 +15,14 @@ class Participant extends React.Component {
     }
 
     handleClick() {
-        var monster = <Monster id={this.props.id} />
-        ReactDOM.render(
-            monster,
-            document.getElementById('monster_pane')
-        );
+        if (this.props.id) {
+            ReactDOM.unmountComponentAtNode( document.getElementById('monster_pane'));
+            var monster = <Monster id={this.props.id} />
+            ReactDOM.render(
+                monster,
+                document.getElementById('monster_pane')
+            );
+        }
     }
 
     renderName(n) {
@@ -40,6 +41,7 @@ class Participant extends React.Component {
     }
 }
 
+
 document.querySelectorAll('.participant_name')
 .forEach(domContainer => {
     // Read the name and ID from a data-* attribute.
@@ -50,4 +52,5 @@ document.querySelectorAll('.participant_name')
       domContainer
     );
   });
+
 
