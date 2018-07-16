@@ -547,7 +547,7 @@ var Spells = function (_React$Component3) {
 
             var spell_list = [React.createElement(
                 "option",
-                { value: "", key: "spell_list_select_Key" },
+                { value: "", key: "spell_list_select_key" },
                 "Choose a Spell"
             )];
             spell_list.push(this.spells.map(function (e, i) {

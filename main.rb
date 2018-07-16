@@ -23,10 +23,6 @@ get '/' do
     @party = @encounter.party
     @monsters = @encounter.monsters
 
-    pp @party
-    pp @encounter.participants
-    pp @monsters
-
     erb :index
 end
 
@@ -136,7 +132,6 @@ post '/participant/:id/damage/?' do
     participant = Participant.where(id: params[:id]).first
     participant.take_damage(params[:damage])
 
-    redirect request.referrer
 end
 
 get '/participant/:id/heal/?' do
@@ -338,12 +333,19 @@ end
 #react functions
 get '/get-encounter/?' do
     content_type :json
-    encounter = Encounter.find(id: params[:id])
-    participants = encounter.active_participants
-    inactive = encounter.inactive_participants
-    current_monster = encounter.next_monster
-
-    {participants: participants, inactive: inactive, current_monster: current_monster}.to_json
+    Encounter.find(id: params[:id]).to_json(
+        include:
+        {
+            participants:
+            {
+                include:
+                [
+                    :character,
+                    :monster
+                ]
+            }
+        }
+    )
 end
 
 get '/get-monster/?' do

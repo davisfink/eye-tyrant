@@ -223,7 +223,7 @@ class Spells extends React.Component {
     }
 
     renderSpellList() {
-        var spell_list = [<option value="" key="spell_list_select_Key" >Choose a Spell</option>];
+        var spell_list = [<option value="" key="spell_list_select_key" >Choose a Spell</option>];
         spell_list.push(this.spells.map(function(e,i) {
             return <option value={e.id} key={i} >{e.name}</option>;
         }))

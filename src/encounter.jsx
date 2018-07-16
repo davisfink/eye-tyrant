@@ -1,56 +1,62 @@
-function Name(props) {
-    return (
-          React.createElement(
-              'span',
-              {className: "participant_name",onClick: props.onClick},
-              props.name
-    )
-    );
-}
+'use strict';
 
-class Participant extends React.Component {
+class Encounter extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { name:'' };
+        this.state = {
+            error: null,
+            isLoaded: false,
+            participants: [],
+            inactive: []
+        };
     }
 
-    handleClick() {
-        if (this.props.id) {
-            ReactDOM.unmountComponentAtNode( document.getElementById('monster_pane'));
-            var monster = <Monster id={this.props.id} />
-            ReactDOM.render(
-                monster,
-                document.getElementById('monster_pane')
-            );
+    componentDidMount() {
+        fetch("/get-encounter/?id="+this.props.id)
+        .then(res => res.json())
+        .then(
+            (result) => {
+            this.setState({
+                isLoaded: true,
+                participants: result.participants,
+                inactive: result.inactive
+            });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+            this.setState({
+                isLoaded: true,
+                error
+            });
         }
-    }
-
-    renderName(n) {
-        return (
-            <Name
-            name={this.props.name}
-            onClick={() => this.handleClick()}
-            />
-        );
+        )
     }
 
     render() {
-        return (
-            this.renderName()
-        );
+        const { error, isLoaded, participants, inactive } = this.state;
+
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <div>Loading...</div>;
+        } else if (participants == null) {
+            return <div>No active participants</div>;
+        } else {
+            var participant_list = participants.map(function(p,i) {
+                return <Participant props={p} key={i}/>
+            })
+            return(
+                <div className="encounter">
+                    {participant_list}
+                </div>
+            )
+        }
     }
 }
 
-
-document.querySelectorAll('.participant_name')
-.forEach(domContainer => {
-    // Read the name and ID from a data-* attribute.
-    const name = domContainer.dataset.name;
-    const id = domContainer.dataset.id;
-    ReactDOM.render(
-       <Participant name={name} id={id}/>,
-      domContainer
-    );
-  });
-
-
+ReactDOM.render(
+    <Encounter id={$('#participants').data('id')}/>,
+    document.getElementById('participants')
+)
