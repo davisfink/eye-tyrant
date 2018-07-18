@@ -44,12 +44,26 @@ class Encounter extends React.Component {
         } else if (participants == null) {
             return <div>No active participants</div>;
         } else {
-            var participant_list = participants.map(function(p,i) {
-                return <Participant props={p} key={i}/>
+            var active_participant_list = participants.map(function(p,i) {
+                if (p.active == true){
+                    return <Participant props={p} key={i}/>
+                }
             })
+            var inactive_participant_list = participants.map(function(p,i) {
+                if (p.active == false){
+                    return <Participant props={p} key={i}/>
+                }
+            })
+
+            active_participant_list.sort(function(a,b) {
+                return b.props.props.initiative - a.props.props.initiative
+            });
+
             return(
                 <div className="encounter">
-                    {participant_list}
+                    {active_participant_list}
+                    <hr/>
+                    {inactive_participant_list}
                 </div>
             )
         }

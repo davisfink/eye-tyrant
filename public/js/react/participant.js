@@ -17,6 +17,13 @@ function Name(props) {
         props.name
     );
 }
+function Damage(props) {
+    return React.createElement(
+        'span',
+        null,
+        props.text
+    );
+}
 
 var Participant = function (_React$Component) {
     _inherits(Participant, _React$Component);
@@ -27,6 +34,12 @@ var Participant = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Participant.__proto__ || Object.getPrototypeOf(Participant)).call(this, props));
 
         _this.details = props.props;
+        _this.state = {
+            hitpoints: _this.details.hitpoints,
+            damage: _this.details.damage,
+            initiative: _this.details.initiative,
+            active: _this.details.active
+        };
         return _this;
     }
 
@@ -40,6 +53,11 @@ var Participant = function (_React$Component) {
             }
         }
     }, {
+        key: 'updateDamage',
+        value: function updateDamage(props) {
+            this.setState({ damage: props });
+        }
+    }, {
         key: 'renderParticipant',
         value: function renderParticipant() {
             if (this.details.type == 'character') {
@@ -51,32 +69,6 @@ var Participant = function (_React$Component) {
     }, {
         key: 'renderConditions',
         value: function renderConditions() {
-            return null;
-        }
-    }, {
-        key: 'renderDamageForm',
-        value: function renderDamageForm() {
-            var uri = "/participant/" + this.details.id + "/damage/";
-            return React.createElement(
-                'form',
-                { action: uri, method: 'post' },
-                React.createElement('input', { type: 'input',
-                    name: 'damage',
-                    placeholder: 'dmg',
-                    value: this.state.value,
-                    onChange: this.handleChange
-                }),
-                React.createElement('input', { type: 'submit', value: '-', className: 'button' })
-            );
-        }
-    }, {
-        key: 'renderHealForm',
-        value: function renderHealForm() {
-            return null;
-        }
-    }, {
-        key: 'renderInitiativeForm',
-        value: function renderInitiativeForm() {
             return null;
         }
     }, {
@@ -102,17 +94,33 @@ var Participant = function (_React$Component) {
                         { className: 'hitpoints' },
                         'hp: '
                     ),
-                    this.details.damage,
+                    React.createElement(Damage, { text: this.state.damage }),
                     '/',
-                    this.details.hitpoints
+                    this.state.hitpoints
                 ),
                 React.createElement(
                     'div',
                     { className: 'col text-right' },
                     this.renderConditions(),
-                    React.createElement(ParticipantDamage, { id: this.details.id }),
-                    React.createElement(ParticipantHeal, { id: this.details.id }),
-                    this.renderInitiativeForm()
+                    React.createElement(ParticipantDamage, {
+                        damage: this.state.damage,
+                        id: this.details.id,
+                        hitpoints: this.details.hitpoints,
+                        updateDamage: function updateDamage(p) {
+                            return _this2.updateDamage(p);
+                        }
+                    }),
+                    React.createElement(ParticipantHeal, {
+                        damage: this.state.damage,
+                        id: this.details.id,
+                        hitpoints: this.details.hitpoints,
+                        updateDamage: function updateDamage(p) {
+                            return _this2.updateDamage(p);
+                        } }),
+                    React.createElement(ParticipantInitiative, {
+                        id: this.details.id,
+                        initiative: this.details.initiative
+                    })
                 )
             );
         }
@@ -170,11 +178,20 @@ var NPC = function (_Participant2) {
         key: 'render',
         value: function render() {
             this.details.name = this.details.monster.name;
-            return React.createElement(
-                'div',
-                { className: 'panel participant' },
-                _get(NPC.prototype.__proto__ || Object.getPrototypeOf(NPC.prototype), 'renderDetails', this).call(this)
-            );
+
+            if (this.details.active == true) {
+                return React.createElement(
+                    'div',
+                    { className: 'panel participant' },
+                    _get(NPC.prototype.__proto__ || Object.getPrototypeOf(NPC.prototype), 'renderDetails', this).call(this)
+                );
+            } else {
+                return React.createElement(
+                    'div',
+                    { className: 'inactive panel participant' },
+                    _get(NPC.prototype.__proto__ || Object.getPrototypeOf(NPC.prototype), 'renderDetails', this).call(this)
+                );
+            }
         }
     }]);
 
@@ -189,7 +206,7 @@ var ParticipantDamage = function (_React$Component2) {
 
         var _this5 = _possibleConstructorReturn(this, (ParticipantDamage.__proto__ || Object.getPrototypeOf(ParticipantDamage)).call(this, props));
 
-        _this5.state = { value: '' };
+        _this5.state = { value: '', damage: _this5.props.damage };
         _this5.uri = "/participant/" + _this5.props.id + "/damage/";
 
         _this5.handleChange = _this5.handleChange.bind(_this5);
@@ -206,11 +223,12 @@ var ParticipantDamage = function (_React$Component2) {
             fetch(this.uri, {
                 method: 'POST',
                 body: data
-            });
+            }).then(this.state = { damage: calculateDamage(this.props.hitpoints, this.props.damage, this.state.value, 'damage') }, this.setState({ damage: this.state.damage }), this.setState({ value: '' })).then(this.props.updateDamage(this.state.damage));
         }
     }, {
         key: 'handleChange',
         value: function handleChange(event) {
+            event.preventDefault();
             this.setState({ value: event.target.value });
         }
     }, {
@@ -241,7 +259,7 @@ var ParticipantHeal = function (_React$Component3) {
 
         var _this6 = _possibleConstructorReturn(this, (ParticipantHeal.__proto__ || Object.getPrototypeOf(ParticipantHeal)).call(this, props));
 
-        _this6.state = { value: '' };
+        _this6.state = { value: '', damage: _this6.props.damage };
         _this6.uri = "/participant/" + _this6.props.id + "/heal/";
 
         _this6.handleChange = _this6.handleChange.bind(_this6);
@@ -258,7 +276,7 @@ var ParticipantHeal = function (_React$Component3) {
             fetch(this.uri, {
                 method: 'POST',
                 body: data
-            });
+            }).then(this.state = { damage: calculateDamage(this.props.hitpoints, this.props.damage, this.state.value, 'heal') }, this.setState({ damage: this.state.damage }), this.setState({ value: '' })).then(this.props.updateDamage(this.state.damage));
         }
     }, {
         key: 'handleChange',
@@ -284,3 +302,66 @@ var ParticipantHeal = function (_React$Component3) {
 
     return ParticipantHeal;
 }(React.Component);
+
+var ParticipantInitiative = function (_React$Component4) {
+    _inherits(ParticipantInitiative, _React$Component4);
+
+    function ParticipantInitiative(props) {
+        _classCallCheck(this, ParticipantInitiative);
+
+        var _this7 = _possibleConstructorReturn(this, (ParticipantInitiative.__proto__ || Object.getPrototypeOf(ParticipantInitiative)).call(this, props));
+
+        _this7.state = { value: '' };
+        _this7.uri = "/participant/" + _this7.props.id + "/initiative/" + $('#encounter-details').data('encounter-id');
+
+        _this7.handleChange = _this7.handleChange.bind(_this7);
+        _this7.handleSubmit = _this7.handleSubmit.bind(_this7);
+        return _this7;
+    }
+
+    _createClass(ParticipantInitiative, [{
+        key: 'handleSubmit',
+        value: function handleSubmit(event) {
+            event.preventDefault();
+            var data = new FormData(event.target);
+
+            fetch(this.uri, {
+                method: 'POST',
+                body: data
+            }).then(this.setState({ initiative: parseInt(this.state.value) }));
+        }
+    }, {
+        key: 'handleChange',
+        value: function handleChange(event) {
+            this.setState({ value: event.target.value });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'form',
+                { onSubmit: this.handleSubmit, method: 'post' },
+                React.createElement('input', { type: 'input',
+                    name: 'initiative',
+                    placeholder: '0',
+                    defaultValue: this.props.initiative,
+                    onChange: this.handleChange
+                }),
+                React.createElement('input', { type: 'submit', value: '~', className: 'button' })
+            );
+        }
+    }]);
+
+    return ParticipantInitiative;
+}(React.Component);
+
+function calculateDamage(max, damage, value, type) {
+    switch (type) {
+        case "damage":
+            return Math.min(damage + parseInt(value), max);
+            break;
+        case "heal":
+            return Math.max(damage - parseInt(value), 0);
+            break;
+    }
+}

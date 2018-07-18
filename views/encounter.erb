@@ -16,6 +16,7 @@
                 </div>
             </div>
             <div id="participants" data-id="<%= @encounter.id %>"></div>
+            <hr/>
             <div class="row">
                 <div class="col-md">
                     <% @participants.each do |p| %>
@@ -100,8 +101,8 @@
                 <div class="col">
                     <%if @mob != nil %>
                         <div id="monster_id" data-id="<%= @mob.id %>"></div>
-                        <div id="monster_pane"></div>
                     <%end%>
+                    <div id="monster_pane"></div>
                 </div>
             </div>
         </div>

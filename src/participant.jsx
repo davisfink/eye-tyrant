@@ -5,15 +5,21 @@ function Name(props) {
         </h5>
     )
 }
+function Damage(props) {
+    return (
+        <span>{props.text}</span>
+    )
+}
 
 class Participant extends React.Component {
     constructor(props) {
         super(props);
         this.details = props.props;
         this.state = {
-            hitpoints: 0,
-            damage: 0,
-            initiative 0
+            hitpoints: this.details.hitpoints,
+            damage: this.details.damage,
+            initiative: this.details.initiative,
+            active: this.details.active
         }
     }
 
@@ -26,6 +32,10 @@ class Participant extends React.Component {
                 document.getElementById('monster_pane')
             );
         }
+    }
+
+    updateDamage(props) {
+        this.setState({ damage: props});
     }
 
     renderParticipant() {
@@ -43,26 +53,6 @@ class Participant extends React.Component {
     renderConditions() {
         return ( null )
     }
-    renderDamageForm() {
-        var uri = "/participant/" + this.details.id + "/damage/"
-        return (
-            <form action={uri} method="post">
-                <input type="input"
-                    name="damage"
-                    placeholder="dmg"
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                />
-                <input type="submit" value="-" className="button"/>
-            </form>
-        )
-    }
-    renderHealForm() {
-        return ( null )
-    }
-    renderInitiativeForm() {
-        return ( null )
-    }
 
     renderDetails() {
         return (
@@ -72,13 +62,25 @@ class Participant extends React.Component {
                         {this.details.name}
                     </h5>
                     <span className="hitpoints">hp: </span>
-                    {this.state.damage}/{this.state.hitpoints}
+                    <Damage text={this.state.damage}/>/{this.state.hitpoints}
                 </div>
                 <div className="col text-right">
                     {this.renderConditions()}
-                    <ParticipantDamage id={this.details.id}/>
-                    <ParticipantHeal id={this.details.id}/>
-                    {this.renderInitiativeForm()}
+                    <ParticipantDamage
+                        damage={this.state.damage}
+                        id={this.details.id}
+                        hitpoints={this.details.hitpoints}
+                        updateDamage={(p) => this.updateDamage(p)}
+                    />
+                    <ParticipantHeal
+                        damage={this.state.damage}
+                        id={this.details.id}
+                        hitpoints={this.details.hitpoints}
+                        updateDamage={(p) => this.updateDamage(p)}/>
+                    <ParticipantInitiative
+                        id={this.details.id}
+                        initiative={this.details.initiative}
+                    />
                 </div>
             </div>
         );
@@ -114,18 +116,27 @@ class NPC extends Participant {
     }
     render() {
         this.details.name = this.details.monster.name;
-        return (
-            <div className="panel participant">
-                {super.renderDetails()}
-            </div>
-        )
+
+        if (this.details.active == true) {
+            return (
+                <div className="panel participant">
+                    {super.renderDetails()}
+                </div>
+            )
+        } else {
+            return (
+                <div className="inactive panel participant">
+                    {super.renderDetails()}
+                </div>
+            )
+        }
     }
 }
 
 class ParticipantDamage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {value: '', damage: this.props.damage};
         this.uri = "/participant/" + this.props.id + "/damage/";
 
         this.handleChange = this.handleChange.bind(this);
@@ -139,10 +150,17 @@ class ParticipantDamage extends React.Component {
         fetch(this.uri, {
             method: 'POST',
             body: data,
-        });
+        }).then(
+        this.state = { damage: calculateDamage(this.props.hitpoints, this.props.damage, this.state.value, 'damage') },
+        this.setState({ damage: this.state.damage}),
+        this.setState({value: ''})
+        ).then(
+        this.props.updateDamage(this.state.damage)
+        );
     }
 
     handleChange(event) {
+        event.preventDefault();
         this.setState({value: event.target.value});
 
     }
@@ -165,7 +183,7 @@ class ParticipantDamage extends React.Component {
 class ParticipantHeal extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {value: '', damage: this.props.damage};
         this.uri = "/participant/" + this.props.id + "/heal/";
 
         this.handleChange = this.handleChange.bind(this);
@@ -180,7 +198,11 @@ class ParticipantHeal extends React.Component {
             method: 'POST',
             body: data,
         }).then(
-        this.setState({ damage: this.state.damage - this.state.value });
+        this.state = { damage: calculateDamage(this.props.hitpoints, this.props.damage, this.state.value, 'heal') },
+        this.setState({ damage: this.state.damage}),
+        this.setState({value: ''})
+        ).then(
+        this.props.updateDamage(this.state.damage)
         );
     }
 
@@ -203,3 +225,57 @@ class ParticipantHeal extends React.Component {
         )
     }
 }
+
+class ParticipantInitiative extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+        this.uri = "/participant/" + this.props.id + "/initiative/" + $('#encounter-details').data('encounter-id');
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+
+        fetch(this.uri, {
+            method: 'POST',
+            body: data,
+        }).then(
+        this.setState({ initiative: parseInt(this.state.value) })
+        );
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit} method="post">
+                <input type="input"
+                    name="initiative"
+                    placeholder="0"
+                    defaultValue={this.props.initiative}
+                    onChange={this.handleChange}
+                />
+                <input type="submit" value="~" className="button"/>
+            </form>
+        )
+    }
+}
+
+function calculateDamage(max, damage, value, type) {
+    switch(type) {
+        case "damage":
+            return Math.min(damage + parseInt(value), max)
+        break;
+        case "heal":
+            return Math.max(damage - parseInt(value), 0)
+        break;
+    }
+}
+

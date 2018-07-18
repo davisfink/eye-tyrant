@@ -132,6 +132,7 @@ post '/participant/:id/damage/?' do
     participant = Participant.where(id: params[:id]).first
     participant.take_damage(params[:damage])
 
+    redirect request.referrer
 end
 
 get '/participant/:id/heal/?' do
@@ -351,17 +352,21 @@ end
 get '/get-monster/?' do
     content_type :json
 
-    MonsterType.find(id: params[:id]).to_json(
-        include:
-        [
-            :type,
-            :actions,
-            :legendaries,
-            :traits,
-            :spells,
-            :cr
-        ]
-    )
+    if params[:id] != "undefined"
+        return MonsterType.find(id: params[:id]).to_json(
+            include:
+            [
+                :type,
+                :actions,
+                :legendaries,
+                :traits,
+                :spells,
+                :cr
+            ]
+        )
+    end
+
+    return [].to_json
 end
 
 get '/get-experience-details/?' do

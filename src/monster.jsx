@@ -39,7 +39,7 @@ class Monster extends React.Component {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
-        } else if (stats == null) {
+        } else if (stats == null || stats.length == 0 ) {
             return <div>Monster not found</div>;
         } else {
             let saving_throw,

@@ -69,7 +69,7 @@ var Monster = function (_React$Component) {
                     null,
                     "Loading..."
                 );
-            } else if (stats == null) {
+            } else if (stats == null || stats.length == 0) {
                 return React.createElement(
                     "div",
                     null,
