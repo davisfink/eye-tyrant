@@ -20,7 +20,8 @@ var Encounter = function (_React$Component) {
             error: null,
             isLoaded: false,
             participants: [],
-            inactive: []
+            inactive: [],
+            current_participant: 0
         };
         return _this;
     }
@@ -36,7 +37,8 @@ var Encounter = function (_React$Component) {
                 _this2.setState({
                     isLoaded: true,
                     participants: result.participants,
-                    inactive: result.inactive
+                    inactive: result.inactive,
+                    current_participant: result.active_participant_id
                 });
             },
             // Note: it's important to handle errors here
@@ -56,7 +58,8 @@ var Encounter = function (_React$Component) {
                 error = _state.error,
                 isLoaded = _state.isLoaded,
                 participants = _state.participants,
-                inactive = _state.inactive;
+                inactive = _state.inactive,
+                current_participant = _state.current_participant;
 
 
             if (error) {
@@ -91,7 +94,20 @@ var Encounter = function (_React$Component) {
                 });
 
                 active_participant_list.sort(function (a, b) {
+                    if (b.props.props.initiative == a.props.props.initiative) {
+                        return b.props.props.id - a.props.props.id;
+                    }
                     return b.props.props.initiative - a.props.props.initiative;
+                });
+
+                var current_participant_index = active_participant_list.map(function (x) {
+                    return x.props.props.id;
+                }).indexOf(current_participant);
+                active_participant_list.push.apply(active_participant_list, active_participant_list.splice(0, current_participant_index));
+
+                console.log("current participant:", current_participant);
+                active_participant_list.forEach(function (x) {
+                    console.log(x.props.props.id, x.props.props.initiative);
                 });
 
                 return React.createElement(
