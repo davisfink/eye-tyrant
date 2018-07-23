@@ -82,15 +82,19 @@ var Encounter = function (_React$Component) {
                     "No active participants"
                 );
             } else {
-                var active_participant_list = participants.map(function (p, i) {
+                var active_participant_list = participants.filter(function (p, i) {
                     if (p.active == true) {
-                        return React.createElement(Participant, { props: p, key: i });
+                        return p;
                     }
+                }).map(function (p, i) {
+                    return React.createElement(Participant, { props: p, key: i });
                 });
-                var inactive_participant_list = participants.map(function (p, i) {
+                var inactive_participant_list = participants.filter(function (p, i) {
                     if (p.active == false) {
-                        return React.createElement(Participant, { props: p, key: i });
+                        return p;
                     }
+                }).map(function (p, i) {
+                    return React.createElement(Participant, { props: p, key: i });
                 });
 
                 active_participant_list.sort(function (a, b) {
@@ -104,11 +108,6 @@ var Encounter = function (_React$Component) {
                     return x.props.props.id;
                 }).indexOf(current_participant);
                 active_participant_list.push.apply(active_participant_list, active_participant_list.splice(0, current_participant_index));
-
-                console.log("current participant:", current_participant);
-                active_participant_list.forEach(function (x) {
-                    console.log(x.props.props.id, x.props.props.initiative);
-                });
 
                 return React.createElement(
                     "div",
