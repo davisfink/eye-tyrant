@@ -1,3 +1,4 @@
+#npx babel --watch src --out-dir public/js/react --presets react-app/prod
 require 'sinatra'
 require 'json'
 require 'erb'

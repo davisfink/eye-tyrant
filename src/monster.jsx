@@ -123,6 +123,7 @@ class Monster extends React.Component {
                             {senses}
                             {languages}
                             {challenge}
+                            {resist}
                             {immune}
                             {conditionimmune}
                             {vulnerable}

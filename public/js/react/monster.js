@@ -352,6 +352,7 @@ var Monster = function (_React$Component) {
                             senses,
                             languages,
                             challenge,
+                            resist,
                             immune,
                             conditionimmune,
                             vulnerable,
